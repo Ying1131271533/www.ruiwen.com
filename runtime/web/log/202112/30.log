@@ -1,0 +1,58 @@
+[2021-12-30T10:58:44+08:00][error] [2]Redis::keys() expects exactly 1 parameter, 0 given[D:\Web\www.ruiwen.com\vendor\topthink\framework\src\think\cache\Driver.php:355]
+[2021-12-30T11:15:42+08:00][error] [8]未定义数组索引: k1[D:\Web\www.ruiwen.com\app\web\controller\RedisDemo.php:18]
+[2021-12-30T11:24:40+08:00][error] [0]call_user_func_array() expects parameter 1 to be a valid callback, class 'Redis' does not have a method 'tll'[D:\Web\www.ruiwen.com\vendor\topthink\framework\src\think\cache\Driver.php:355]
+[2021-12-30T11:31:15+08:00][error] [2]Redis::mset() expects exactly 1 parameter, 4 given[D:\Web\www.ruiwen.com\vendor\topthink\framework\src\think\cache\Driver.php:355]
+[2021-12-30T11:34:33+08:00][error] [2]Redis::mset() expects exactly 1 parameter, 2 given[D:\Web\www.ruiwen.com\vendor\topthink\framework\src\think\cache\Driver.php:355]
+[2021-12-30T11:34:42+08:00][error] [2]Redis::mset() expects parameter 1 to be array, string given[D:\Web\www.ruiwen.com\vendor\topthink\framework\src\think\cache\Driver.php:355]
+[2021-12-30T11:34:55+08:00][error] [2]Redis::mset() expects exactly 1 parameter, 2 given[D:\Web\www.ruiwen.com\vendor\topthink\framework\src\think\cache\Driver.php:355]
+[2021-12-30T18:51:08+08:00][sql] CONNECT:[ UseTime:1.175534s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-30T18:51:08+08:00][sql] SHOW FULL COLUMNS FROM `user` [ RunTime:0.020410s ]
+[2021-12-30T18:51:08+08:00][sql] SELECT * FROM `user` WHERE  `username` = '阿卡丽'  AND `password` = 'e10adc3949ba59abbe56e057f20f883e' LIMIT 1 [ RunTime:0.014719s ]
+[2021-12-30T18:51:08+08:00][sql] UPDATE `user`  SET `last_ip` = '127.0.0.1' , `last_time` = 1640861468 , `update_time` = 1640861468  WHERE  `id` = 1 [ RunTime:0.014355s ]
+[2021-12-30T18:52:47+08:00][sql] CONNECT:[ UseTime:0.015180s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-30T18:52:47+08:00][sql] SHOW FULL COLUMNS FROM `user` [ RunTime:0.011191s ]
+[2021-12-30T18:52:47+08:00][sql] SELECT * FROM `user` WHERE  `openid` = 'onUqQ5ToVmIQxjY7cOWE5gVf7b44' LIMIT 1 [ RunTime:0.010747s ]
+[2021-12-30T18:52:47+08:00][sql] CONNECT:[ UseTime:0.022486s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-30T18:52:47+08:00][sql] SHOW FULL COLUMNS FROM `user` [ RunTime:0.015789s ]
+[2021-12-30T18:52:47+08:00][sql] SELECT * FROM `user` WHERE  `openid` = 'onUqQ5ToVmIQxjY7cOWE5gVf7b44' LIMIT 1 [ RunTime:0.016321s ]
+[2021-12-30T18:52:47+08:00][sql] CONNECT:[ UseTime:0.030864s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-30T18:52:47+08:00][sql] SHOW FULL COLUMNS FROM `user` [ RunTime:0.014653s ]
+[2021-12-30T18:52:47+08:00][sql] SELECT * FROM `user` WHERE  `openid` = 'onUqQ5ToVmIQxjY7cOWE5gVf7b44' LIMIT 1 [ RunTime:0.014954s ]
+[2021-12-30T18:52:47+08:00][sql] CONNECT:[ UseTime:0.027266s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-30T18:52:47+08:00][sql] SHOW FULL COLUMNS FROM `user` [ RunTime:0.019113s ]
+[2021-12-30T18:52:47+08:00][sql] SELECT * FROM `user` WHERE  `openid` = 'onUqQ5ToVmIQxjY7cOWE5gVf7b44' LIMIT 1 [ RunTime:0.019175s ]
+[2021-12-30T18:52:47+08:00][sql] CONNECT:[ UseTime:0.021055s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-30T18:52:47+08:00][sql] SHOW FULL COLUMNS FROM `user` [ RunTime:0.015002s ]
+[2021-12-30T18:52:47+08:00][sql] SELECT * FROM `user` WHERE  `openid` = 'onUqQ5ToVmIQxjY7cOWE5gVf7b44' LIMIT 1 [ RunTime:0.016614s ]
+[2021-12-30T18:52:47+08:00][sql] CONNECT:[ UseTime:0.021252s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-30T18:52:47+08:00][sql] SHOW FULL COLUMNS FROM `user` [ RunTime:0.015054s ]
+[2021-12-30T18:52:47+08:00][sql] SELECT * FROM `user` WHERE  `openid` = 'onUqQ5ToVmIQxjY7cOWE5gVf7b44' LIMIT 1 [ RunTime:0.015067s ]
+[2021-12-30T18:52:48+08:00][sql] CONNECT:[ UseTime:0.019800s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-30T18:52:48+08:00][sql] SHOW FULL COLUMNS FROM `user` [ RunTime:0.013947s ]
+[2021-12-30T18:52:48+08:00][sql] SELECT * FROM `user` WHERE  `openid` = 'onUqQ5ToVmIQxjY7cOWE5gVf7b44' LIMIT 1 [ RunTime:0.013494s ]
+[2021-12-30T18:52:48+08:00][sql] CONNECT:[ UseTime:0.024105s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-30T18:52:48+08:00][sql] SHOW FULL COLUMNS FROM `user` [ RunTime:0.016518s ]
+[2021-12-30T18:52:48+08:00][sql] SELECT * FROM `user` WHERE  `openid` = 'onUqQ5ToVmIQxjY7cOWE5gVf7b44' LIMIT 1 [ RunTime:0.016377s ]
+[2021-12-30T18:52:48+08:00][sql] CONNECT:[ UseTime:0.022718s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-30T18:52:48+08:00][sql] SHOW FULL COLUMNS FROM `user` [ RunTime:0.015669s ]
+[2021-12-30T18:52:48+08:00][sql] SELECT * FROM `user` WHERE  `openid` = 'onUqQ5ToVmIQxjY7cOWE5gVf7b44' LIMIT 1 [ RunTime:0.015535s ]
+[2021-12-30T18:52:48+08:00][sql] CONNECT:[ UseTime:0.029827s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-30T18:52:48+08:00][sql] SHOW FULL COLUMNS FROM `user` [ RunTime:0.012669s ]
+[2021-12-30T18:52:48+08:00][sql] SELECT * FROM `user` WHERE  `openid` = 'onUqQ5ToVmIQxjY7cOWE5gVf7b44' LIMIT 1 [ RunTime:0.010216s ]
+[2021-12-30T18:52:48+08:00][sql] CONNECT:[ UseTime:0.027272s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-30T18:52:48+08:00][sql] SHOW FULL COLUMNS FROM `user` [ RunTime:0.009447s ]
+[2021-12-30T18:52:48+08:00][sql] SELECT * FROM `user` WHERE  `openid` = 'onUqQ5ToVmIQxjY7cOWE5gVf7b44' LIMIT 1 [ RunTime:0.009199s ]
+[2021-12-30T18:52:48+08:00][sql] CONNECT:[ UseTime:0.036867s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-30T18:52:48+08:00][sql] SHOW FULL COLUMNS FROM `user` [ RunTime:0.016460s ]
+[2021-12-30T18:52:48+08:00][sql] SELECT * FROM `user` WHERE  `openid` = 'onUqQ5ToVmIQxjY7cOWE5gVf7b44' LIMIT 1 [ RunTime:0.015661s ]
+[2021-12-30T18:52:49+08:00][error] [403][D:\Web\www.ruiwen.com\app\web\logic\Token.php:63]
+[2021-12-30T18:52:50+08:00][sql] CONNECT:[ UseTime:0.032489s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-30T18:52:50+08:00][sql] SHOW FULL COLUMNS FROM `user` [ RunTime:0.015743s ]
+[2021-12-30T18:52:50+08:00][sql] SELECT * FROM `user` WHERE  `openid` = 'onUqQ5ToVmIQxjY7cOWE5gVf7b44' LIMIT 1 [ RunTime:0.015405s ]
+[2021-12-30T18:52:50+08:00][sql] CONNECT:[ UseTime:0.030571s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-30T18:52:50+08:00][sql] SHOW FULL COLUMNS FROM `user` [ RunTime:0.023215s ]
+[2021-12-30T18:52:50+08:00][sql] SELECT * FROM `user` WHERE  `openid` = 'onUqQ5ToVmIQxjY7cOWE5gVf7b44' LIMIT 1 [ RunTime:0.021073s ]
+[2021-12-30T18:52:56+08:00][sql] CONNECT:[ UseTime:0.024297s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-30T18:52:56+08:00][sql] SHOW FULL COLUMNS FROM `user` [ RunTime:0.021310s ]
+[2021-12-30T18:52:56+08:00][sql] SELECT * FROM `user` WHERE  `id` = 2 LIMIT 1 [ RunTime:0.017026s ]
+[2021-12-30T18:52:56+08:00][sql] UPDATE `user`  SET `gender` = 0 , `update_time` = 1640861576  WHERE  `id` = 2 [ RunTime:0.016386s ]

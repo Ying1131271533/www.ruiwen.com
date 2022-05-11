@@ -1,0 +1,12 @@
+[2022-04-21T11:28:09+08:00][error] [10501]SQLSTATE[HY000] [1045] Access denied for user 'www_akali_ltd'@'113.67.182.53' (using password: YES)[D:\Web\www.ruiwen.com\vendor\topthink\think-orm\src\db\PDOConnection.php:796]
+[2022-04-21T11:29:13+08:00][error] [10501]SQLSTATE[HY000] [1045] Access denied for user 'www_akali_ltd'@'113.67.182.53' (using password: YES)[D:\Web\www.ruiwen.com\vendor\topthink\think-orm\src\db\PDOConnection.php:796]
+[2022-04-21T11:30:09+08:00][error] [10501]SQLSTATE[HY000] [1045] Access denied for user 'www_ruiwen_com'@'113.67.182.53' (using password: YES)[D:\Web\www.ruiwen.com\vendor\topthink\think-orm\src\db\PDOConnection.php:796]
+[2022-04-21T11:31:32+08:00][error] [10501]SQLSTATE[HY000] [1045] Access denied for user 'www_ruiwen_com'@'113.67.182.53' (using password: YES)
+[2022-04-21T11:31:55+08:00][sql] CONNECT:[ UseTime:0.020947s ] mysql:host=124.71.218.160;port=3306;dbname=www_ruiwen_com;charset=utf8
+[2022-04-21T11:31:55+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.075239s ]
+[2022-04-21T11:31:55+08:00][sql] SELECT `id` FROM `product` WHERE  `name` = '苹果113' LIMIT 1 [ RunTime:0.014291s ]
+[2022-04-21T11:31:55+08:00][sql] SHOW FULL COLUMNS FROM `product_category` [ RunTime:0.014836s ]
+[2022-04-21T11:31:55+08:00][sql] SELECT * FROM `product_category` WHERE (  `id` = 1 ) AND `product_category`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.014183s ]
+[2022-04-21T11:31:55+08:00][sql] SHOW FULL COLUMNS FROM `product_specs_value` [ RunTime:0.015597s ]
+[2022-04-21T11:31:55+08:00][sql] SELECT * FROM `product_specs_value` WHERE  `id` IN (4,12,19) [ RunTime:0.014132s ]
+[2022-04-21T11:31:55+08:00][sql] SELECT * FROM `product_specs_value` WHERE  `id` IN (5,12,20) [ RunTime:0.014089s ]

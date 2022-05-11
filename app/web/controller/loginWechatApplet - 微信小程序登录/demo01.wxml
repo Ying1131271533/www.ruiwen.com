@@ -1,0 +1,8 @@
+<!--pages/demo01/demo01.wxml-->
+<view class="container">
+  <view>
+    <button bindtap="code">code</button>
+    <button bindgetuserinfo="login" open-type="getUserInfo">login</button>
+    <button bindtap="pay">pay</button>
+  </view>
+</view>

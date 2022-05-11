@@ -1,0 +1,112 @@
+<?php
+namespace lib;
+
+// use think\cache\driver\Redis;
+use lib\RedisPool;
+
+class RedisLock
+{
+    /**
+     * @var 当前锁标识，用于解锁
+     */
+    private $_lockFlag;
+    private $_redis;
+
+    public function __construct($host = '124.71.218.160', $port = '6379', $passwd = 'Ak-12]al^iY?i4/3@n.!g')
+    {
+        /* $this->_redis = new Redis();
+        $this->_redis->connect($host, $port);
+        if ($passwd) {
+            $this->_redis->auth($passwd);
+        } */
+        
+        // 连接池
+        RedisPool::addServer(config('app.redis_pool')); // 添加Redis配置
+        $this->_redis = RedisPool::getRedis('RA'); // 连接RA，使用默认0库
+    }
+
+    public function lock($key = 'lock', $expire = 5)
+    {
+        $now= time();
+        $expireTime = $expire + $now;
+        if ($this->_redis->setnx($key, $expireTime)) {
+            $this->_lockFlag = $expireTime;
+            return true;
+        }
+
+        // 获取上一个锁的到期时间
+        $currentLockTime = $this->_redis->get($key);
+        if ($currentLockTime < $now) {
+            /* 用于解决
+            C0超时了,还持有锁,加入C1/C2/...同时请求进入了方法里面
+            C1/C2都执行了getset方法(由于getset方法的原子性,
+            所以两个请求返回的值必定不相等保证了C1/C2只有一个获取了锁) */
+            $oldLockTime = $this->_redis->getset($key, $expireTime);
+            if ($currentLockTime == $oldLockTime) {
+                $this->_lockFlag = $expireTime;
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function lockByLua($key = 'lock', $expire = 5)
+    {
+        // ttl - 过期时间
+        $script = <<<EOF
+
+            local key = KEYS[1]
+            local value = ARGV[1]
+            local ttl = ARGV[2]
+
+            if (redis.call('setnx', key, value) == 1) then
+                return redis.call('expire', key, ttl)
+            elseif (redis.call('ttl', key) == -1) then
+                return redis.call('expire', key, ttl)
+            end
+
+            return 0
+EOF;
+
+        $this->_lockFlag = md5(microtime(true));
+        return $this->_eval($script, [$key, $this->_lockFlag, $expire]);
+    }
+
+    public function unlock($key)
+    {
+        $script = <<<EOF
+
+            local key = KEYS[1]
+            local value = ARGV[1]
+
+            if (redis.call('exists', key) == 1 and redis.call('get', key) == value)
+            then
+                return redis.call('del', key)
+            end
+
+            return 0
+EOF;
+
+        if ($this->_lockFlag) {
+            return $this->_eval($script, [$key, $this->_lockFlag]);
+        }
+    }
+
+    private function _eval($script, array $params, $keyNum = 1)
+    {
+        $hash = $this->_redis->script('load', $script);
+        return $this->_redis->evalSha($hash, $params, $keyNum);
+    }
+
+}
+
+/* 
+$redisLock = new RedisLock();
+
+// 记录此次redis锁的标识key，不是要锁住的redis值(例如：库存)
+$key = 'lock';
+if ($redisLock->lockByLua($key)) {
+    // to do...业务代码
+    $redisLock->unlock($key);
+} */

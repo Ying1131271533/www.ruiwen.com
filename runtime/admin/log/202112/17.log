@@ -1,0 +1,143 @@
+[2021-12-17T09:25:00+08:00][sql] CONNECT:[ UseTime:0.024787s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-17T09:25:00+08:00][sql] SHOW FULL COLUMNS FROM `product_category` [ RunTime:0.017488s ]
+[2021-12-17T09:25:00+08:00][sql] SELECT COUNT(*) AS think_count FROM `product_category` WHERE `product_category`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.016294s ]
+[2021-12-17T09:25:00+08:00][sql] SELECT * FROM `product_category` WHERE `product_category`.`delete_time` IS NULL ORDER BY `id` DESC LIMIT 0,10 [ RunTime:0.016769s ]
+[2021-12-17T09:47:57+08:00][sql] CONNECT:[ UseTime:0.027292s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-17T09:47:57+08:00][sql] SHOW FULL COLUMNS FROM `product_category` [ RunTime:0.021944s ]
+[2021-12-17T09:47:57+08:00][sql] SELECT COUNT(*) AS think_count FROM `product_category` WHERE `product_category`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.018165s ]
+[2021-12-17T09:47:57+08:00][sql] SELECT * FROM `product_category` WHERE `product_category`.`delete_time` IS NULL ORDER BY `id` DESC LIMIT 0,10 [ RunTime:0.018466s ]
+[2021-12-17T09:49:47+08:00][sql] CONNECT:[ UseTime:0.011572s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-17T09:49:47+08:00][sql] SHOW FULL COLUMNS FROM `product_category` [ RunTime:0.008353s ]
+[2021-12-17T09:49:47+08:00][sql] SELECT COUNT(*) AS think_count FROM `product_category` WHERE `product_category`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.007722s ]
+[2021-12-17T09:49:47+08:00][sql] SELECT * FROM `product_category` WHERE `product_category`.`delete_time` IS NULL ORDER BY `id` DESC LIMIT 0,10 [ RunTime:0.008208s ]
+[2021-12-17T14:26:48+08:00][sql] CONNECT:[ UseTime:0.029558s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-17T14:26:48+08:00][sql] SHOW FULL COLUMNS FROM `product_category` [ RunTime:0.025732s ]
+[2021-12-17T14:26:48+08:00][sql] SELECT `id` FROM `product_category` WHERE  `name` = '平板电脑'  AND `id` <> 3 LIMIT 1 [ RunTime:0.024881s ]
+[2021-12-17T14:26:48+08:00][error] [300][D:\Web\www.ruiwen.com\app\common\middleware\CheckParams.php:61]
+[2021-12-17T14:40:14+08:00][error] [300][D:\Web\www.ruiwen.com\app\common\middleware\CheckParams.php:61]
+[2021-12-17T14:40:56+08:00][error] [300][D:\Web\www.ruiwen.com\app\common\middleware\CheckParams.php:61]
+[2021-12-17T14:40:59+08:00][error] [300][D:\Web\www.ruiwen.com\app\common\middleware\CheckParams.php:61]
+[2021-12-17T14:48:16+08:00][error] [300][D:\Web\www.ruiwen.com\app\common\middleware\CheckParams.php:61]
+[2021-12-17T14:48:36+08:00][error] [0]语法错误: unexpected ''market_price|市场价'' (T_CONSTANT_ENCAPSED_STRING), expecting ']'[D:\Web\www.ruiwen.com\app\admin\validate\Product.php:16]
+[2021-12-17T14:48:40+08:00][error] [300][D:\Web\www.ruiwen.com\app\common\middleware\CheckParams.php:61]
+[2021-12-17T14:56:06+08:00][sql] CONNECT:[ UseTime:0.012395s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-17T14:56:06+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.008861s ]
+[2021-12-17T14:56:06+08:00][sql] SELECT `id`,`product_category_id` FROM `product` WHERE  `name` = '苹果' LIMIT 1 [ RunTime:0.009954s ]
+[2021-12-17T14:56:40+08:00][sql] CONNECT:[ UseTime:0.022148s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-17T14:56:40+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.015823s ]
+[2021-12-17T14:56:40+08:00][sql] SELECT `id`,`product_category_id` FROM `product` WHERE  `name` = '苹果' LIMIT 1 [ RunTime:0.014835s ]
+[2021-12-17T14:56:40+08:00][error] [300][D:\Web\www.ruiwen.com\app\common\middleware\CheckParams.php:61]
+[2021-12-17T15:26:52+08:00][sql] CONNECT:[ UseTime:0.012431s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-17T15:26:52+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.008799s ]
+[2021-12-17T15:26:52+08:00][sql] SELECT `id`,`product_category_id` FROM `product` WHERE  `name` = '苹果' LIMIT 1 [ RunTime:0.008278s ]
+[2021-12-17T15:27:26+08:00][sql] CONNECT:[ UseTime:0.033019s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-17T15:27:26+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.016443s ]
+[2021-12-17T15:27:26+08:00][sql] SELECT `id`,`product_category_id` FROM `product` WHERE  `name` = '苹果' LIMIT 1 [ RunTime:0.015652s ]
+[2021-12-17T15:27:40+08:00][sql] CONNECT:[ UseTime:0.034345s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-17T15:27:40+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.015255s ]
+[2021-12-17T15:27:40+08:00][sql] SELECT `id`,`product_category_id` FROM `product` WHERE  `name` = '苹果' LIMIT 1 [ RunTime:0.023712s ]
+[2021-12-17T15:29:59+08:00][sql] CONNECT:[ UseTime:0.021953s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-17T15:29:59+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.016024s ]
+[2021-12-17T15:29:59+08:00][sql] SELECT `id`,`product_category_id` FROM `product` WHERE  `name` = '苹果' LIMIT 1 [ RunTime:0.017756s ]
+[2021-12-17T15:30:02+08:00][sql] CONNECT:[ UseTime:0.014510s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-17T15:30:02+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.008648s ]
+[2021-12-17T15:30:02+08:00][sql] SELECT `id`,`product_category_id` FROM `product` WHERE  `name` = '苹果' LIMIT 1 [ RunTime:0.008068s ]
+[2021-12-17T15:31:03+08:00][sql] CONNECT:[ UseTime:0.042695s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-17T15:31:03+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.016909s ]
+[2021-12-17T15:31:03+08:00][sql] SELECT `id`,`product_category_id` FROM `product` WHERE  `name` = '苹果' LIMIT 1 [ RunTime:0.016395s ]
+[2021-12-17T15:31:43+08:00][sql] CONNECT:[ UseTime:0.013166s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-17T15:31:43+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.009115s ]
+[2021-12-17T15:31:43+08:00][sql] SELECT `id`,`product_category_id` FROM `product` WHERE  `name` = '苹果' LIMIT 1 [ RunTime:0.008454s ]
+[2021-12-17T15:32:45+08:00][sql] CONNECT:[ UseTime:0.026671s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-17T15:32:45+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.010731s ]
+[2021-12-17T15:32:45+08:00][sql] SELECT `id`,`product_category_id` FROM `product` WHERE  `name` = '苹果' LIMIT 1 [ RunTime:0.011495s ]
+[2021-12-17T15:33:06+08:00][sql] CONNECT:[ UseTime:0.031373s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-17T15:33:06+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.021541s ]
+[2021-12-17T15:33:06+08:00][sql] SELECT `id`,`product_category_id` FROM `product` WHERE  `name` = '苹果' LIMIT 1 [ RunTime:0.021256s ]
+[2021-12-17T15:33:31+08:00][sql] CONNECT:[ UseTime:0.022973s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-17T15:33:31+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.015706s ]
+[2021-12-17T15:33:31+08:00][sql] SELECT `id`,`product_category_id` FROM `product` WHERE  `name` = '苹果' LIMIT 1 [ RunTime:0.015001s ]
+[2021-12-17T15:34:16+08:00][sql] CONNECT:[ UseTime:0.038543s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-17T15:34:16+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.024250s ]
+[2021-12-17T15:34:16+08:00][sql] SELECT `id`,`product_category_id` FROM `product` WHERE  `name` = '苹果' LIMIT 1 [ RunTime:0.026439s ]
+[2021-12-17T15:34:59+08:00][sql] CONNECT:[ UseTime:0.022969s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-17T15:34:59+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.016161s ]
+[2021-12-17T15:34:59+08:00][sql] SELECT `id`,`product_category_id` FROM `product` WHERE  `name` = '苹果' LIMIT 1 [ RunTime:0.015679s ]
+[2021-12-17T15:35:27+08:00][sql] CONNECT:[ UseTime:0.019528s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-17T15:35:27+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.010338s ]
+[2021-12-17T15:35:27+08:00][sql] SELECT `id`,`product_category_id` FROM `product` WHERE  `name` = '苹果' LIMIT 1 [ RunTime:0.009138s ]
+[2021-12-17T15:44:47+08:00][sql] CONNECT:[ UseTime:0.033283s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-17T15:44:47+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.026514s ]
+[2021-12-17T15:44:47+08:00][sql] SELECT `id`,`product_category_id` FROM `product` WHERE  `name` = '苹果' LIMIT 1 [ RunTime:0.021306s ]
+[2021-12-17T15:45:48+08:00][sql] CONNECT:[ UseTime:0.026952s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-17T15:45:48+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.019454s ]
+[2021-12-17T15:45:48+08:00][sql] SELECT `id`,`product_category_id` FROM `product` WHERE  `name` = '苹果' LIMIT 1 [ RunTime:0.015790s ]
+[2021-12-17T15:46:34+08:00][sql] CONNECT:[ UseTime:0.025591s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-17T15:46:34+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.016915s ]
+[2021-12-17T15:46:34+08:00][sql] SELECT `id`,`product_category_id` FROM `product` WHERE  `name` = '苹果' LIMIT 1 [ RunTime:0.016200s ]
+[2021-12-17T15:47:48+08:00][sql] CONNECT:[ UseTime:0.035621s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-17T15:47:48+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.023900s ]
+[2021-12-17T15:47:48+08:00][sql] SELECT `id`,`product_category_id` FROM `product` WHERE  `name` = '苹果' LIMIT 1 [ RunTime:0.036661s ]
+[2021-12-17T16:52:58+08:00][sql] CONNECT:[ UseTime:0.023958s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-17T16:52:58+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.015989s ]
+[2021-12-17T16:52:58+08:00][sql] SELECT `id`,`product_category_id` FROM `product` WHERE  `name` = '苹果13' LIMIT 1 [ RunTime:0.015386s ]
+[2021-12-17T17:11:11+08:00][sql] CONNECT:[ UseTime:0.015320s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-17T17:11:11+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.011368s ]
+[2021-12-17T17:11:11+08:00][sql] SELECT `id`,`product_category_id` FROM `product` WHERE  `name` = '苹果13' LIMIT 1 [ RunTime:0.010323s ]
+[2021-12-17T17:14:51+08:00][sql] CONNECT:[ UseTime:0.023722s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-17T17:14:51+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.015417s ]
+[2021-12-17T17:14:51+08:00][sql] SELECT `id`,`product_category_id` FROM `product` WHERE  `name` = '苹果13' LIMIT 1 [ RunTime:0.014716s ]
+[2021-12-17T17:14:51+08:00][error] [300][D:\Web\www.ruiwen.com\app\common\middleware\CheckParams.php:61]
+[2021-12-17T17:15:06+08:00][sql] CONNECT:[ UseTime:0.023162s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-17T17:15:06+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.017087s ]
+[2021-12-17T17:15:06+08:00][sql] SELECT `id`,`product_category_id` FROM `product` WHERE  `name` = '苹果13' LIMIT 1 [ RunTime:0.015657s ]
+[2021-12-17T17:15:06+08:00][error] [300][D:\Web\www.ruiwen.com\app\common\middleware\CheckParams.php:61]
+[2021-12-17T17:15:22+08:00][sql] CONNECT:[ UseTime:0.024709s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-17T17:15:22+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.016777s ]
+[2021-12-17T17:15:22+08:00][sql] SELECT `id`,`product_category_id` FROM `product` WHERE  `name` = '苹果13' LIMIT 1 [ RunTime:0.015921s ]
+[2021-12-17T17:15:22+08:00][error] [300][D:\Web\www.ruiwen.com\app\common\middleware\CheckParams.php:61]
+[2021-12-17T17:17:57+08:00][error] [300][D:\Web\www.ruiwen.com\app\common\middleware\CheckParams.php:61]
+[2021-12-17T17:18:02+08:00][sql] CONNECT:[ UseTime:0.041773s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-17T17:18:02+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.020613s ]
+[2021-12-17T17:18:02+08:00][sql] SELECT `id`,`product_category_id` FROM `product` WHERE  `name` = '苹果13' LIMIT 1 [ RunTime:0.017773s ]
+[2021-12-17T17:18:02+08:00][error] [300][D:\Web\www.ruiwen.com\app\common\middleware\CheckParams.php:61]
+[2021-12-17T17:18:21+08:00][sql] CONNECT:[ UseTime:0.023374s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-17T17:18:21+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.015729s ]
+[2021-12-17T17:18:21+08:00][sql] SELECT `id`,`product_category_id` FROM `product` WHERE  `name` = '苹果13' LIMIT 1 [ RunTime:0.015125s ]
+[2021-12-17T17:19:13+08:00][sql] CONNECT:[ UseTime:0.023789s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-17T17:19:13+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.016160s ]
+[2021-12-17T17:19:13+08:00][sql] SELECT `id`,`product_category_id` FROM `product` WHERE  `name` = '苹果13' LIMIT 1 [ RunTime:0.016500s ]
+[2021-12-17T17:19:13+08:00][error] [300][D:\Web\www.ruiwen.com\app\common\middleware\CheckParams.php:61]
+[2021-12-17T17:19:47+08:00][sql] CONNECT:[ UseTime:0.035774s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-17T17:19:47+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.023019s ]
+[2021-12-17T17:19:47+08:00][sql] SELECT `id`,`product_category_id` FROM `product` WHERE  `name` = '苹果13' LIMIT 1 [ RunTime:0.022377s ]
+[2021-12-17T17:19:47+08:00][error] [300][D:\Web\www.ruiwen.com\app\common\middleware\CheckParams.php:61]
+[2021-12-17T17:20:13+08:00][sql] CONNECT:[ UseTime:0.025551s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-17T17:20:13+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.021074s ]
+[2021-12-17T17:20:13+08:00][sql] SELECT `id`,`product_category_id` FROM `product` WHERE  `name` = '苹果13' LIMIT 1 [ RunTime:0.017270s ]
+[2021-12-17T17:28:34+08:00][sql] CONNECT:[ UseTime:0.015075s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-17T17:28:34+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.010773s ]
+[2021-12-17T17:28:34+08:00][sql] SELECT `id`,`product_category_id` FROM `product` WHERE  `name` = '苹果13' LIMIT 1 [ RunTime:0.010067s ]
+[2021-12-17T17:34:42+08:00][sql] CONNECT:[ UseTime:0.021629s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-17T17:34:42+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.011656s ]
+[2021-12-17T17:34:42+08:00][sql] SELECT `id`,`product_category_id` FROM `product` WHERE  `name` = '苹果13' LIMIT 1 [ RunTime:0.010850s ]
+[2021-12-17T18:05:40+08:00][sql] CONNECT:[ UseTime:0.023399s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-17T18:05:40+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.016056s ]
+[2021-12-17T18:05:40+08:00][sql] SELECT `id`,`product_category_id` FROM `product` WHERE  `name` = '苹果13' LIMIT 1 [ RunTime:0.015462s ]
+[2021-12-17T18:05:40+08:00][error] [0]规格价格规则错误[D:\Web\www.ruiwen.com\app\admin\validate\Product.php:89]
+[2021-12-17T18:08:14+08:00][sql] CONNECT:[ UseTime:0.022466s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-17T18:08:14+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.015513s ]
+[2021-12-17T18:08:14+08:00][sql] SELECT `id`,`product_category_id` FROM `product` WHERE  `name` = '苹果13' LIMIT 1 [ RunTime:0.014765s ]
+[2021-12-17T18:08:14+08:00][error] [0]规格值不能为空[D:\Web\www.ruiwen.com\app\admin\validate\Product.php:90]
+[2021-12-17T18:08:28+08:00][sql] CONNECT:[ UseTime:0.023816s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-17T18:08:28+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.017026s ]
+[2021-12-17T18:08:28+08:00][sql] SELECT `id`,`product_category_id` FROM `product` WHERE  `name` = '苹果13' LIMIT 1 [ RunTime:0.015639s ]
+[2021-12-17T18:08:28+08:00][error] [0]规格值必须是数字[D:\Web\www.ruiwen.com\app\admin\validate\Product.php:90]
+[2021-12-17T18:09:14+08:00][sql] CONNECT:[ UseTime:0.014649s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-17T18:09:14+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.009896s ]
+[2021-12-17T18:09:14+08:00][sql] SELECT `id`,`product_category_id` FROM `product` WHERE  `name` = '苹果13' LIMIT 1 [ RunTime:0.009565s ]
+[2021-12-17T18:09:14+08:00][error] [0]必须为数字[D:\Web\www.ruiwen.com\app\admin\validate\Product.php:90]
+[2021-12-17T18:09:38+08:00][sql] CONNECT:[ UseTime:0.023778s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-17T18:09:38+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.016930s ]
+[2021-12-17T18:09:38+08:00][sql] SELECT `id`,`product_category_id` FROM `product` WHERE  `name` = '苹果13' LIMIT 1 [ RunTime:0.015946s ]
+[2021-12-17T18:09:38+08:00][error] [0]规格值id必须为数字[D:\Web\www.ruiwen.com\app\admin\validate\Product.php:90]

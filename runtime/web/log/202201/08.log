@@ -1,0 +1,4 @@
+[2022-01-08T10:43:04+08:00][error] [0]NOAUTH Authentication required.[D:\Web\www.ruiwen.com\vendor\topthink\framework\src\think\cache\Driver.php:355]
+[2022-01-08T10:46:05+08:00][error] [0]NOAUTH Authentication required.[D:\Web\www.ruiwen.com\vendor\topthink\framework\src\think\cache\Driver.php:355]
+[2022-01-08T10:47:25+08:00][error] [0]NOAUTH Authentication required.[D:\Web\www.ruiwen.com\vendor\topthink\framework\src\think\cache\Driver.php:355]
+[2022-01-08T10:50:35+08:00][error] [0]WRONGPASS invalid username-password pair or user is disabled.[D:\Web\www.ruiwen.com\vendor\topthink\framework\src\think\cache\Driver.php:355]

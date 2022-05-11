@@ -1,0 +1,20 @@
+[2022-04-23T19:21:33+08:00][sql] CONNECT:[ UseTime:0.023319s ] mysql:host=124.71.218.160;port=3306;dbname=www_ruiwen_com;charset=utf8
+[2022-04-23T19:21:33+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.014073s ]
+[2022-04-23T19:21:33+08:00][sql] SELECT * FROM `product` WHERE (  `id` = 16 ) AND `product`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.018746s ]
+[2022-04-23T19:21:33+08:00][sql] SHOW FULL COLUMNS FROM `product_category` [ RunTime:0.016657s ]
+[2022-04-23T19:21:33+08:00][sql] SELECT * FROM `product_category` WHERE (  `id` = 13 ) AND `product_category`.`delete_time` IS NULL [ RunTime:0.016155s ]
+[2022-04-23T19:21:33+08:00][sql] SHOW FULL COLUMNS FROM `product_specs` [ RunTime:0.019714s ]
+[2022-04-23T19:21:33+08:00][sql] SELECT * FROM `product_specs` WHERE (  `product_id` = 16 ) AND `product_specs`.`delete_time` IS NULL [ RunTime:0.023724s ]
+[2022-04-23T20:32:57+08:00][sql] CONNECT:[ UseTime:0.020985s ] mysql:host=124.71.218.160;port=3306;dbname=www_ruiwen_com;charset=utf8
+[2022-04-23T20:32:57+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.024304s ]
+[2022-04-23T20:32:57+08:00][sql] SELECT * FROM `product` WHERE (  `id` = 17 ) AND `product`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.015678s ]
+[2022-04-23T20:32:57+08:00][sql] SHOW FULL COLUMNS FROM `product_specs` [ RunTime:0.018237s ]
+[2022-04-23T20:32:57+08:00][sql] SELECT `id`,`specs_value_id`,`price`,`stock`,`create_time`,`update_time`,`product_id`,`delete_time` FROM `product_specs` WHERE (  `product_id` = 17 ) AND `product_specs`.`delete_time` IS NULL [ RunTime:0.012000s ]
+[2022-04-23T20:32:57+08:00][sql] SHOW FULL COLUMNS FROM `product_specs_value` [ RunTime:0.017230s ]
+[2022-04-23T20:32:57+08:00][sql] SELECT * FROM `product_specs_value` WHERE  `id` IN (4,12,19,5,20) [ RunTime:0.020530s ]
+[2022-04-23T21:14:16+08:00][sql] CONNECT:[ UseTime:0.028058s ] mysql:host=124.71.218.160;port=3306;dbname=www_ruiwen_com;charset=utf8
+[2022-04-23T21:14:16+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.015740s ]
+[2022-04-23T21:14:16+08:00][sql] SHOW FULL COLUMNS FROM `product_category` [ RunTime:0.016819s ]
+[2022-04-23T21:14:16+08:00][sql] SELECT * FROM `product_category` WHERE (  `id` = 13 ) AND `product_category`.`delete_time` IS NULL [ RunTime:0.020528s ]
+[2022-04-23T21:14:16+08:00][sql] SHOW FULL COLUMNS FROM `product_specs` [ RunTime:0.013630s ]
+[2022-04-23T21:14:16+08:00][sql] SELECT * FROM `product_specs` WHERE (  `product_id` = 16 ) AND `product_specs`.`delete_time` IS NULL [ RunTime:0.017781s ]

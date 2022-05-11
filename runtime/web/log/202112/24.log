@@ -1,0 +1,73 @@
+[2021-12-24T09:52:08+08:00][sql] CONNECT:[ UseTime:0.034182s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-24T09:52:08+08:00][sql] SHOW FULL COLUMNS FROM `user` [ RunTime:0.021245s ]
+[2021-12-24T09:52:08+08:00][sql] SELECT * FROM `user` WHERE  `username` = '阿卡丽'  AND `password` = 'e10adc3949ba59abbe56e057f20f883e' LIMIT 1 [ RunTime:0.020879s ]
+[2021-12-24T09:52:08+08:00][sql] UPDATE `user`  SET `last_ip` = '127.0.0.1' , `last_time` = 1640310728 , `update_time` = 1640310728  WHERE  `id` = 1 [ RunTime:0.016503s ]
+[2021-12-24T09:52:16+08:00][sql] CONNECT:[ UseTime:0.021779s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-24T09:52:16+08:00][sql] SHOW FULL COLUMNS FROM `user` [ RunTime:0.015360s ]
+[2021-12-24T09:52:16+08:00][sql] SELECT * FROM `user` WHERE  `username` = '阿卡丽'  AND `password` = 'e10adc3949ba59abbe56e057f20f883e' LIMIT 1 [ RunTime:0.015531s ]
+[2021-12-24T09:52:16+08:00][sql] UPDATE `user`  SET `last_ip` = '127.0.0.1' , `last_time` = 1640310736 , `update_time` = 1640310736  WHERE  `id` = 1 [ RunTime:0.014752s ]
+[2021-12-24T09:54:33+08:00][sql] CONNECT:[ UseTime:0.034439s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-24T09:54:33+08:00][sql] SHOW FULL COLUMNS FROM `user` [ RunTime:0.024524s ]
+[2021-12-24T09:54:33+08:00][sql] SELECT * FROM `user` WHERE  `username` = '阿卡丽'  AND `password` = 'e10adc3949ba59abbe56e057f20f883e' LIMIT 1 [ RunTime:0.023843s ]
+[2021-12-24T09:57:57+08:00][sql] CONNECT:[ UseTime:0.033634s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-24T09:57:57+08:00][sql] SHOW FULL COLUMNS FROM `user` [ RunTime:0.021521s ]
+[2021-12-24T09:57:57+08:00][sql] SELECT * FROM `user` WHERE  `username` = '阿卡丽'  AND `password` = 'e10adc3949ba59abbe56e057f20f883e' LIMIT 1 [ RunTime:0.020725s ]
+[2021-12-24T09:58:02+08:00][sql] CONNECT:[ UseTime:0.020713s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-24T09:58:02+08:00][sql] SHOW FULL COLUMNS FROM `user` [ RunTime:0.011483s ]
+[2021-12-24T09:58:02+08:00][sql] SELECT * FROM `user` WHERE  `username` = '阿卡丽'  AND `password` = 'e10adc3949ba59abbe56e057f20f883e' LIMIT 1 [ RunTime:0.008652s ]
+[2021-12-24T09:58:02+08:00][sql] UPDATE `user`  SET `last_ip` = '127.0.0.1' , `last_time` = 1640311082 , `update_time` = 1640311082  WHERE  `id` = 1 [ RunTime:0.010062s ]
+[2021-12-24T09:58:06+08:00][sql] CONNECT:[ UseTime:0.025092s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-24T09:58:06+08:00][sql] SHOW FULL COLUMNS FROM `user` [ RunTime:0.016162s ]
+[2021-12-24T09:58:06+08:00][sql] SELECT * FROM `user` WHERE  `username` = '阿卡丽'  AND `password` = 'e10adc3949ba59abbe56e057f20f883e' LIMIT 1 [ RunTime:0.015579s ]
+[2021-12-24T09:58:06+08:00][sql] UPDATE `user`  SET `last_ip` = '127.0.0.1' , `last_time` = 1640311086 , `update_time` = 1640311086  WHERE  `id` = 1 [ RunTime:0.015325s ]
+[2021-12-24T09:58:24+08:00][sql] CONNECT:[ UseTime:0.021674s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-24T09:58:24+08:00][sql] SHOW FULL COLUMNS FROM `user` [ RunTime:0.014891s ]
+[2021-12-24T09:58:24+08:00][sql] SELECT * FROM `user` WHERE  `username` = '阿卡丽'  AND `password` = 'e10adc3949ba59abbe56e057f20f883e' LIMIT 1 [ RunTime:0.014440s ]
+[2021-12-24T09:58:24+08:00][error] [0]Maximum function nesting level of '256' reached, aborting![D:\Web\www.ruiwen.com\vendor\topthink\framework\src\think\Container.php:173]
+[2021-12-24T09:58:35+08:00][sql] CONNECT:[ UseTime:0.025949s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-24T09:58:35+08:00][sql] SHOW FULL COLUMNS FROM `user` [ RunTime:0.018175s ]
+[2021-12-24T09:58:35+08:00][sql] SELECT * FROM `user` WHERE  `username` = '阿卡丽'  AND `password` = 'e10adc3949ba59abbe56e057f20f883e' LIMIT 1 [ RunTime:0.017783s ]
+[2021-12-24T10:15:30+08:00][error] [404][D:\Web\www.ruiwen.com\app\web\middleware\Login.php:41]
+[2021-12-24T16:32:32+08:00][error] [404][D:\Web\www.ruiwen.com\app\web\middleware\Login.php:41]
+[2021-12-24T16:43:59+08:00][error] [404][D:\Web\www.ruiwen.com\app\web\middleware\Login.php:41]
+[2021-12-24T16:47:37+08:00][error] [404][D:\Web\www.ruiwen.com\app\web\middleware\Login.php:42]
+[2021-12-24T16:47:55+08:00][error] [404][D:\Web\www.ruiwen.com\app\web\middleware\Login.php:42]
+[2021-12-24T16:48:02+08:00][error] [404][D:\Web\www.ruiwen.com\app\web\middleware\Login.php:42]
+[2021-12-24T16:48:46+08:00][sql] CONNECT:[ UseTime:0.021643s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-24T16:48:46+08:00][sql] SHOW FULL COLUMNS FROM `user` [ RunTime:0.015518s ]
+[2021-12-24T16:48:46+08:00][sql] SELECT * FROM `user` WHERE  `username` = '阿卡丽'  AND `password` = 'e10adc3949ba59abbe56e057f20f883e' LIMIT 1 [ RunTime:0.014871s ]
+[2021-12-24T16:48:55+08:00][sql] CONNECT:[ UseTime:0.039717s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-24T16:48:55+08:00][sql] SHOW FULL COLUMNS FROM `user` [ RunTime:0.016139s ]
+[2021-12-24T16:48:55+08:00][sql] SELECT * FROM `user` WHERE  `username` = '阿卡丽'  AND `password` = 'e10adc3949ba59abbe56e057f20f883e' LIMIT 1 [ RunTime:0.014891s ]
+[2021-12-24T16:48:55+08:00][sql] UPDATE `user`  SET `last_ip` = '127.0.0.1' , `last_time` = 1640335735 , `update_time` = 1640335735  WHERE  `id` = 1 [ RunTime:0.014720s ]
+[2021-12-24T18:04:27+08:00][error] [300][D:\Web\www.ruiwen.com\app\common\middleware\CheckParams.php:63]
+[2021-12-24T18:13:33+08:00][error] [500][D:\Web\www.ruiwen.com\app\web\logic\WechatApplet.php:26]
+[2021-12-24T18:14:21+08:00][error] [500][D:\Web\www.ruiwen.com\app\web\logic\WechatApplet.php:26]
+[2021-12-24T18:14:23+08:00][error] [500][D:\Web\www.ruiwen.com\app\web\logic\WechatApplet.php:26]
+[2021-12-24T18:14:31+08:00][error] [500][D:\Web\www.ruiwen.com\app\web\logic\WechatApplet.php:26]
+[2021-12-24T18:24:18+08:00][error] [300][D:\Web\www.ruiwen.com\app\common\middleware\CheckParams.php:63]
+[2021-12-24T18:24:24+08:00][error] [300][D:\Web\www.ruiwen.com\app\common\middleware\CheckParams.php:63]
+[2021-12-24T18:24:44+08:00][error] [300][D:\Web\www.ruiwen.com\app\common\middleware\CheckParams.php:63]
+[2021-12-24T18:24:59+08:00][sql] CONNECT:[ UseTime:0.033471s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-24T18:24:59+08:00][sql] SHOW FULL COLUMNS FROM `user` [ RunTime:0.017434s ]
+[2021-12-24T18:24:59+08:00][sql] SELECT * FROM `user` WHERE  `username` = '阿卡丽'  AND `password` = 'e10adc3949ba59abbe56e057f20f883e' LIMIT 1 [ RunTime:0.017032s ]
+[2021-12-24T18:25:09+08:00][sql] CONNECT:[ UseTime:0.040846s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-24T18:25:09+08:00][sql] SHOW FULL COLUMNS FROM `user` [ RunTime:0.017311s ]
+[2021-12-24T18:25:09+08:00][sql] SELECT * FROM `user` WHERE  `username` = '阿卡丽'  AND `password` = 'e10adc3949ba59abbe56e057f20f883e' LIMIT 1 [ RunTime:0.016754s ]
+[2021-12-24T18:25:41+08:00][sql] CONNECT:[ UseTime:0.030162s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-24T18:25:41+08:00][sql] SHOW FULL COLUMNS FROM `user` [ RunTime:0.011583s ]
+[2021-12-24T18:25:41+08:00][sql] SELECT * FROM `user` WHERE  `username` = '阿卡丽'  AND `password` = 'e10adc3949ba59abbe56e057f20f883e' LIMIT 1 [ RunTime:0.010686s ]
+[2021-12-24T18:25:41+08:00][error] [8]Trying to get property 'code' of non-object[D:\Web\www.ruiwen.com\app\web\controller\Login.php:11]
+[2021-12-24T18:25:49+08:00][sql] CONNECT:[ UseTime:0.038372s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-24T18:25:49+08:00][sql] SHOW FULL COLUMNS FROM `user` [ RunTime:0.016186s ]
+[2021-12-24T18:25:49+08:00][sql] SELECT * FROM `user` WHERE  `username` = '阿卡丽'  AND `password` = 'e10adc3949ba59abbe56e057f20f883e' LIMIT 1 [ RunTime:0.015854s ]
+[2021-12-24T18:38:57+08:00][error] [500][D:\Web\www.ruiwen.com\app\web\logic\WechatApplet.php:26]
+[2021-12-24T18:40:54+08:00][error] [8]未定义变量: result[D:\Web\www.ruiwen.com\app\web\logic\WechatApplet.php:23]
+[2021-12-24T18:41:10+08:00][error] [0]Call to undefined function app\web\logic\result()[D:\Web\www.ruiwen.com\app\web\logic\WechatApplet.php:23]
+[2021-12-24T18:41:18+08:00][error] [0]Cannot use object of type think\response\Json as array[D:\Web\www.ruiwen.com\app\web\logic\Login.php:37]
+[2021-12-24T18:42:50+08:00][error] [0]Cannot use object of type think\response\Json as array[D:\Web\www.ruiwen.com\app\web\logic\Login.php:37]
+[2021-12-24T18:42:51+08:00][error] [0]Cannot use object of type think\response\Json as array[D:\Web\www.ruiwen.com\app\web\logic\Login.php:37]
+[2021-12-24T18:42:53+08:00][error] [0]Cannot use object of type think\response\Json as array[D:\Web\www.ruiwen.com\app\web\logic\Login.php:37]
+[2021-12-24T18:43:19+08:00][error] [400][D:\Web\www.ruiwen.com\app\web\logic\WechatApplet.php:24]
+[2021-12-24T18:45:46+08:00][error] [4096]Object of class think\response\Json could not be converted to string[D:\Web\www.ruiwen.com\app\common.php:43]
+[2021-12-24T18:45:57+08:00][error] [4096]Object of class think\response\Json could not be converted to string[D:\Web\www.ruiwen.com\app\common.php:43]

@@ -1,0 +1,15 @@
+[2022-04-25T14:54:58+08:00][error] [10501]SQLSTATE[HY000] [1049] Unknown database 'www_ruiwen_com'[D:\Web\www.ruiwen.com\vendor\topthink\think-orm\src\db\PDOConnection.php:796]
+[2022-04-25T15:34:30+08:00][sql] CONNECT:[ UseTime:0.013424s ] mysql:host=124.71.218.160;port=3306;dbname=www_ruiwen_com;charset=utf8
+[2022-04-25T15:34:30+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.009666s ]
+[2022-04-25T15:34:30+08:00][sql] SELECT * FROM `product` WHERE (  `id` = 18 ) AND `product`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.009492s ]
+[2022-04-25T15:34:30+08:00][sql] SHOW FULL COLUMNS FROM `product_specs` [ RunTime:0.010118s ]
+[2022-04-25T15:34:30+08:00][sql] SELECT `id`,`specs_value_id`,`price`,`stock`,`create_time`,`update_time`,`product_id`,`delete_time` FROM `product_specs` WHERE (  `product_id` = 18 ) AND `product_specs`.`delete_time` IS NULL [ RunTime:0.009104s ]
+[2022-04-25T15:34:30+08:00][sql] SHOW FULL COLUMNS FROM `product_specs_value` [ RunTime:0.009873s ]
+[2022-04-25T15:34:30+08:00][sql] SELECT * FROM `product_specs_value` WHERE  `id` IN (4,12,21,5,20) [ RunTime:0.009198s ]
+[2022-04-25T15:37:50+08:00][sql] CONNECT:[ UseTime:0.031534s ] mysql:host=124.71.218.160;port=3306;dbname=www_ruiwen_com;charset=utf8
+[2022-04-25T15:37:50+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.016001s ]
+[2022-04-25T15:37:50+08:00][sql] SELECT * FROM `product` WHERE (  `id` = 18 ) AND `product`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.014983s ]
+[2022-04-25T15:37:50+08:00][sql] SHOW FULL COLUMNS FROM `product_specs` [ RunTime:0.015250s ]
+[2022-04-25T15:37:50+08:00][sql] SELECT `id`,`specs_value_id`,`price`,`stock`,`create_time`,`update_time`,`product_id`,`delete_time` FROM `product_specs` WHERE (  `product_id` = 18 ) AND `product_specs`.`delete_time` IS NULL [ RunTime:0.014794s ]
+[2022-04-25T15:37:50+08:00][sql] SHOW FULL COLUMNS FROM `product_specs_value` [ RunTime:0.015943s ]
+[2022-04-25T15:37:50+08:00][sql] SELECT * FROM `product_specs_value` WHERE  `id` IN (4,12,21,5,20) [ RunTime:0.014735s ]

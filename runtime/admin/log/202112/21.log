@@ -1,0 +1,358 @@
+[2021-12-21T09:37:53+08:00][sql] CONNECT:[ UseTime:0.023748s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T09:37:53+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.014791s ]
+[2021-12-21T09:37:53+08:00][sql] SELECT `id` FROM `product` WHERE  `name` = '苹果12'  AND `id` <> 14 LIMIT 1 [ RunTime:0.013590s ]
+[2021-12-21T09:37:53+08:00][sql] SHOW FULL COLUMNS FROM `product_category` [ RunTime:0.014805s ]
+[2021-12-21T09:37:53+08:00][sql] SELECT * FROM `product_category` WHERE (  `id` = 10 ) AND `product_category`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.014168s ]
+[2021-12-21T09:37:53+08:00][error] [400][D:\Web\www.ruiwen.com\app\admin\middleware\Product.php:25]
+[2021-12-21T09:38:11+08:00][sql] CONNECT:[ UseTime:0.017357s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T09:38:11+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.011081s ]
+[2021-12-21T09:38:11+08:00][sql] SELECT `id` FROM `product` WHERE  `name` = '苹果12'  AND `id` <> 14 LIMIT 1 [ RunTime:0.010345s ]
+[2021-12-21T09:38:11+08:00][sql] SHOW FULL COLUMNS FROM `product_category` [ RunTime:0.018337s ]
+[2021-12-21T09:38:11+08:00][sql] SELECT * FROM `product_category` WHERE (  `id` = 10 ) AND `product_category`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.010527s ]
+[2021-12-21T09:38:11+08:00][error] [404][D:\Web\www.ruiwen.com\app\admin\middleware\Product.php:25]
+[2021-12-21T09:45:47+08:00][sql] CONNECT:[ UseTime:0.025762s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T09:45:47+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.017171s ]
+[2021-12-21T09:45:47+08:00][sql] SELECT `id` FROM `product` WHERE  `name` = '苹果12'  AND `id` <> 14 LIMIT 1 [ RunTime:0.016125s ]
+[2021-12-21T09:46:28+08:00][sql] CONNECT:[ UseTime:0.027394s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T09:46:28+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.009784s ]
+[2021-12-21T09:46:28+08:00][sql] SELECT `id` FROM `product` WHERE  `name` = '苹果12'  AND `id` <> 14 LIMIT 1 [ RunTime:0.009692s ]
+[2021-12-21T09:46:28+08:00][error] [8]未定义数组索引: product_category_id[D:\Web\www.ruiwen.com\app\admin\middleware\Product.php:19]
+[2021-12-21T09:46:58+08:00][sql] CONNECT:[ UseTime:0.033529s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T09:46:58+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.021884s ]
+[2021-12-21T09:46:58+08:00][sql] SELECT `id` FROM `product` WHERE  `name` = '苹果12'  AND `id` <> 14 LIMIT 1 [ RunTime:0.024312s ]
+[2021-12-21T09:47:43+08:00][sql] CONNECT:[ UseTime:0.023883s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T09:47:43+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.015427s ]
+[2021-12-21T09:47:43+08:00][sql] SELECT `id` FROM `product` WHERE  `name` = '苹果12'  AND `id` <> 14 LIMIT 1 [ RunTime:0.014531s ]
+[2021-12-21T09:47:43+08:00][sql] SHOW FULL COLUMNS FROM `product_category` [ RunTime:0.015413s ]
+[2021-12-21T09:47:43+08:00][sql] SELECT * FROM `product_category` WHERE (  `id` = 12 ) AND `product_category`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.014447s ]
+[2021-12-21T09:47:43+08:00][error] [404][D:\Web\www.ruiwen.com\app\admin\middleware\Product.php:32]
+[2021-12-21T11:17:22+08:00][sql] CONNECT:[ UseTime:0.022567s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T11:17:22+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.015471s ]
+[2021-12-21T11:17:22+08:00][sql] SELECT `id` FROM `product` WHERE  `name` = '苹果12'  AND `id` <> 14 LIMIT 1 [ RunTime:0.014757s ]
+[2021-12-21T11:17:22+08:00][sql] SHOW FULL COLUMNS FROM `product_category` [ RunTime:0.016449s ]
+[2021-12-21T11:17:22+08:00][sql] SELECT * FROM `product_category` WHERE (  `id` = 12 ) AND `product_category`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.015073s ]
+[2021-12-21T11:17:22+08:00][error] [404][D:\Web\www.ruiwen.com\app\admin\middleware\Product.php:32]
+[2021-12-21T11:17:30+08:00][sql] CONNECT:[ UseTime:0.014559s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T11:17:30+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.010381s ]
+[2021-12-21T11:17:30+08:00][sql] SELECT `id` FROM `product` WHERE  `name` = '苹果12'  AND `id` <> 14 LIMIT 1 [ RunTime:0.009860s ]
+[2021-12-21T11:17:30+08:00][sql] SHOW FULL COLUMNS FROM `product_category` [ RunTime:0.010386s ]
+[2021-12-21T11:17:30+08:00][sql] SELECT * FROM `product_category` WHERE (  `id` = 2 ) AND `product_category`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.010086s ]
+[2021-12-21T11:17:30+08:00][error] [8]Array to string conversion[D:\Web\www.ruiwen.com\vendor\topthink\think-orm\src\db\Builder.php:758]
+[2021-12-21T11:17:53+08:00][sql] CONNECT:[ UseTime:0.031576s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T11:17:53+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.021861s ]
+[2021-12-21T11:17:53+08:00][sql] SELECT `id` FROM `product` WHERE  `name` = '苹果12'  AND `id` <> 14 LIMIT 1 [ RunTime:0.022558s ]
+[2021-12-21T11:17:53+08:00][sql] SHOW FULL COLUMNS FROM `product_category` [ RunTime:0.022842s ]
+[2021-12-21T11:17:53+08:00][sql] SELECT * FROM `product_category` WHERE (  `id` = 2 ) AND `product_category`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.021036s ]
+[2021-12-21T11:22:58+08:00][sql] CONNECT:[ UseTime:0.026131s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T11:22:58+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.017739s ]
+[2021-12-21T11:22:58+08:00][sql] SELECT `id` FROM `product` WHERE  `name` = '苹果12'  AND `id` <> 14 LIMIT 1 [ RunTime:0.017197s ]
+[2021-12-21T11:22:58+08:00][sql] SHOW FULL COLUMNS FROM `product_category` [ RunTime:0.017668s ]
+[2021-12-21T11:22:58+08:00][sql] SELECT * FROM `product_category` WHERE (  `id` = 2 ) AND `product_category`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.017155s ]
+[2021-12-21T11:41:10+08:00][sql] CONNECT:[ UseTime:0.024095s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T11:41:10+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.016670s ]
+[2021-12-21T11:41:10+08:00][sql] SELECT `id` FROM `product` WHERE  `name` = '苹果12'  AND `id` <> 14 LIMIT 1 [ RunTime:0.016316s ]
+[2021-12-21T11:41:10+08:00][sql] SHOW FULL COLUMNS FROM `product_category` [ RunTime:0.017050s ]
+[2021-12-21T11:41:10+08:00][sql] SELECT * FROM `product_category` WHERE (  `id` = 2 ) AND `product_category`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.018545s ]
+[2021-12-21T11:42:05+08:00][sql] CONNECT:[ UseTime:0.021566s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T11:42:05+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.014953s ]
+[2021-12-21T11:42:05+08:00][sql] SELECT `id` FROM `product` WHERE  `name` = '苹果12'  AND `id` <> 14 LIMIT 1 [ RunTime:0.014656s ]
+[2021-12-21T11:42:05+08:00][sql] SHOW FULL COLUMNS FROM `product_category` [ RunTime:0.014939s ]
+[2021-12-21T11:42:05+08:00][sql] SELECT * FROM `product_category` WHERE (  `id` = 2 ) AND `product_category`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.014660s ]
+[2021-12-21T11:44:19+08:00][sql] CONNECT:[ UseTime:0.030825s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T11:44:19+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.022034s ]
+[2021-12-21T11:44:19+08:00][sql] SELECT `id` FROM `product` WHERE  `name` = '苹果12'  AND `id` <> 14 LIMIT 1 [ RunTime:0.020359s ]
+[2021-12-21T11:44:19+08:00][sql] SHOW FULL COLUMNS FROM `product_category` [ RunTime:0.021314s ]
+[2021-12-21T11:44:19+08:00][sql] SELECT * FROM `product_category` WHERE (  `id` = 2 ) AND `product_category`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.023161s ]
+[2021-12-21T11:46:35+08:00][sql] CONNECT:[ UseTime:0.023705s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T11:46:35+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.016162s ]
+[2021-12-21T11:46:35+08:00][sql] SELECT `id` FROM `product` WHERE  `name` = '苹果12'  AND `id` <> 14 LIMIT 1 [ RunTime:0.015686s ]
+[2021-12-21T11:46:35+08:00][sql] SHOW FULL COLUMNS FROM `product_category` [ RunTime:0.016359s ]
+[2021-12-21T11:46:35+08:00][sql] SELECT * FROM `product_category` WHERE (  `id` = 2 ) AND `product_category`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.016109s ]
+[2021-12-21T11:46:35+08:00][error] [400][D:\Web\www.ruiwen.com\app\admin\middleware\Product.php:59]
+[2021-12-21T11:46:48+08:00][sql] CONNECT:[ UseTime:0.030846s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T11:46:48+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.020676s ]
+[2021-12-21T11:46:48+08:00][sql] SELECT `id` FROM `product` WHERE  `name` = '苹果12'  AND `id` <> 14 LIMIT 1 [ RunTime:0.019626s ]
+[2021-12-21T11:46:48+08:00][sql] SHOW FULL COLUMNS FROM `product_category` [ RunTime:0.020617s ]
+[2021-12-21T11:46:48+08:00][sql] SELECT * FROM `product_category` WHERE (  `id` = 2 ) AND `product_category`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.022971s ]
+[2021-12-21T11:47:21+08:00][sql] CONNECT:[ UseTime:0.024578s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T11:47:21+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.016151s ]
+[2021-12-21T11:47:21+08:00][sql] SELECT `id` FROM `product` WHERE  `name` = '苹果12'  AND `id` <> 14 LIMIT 1 [ RunTime:0.015097s ]
+[2021-12-21T11:47:21+08:00][sql] SHOW FULL COLUMNS FROM `product_category` [ RunTime:0.016230s ]
+[2021-12-21T11:47:21+08:00][sql] SELECT * FROM `product_category` WHERE (  `id` = 2 ) AND `product_category`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.015489s ]
+[2021-12-21T11:47:31+08:00][sql] CONNECT:[ UseTime:0.014559s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T11:47:31+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.011523s ]
+[2021-12-21T11:47:31+08:00][sql] SELECT `id` FROM `product` WHERE  `name` = '苹果12'  AND `id` <> 14 LIMIT 1 [ RunTime:0.009744s ]
+[2021-12-21T11:47:31+08:00][sql] SHOW FULL COLUMNS FROM `product_category` [ RunTime:0.010616s ]
+[2021-12-21T11:47:31+08:00][sql] SELECT * FROM `product_category` WHERE (  `id` = 2 ) AND `product_category`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.010018s ]
+[2021-12-21T11:47:31+08:00][error] [400][D:\Web\www.ruiwen.com\app\admin\middleware\Product.php:59]
+[2021-12-21T11:47:40+08:00][sql] CONNECT:[ UseTime:0.037299s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T11:47:40+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.015052s ]
+[2021-12-21T11:47:40+08:00][sql] SELECT `id` FROM `product` WHERE  `name` = '苹果12'  AND `id` <> 14 LIMIT 1 [ RunTime:0.014841s ]
+[2021-12-21T11:47:40+08:00][sql] SHOW FULL COLUMNS FROM `product_category` [ RunTime:0.015114s ]
+[2021-12-21T11:47:40+08:00][sql] SELECT * FROM `product_category` WHERE (  `id` = 2 ) AND `product_category`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.014444s ]
+[2021-12-21T11:47:40+08:00][error] [400][D:\Web\www.ruiwen.com\app\admin\middleware\Product.php:59]
+[2021-12-21T14:10:51+08:00][sql] CONNECT:[ UseTime:0.025672s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T14:10:51+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.019971s ]
+[2021-12-21T14:10:51+08:00][sql] SELECT `id` FROM `product` WHERE  `name` = '苹果12'  AND `id` <> 14 LIMIT 1 [ RunTime:0.017066s ]
+[2021-12-21T14:10:51+08:00][sql] SHOW FULL COLUMNS FROM `product_category` [ RunTime:0.017599s ]
+[2021-12-21T14:10:51+08:00][sql] SELECT * FROM `product_category` WHERE (  `id` = 2 ) AND `product_category`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.017518s ]
+[2021-12-21T14:10:51+08:00][error] [400][D:\Web\www.ruiwen.com\app\admin\middleware\Product.php:61]
+[2021-12-21T14:12:49+08:00][sql] CONNECT:[ UseTime:0.031786s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T14:12:49+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.023403s ]
+[2021-12-21T14:12:49+08:00][sql] SELECT `id` FROM `product` WHERE  `name` = '苹果12'  AND `id` <> 14 LIMIT 1 [ RunTime:0.017505s ]
+[2021-12-21T14:12:49+08:00][sql] SHOW FULL COLUMNS FROM `product_category` [ RunTime:0.018850s ]
+[2021-12-21T14:12:49+08:00][sql] SELECT * FROM `product_category` WHERE (  `id` = 2 ) AND `product_category`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.021384s ]
+[2021-12-21T14:14:12+08:00][sql] CONNECT:[ UseTime:0.015774s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T14:14:12+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.011529s ]
+[2021-12-21T14:14:12+08:00][sql] SELECT `id` FROM `product` WHERE  `name` = '苹果12'  AND `id` <> 14 LIMIT 1 [ RunTime:0.010518s ]
+[2021-12-21T14:14:12+08:00][sql] SHOW FULL COLUMNS FROM `product_category` [ RunTime:0.011626s ]
+[2021-12-21T14:14:12+08:00][sql] SELECT * FROM `product_category` WHERE (  `id` = 2 ) AND `product_category`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.010820s ]
+[2021-12-21T14:15:47+08:00][sql] CONNECT:[ UseTime:0.016695s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T14:15:47+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.010461s ]
+[2021-12-21T14:15:47+08:00][sql] SELECT `id` FROM `product` WHERE  `name` = '苹果12'  AND `id` <> 14 LIMIT 1 [ RunTime:0.010119s ]
+[2021-12-21T14:15:47+08:00][sql] SHOW FULL COLUMNS FROM `product_category` [ RunTime:0.010301s ]
+[2021-12-21T14:15:47+08:00][sql] SELECT * FROM `product_category` WHERE (  `id` = 2 ) AND `product_category`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.009680s ]
+[2021-12-21T14:16:35+08:00][sql] CONNECT:[ UseTime:0.024358s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T14:16:35+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.016981s ]
+[2021-12-21T14:16:35+08:00][sql] SELECT `id` FROM `product` WHERE  `name` = '苹果12'  AND `id` <> 14 LIMIT 1 [ RunTime:0.016055s ]
+[2021-12-21T14:16:35+08:00][sql] SHOW FULL COLUMNS FROM `product_category` [ RunTime:0.017278s ]
+[2021-12-21T14:16:35+08:00][sql] SELECT * FROM `product_category` WHERE (  `id` = 2 ) AND `product_category`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.016325s ]
+[2021-12-21T14:16:50+08:00][sql] CONNECT:[ UseTime:0.020938s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T14:16:50+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.015195s ]
+[2021-12-21T14:16:50+08:00][sql] SELECT `id` FROM `product` WHERE  `name` = '苹果12'  AND `id` <> 14 LIMIT 1 [ RunTime:0.014184s ]
+[2021-12-21T14:16:50+08:00][sql] SHOW FULL COLUMNS FROM `product_category` [ RunTime:0.016249s ]
+[2021-12-21T14:16:50+08:00][sql] SELECT * FROM `product_category` WHERE (  `id` = 2 ) AND `product_category`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.014646s ]
+[2021-12-21T14:18:48+08:00][sql] CONNECT:[ UseTime:0.037513s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T14:18:48+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.017038s ]
+[2021-12-21T14:18:48+08:00][sql] SELECT `id` FROM `product` WHERE  `name` = '苹果12'  AND `id` <> 14 LIMIT 1 [ RunTime:0.016484s ]
+[2021-12-21T14:18:48+08:00][sql] SHOW FULL COLUMNS FROM `product_category` [ RunTime:0.017214s ]
+[2021-12-21T14:18:48+08:00][sql] SELECT * FROM `product_category` WHERE (  `id` = 2 ) AND `product_category`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.017161s ]
+[2021-12-21T14:18:55+08:00][sql] CONNECT:[ UseTime:0.031366s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T14:18:55+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.013911s ]
+[2021-12-21T14:18:55+08:00][sql] SELECT `id` FROM `product` WHERE  `name` = '苹果12'  AND `id` <> 14 LIMIT 1 [ RunTime:0.013388s ]
+[2021-12-21T14:18:55+08:00][sql] SHOW FULL COLUMNS FROM `product_category` [ RunTime:0.014085s ]
+[2021-12-21T14:18:55+08:00][sql] SELECT * FROM `product_category` WHERE (  `id` = 2 ) AND `product_category`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.013598s ]
+[2021-12-21T14:29:56+08:00][sql] CONNECT:[ UseTime:0.031272s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T14:29:56+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.019381s ]
+[2021-12-21T14:29:56+08:00][sql] SELECT `id` FROM `product` WHERE  `name` = '苹果12'  AND `id` <> 14 LIMIT 1 [ RunTime:0.017111s ]
+[2021-12-21T14:29:56+08:00][sql] SHOW FULL COLUMNS FROM `product_category` [ RunTime:0.016614s ]
+[2021-12-21T14:29:56+08:00][sql] SELECT * FROM `product_category` WHERE (  `id` = 2 ) AND `product_category`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.016352s ]
+[2021-12-21T14:29:56+08:00][error] [8]未定义数组索引: specs_type[D:\Web\www.ruiwen.com\app\admin\middleware\Product.php:22]
+[2021-12-21T14:31:20+08:00][sql] CONNECT:[ UseTime:0.031771s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T14:31:20+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.022450s ]
+[2021-12-21T14:31:20+08:00][sql] SELECT `id` FROM `product` WHERE  `name` = '苹果12'  AND `id` <> 14 LIMIT 1 [ RunTime:0.019881s ]
+[2021-12-21T14:31:20+08:00][sql] SHOW FULL COLUMNS FROM `product_category` [ RunTime:0.020454s ]
+[2021-12-21T14:31:20+08:00][sql] SELECT * FROM `product_category` WHERE (  `id` = 2 ) AND `product_category`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.020446s ]
+[2021-12-21T14:31:20+08:00][sql] SHOW FULL COLUMNS FROM `product_specs_value` [ RunTime:0.020742s ]
+[2021-12-21T14:31:20+08:00][sql] SELECT * FROM `product_specs_value` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.020754s ]
+[2021-12-21T14:31:20+08:00][error] [404][D:\Web\www.ruiwen.com\app\admin\middleware\Product.php:87]
+[2021-12-21T14:36:55+08:00][sql] CONNECT:[ UseTime:0.038140s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T14:36:55+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.026105s ]
+[2021-12-21T14:36:55+08:00][sql] SELECT `id` FROM `product` WHERE  `name` = '苹果12'  AND `id` <> 14 LIMIT 1 [ RunTime:0.025114s ]
+[2021-12-21T14:36:55+08:00][sql] SHOW FULL COLUMNS FROM `product_category` [ RunTime:0.026946s ]
+[2021-12-21T14:36:55+08:00][sql] SELECT * FROM `product_category` WHERE (  `id` = 2 ) AND `product_category`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.025810s ]
+[2021-12-21T14:36:55+08:00][sql] SHOW FULL COLUMNS FROM `product_specs_value` [ RunTime:0.024196s ]
+[2021-12-21T14:36:55+08:00][sql] SELECT * FROM `product_specs_value` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.023630s ]
+[2021-12-21T14:36:55+08:00][error] [404][D:\Web\www.ruiwen.com\app\admin\middleware\Product.php:99]
+[2021-12-21T14:37:08+08:00][sql] CONNECT:[ UseTime:0.034881s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T14:37:08+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.024604s ]
+[2021-12-21T14:37:08+08:00][sql] SELECT `id` FROM `product` WHERE  `name` = '苹果12'  AND `id` <> 14 LIMIT 1 [ RunTime:0.023439s ]
+[2021-12-21T14:37:08+08:00][sql] SHOW FULL COLUMNS FROM `product_category` [ RunTime:0.023762s ]
+[2021-12-21T14:37:08+08:00][sql] SELECT * FROM `product_category` WHERE (  `id` = 2 ) AND `product_category`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.023463s ]
+[2021-12-21T14:37:08+08:00][sql] SHOW FULL COLUMNS FROM `product_specs_value` [ RunTime:0.026017s ]
+[2021-12-21T14:37:08+08:00][sql] SELECT * FROM `product_specs_value` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.026891s ]
+[2021-12-21T14:37:08+08:00][error] [404][D:\Web\www.ruiwen.com\app\admin\middleware\Product.php:87]
+[2021-12-21T14:37:24+08:00][sql] CONNECT:[ UseTime:0.031228s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T14:37:24+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.017054s ]
+[2021-12-21T14:37:24+08:00][sql] SELECT `id` FROM `product` WHERE  `name` = '苹果12'  AND `id` <> 14 LIMIT 1 [ RunTime:0.016329s ]
+[2021-12-21T14:37:24+08:00][sql] SHOW FULL COLUMNS FROM `product_category` [ RunTime:0.017020s ]
+[2021-12-21T14:37:24+08:00][sql] SELECT * FROM `product_category` WHERE (  `id` = 2 ) AND `product_category`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.017034s ]
+[2021-12-21T14:37:24+08:00][sql] SHOW FULL COLUMNS FROM `product_specs_value` [ RunTime:0.017387s ]
+[2021-12-21T14:37:24+08:00][sql] SELECT * FROM `product_specs_value` WHERE  `id` = 1 LIMIT 1 [ RunTime:0.017881s ]
+[2021-12-21T14:37:24+08:00][error] [404][D:\Web\www.ruiwen.com\app\admin\middleware\Product.php:87]
+[2021-12-21T14:46:23+08:00][sql] CONNECT:[ UseTime:0.037131s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T14:46:23+08:00][sql] SHOW FULL COLUMNS FROM `product` [ RunTime:0.024880s ]
+[2021-12-21T14:46:23+08:00][sql] SELECT `id` FROM `product` WHERE  `name` = '苹果12'  AND `id` <> 14 LIMIT 1 [ RunTime:0.026947s ]
+[2021-12-21T14:46:23+08:00][sql] SHOW FULL COLUMNS FROM `product_category` [ RunTime:0.024309s ]
+[2021-12-21T14:46:23+08:00][sql] SELECT * FROM `product_category` WHERE (  `id` = 2 ) AND `product_category`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.025003s ]
+[2021-12-21T14:46:23+08:00][error] [400][D:\Web\www.ruiwen.com\app\admin\middleware\Product.php:64]
+[2021-12-21T16:30:56+08:00][error] [300][D:\Web\www.ruiwen.com\app\common\middleware\CheckParams.php:64]
+[2021-12-21T16:33:25+08:00][error] [300][D:\Web\www.ruiwen.com\app\common\middleware\CheckParams.php:64]
+[2021-12-21T16:33:50+08:00][error] [300][D:\Web\www.ruiwen.com\app\common\middleware\CheckParams.php:64]
+[2021-12-21T16:34:11+08:00][sql] CONNECT:[ UseTime:0.024123s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T16:34:11+08:00][error] [10501]SQLSTATE[42S02]: Base table or view not found: 1146 Table 'www_akali_ltd.product_specs_name' doesn't exist[D:\Web\www.ruiwen.com\vendor\topthink\think-orm\src\db\PDOConnection.php:796]
+[2021-12-21T16:37:51+08:00][sql] CONNECT:[ UseTime:0.025159s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T16:37:51+08:00][sql] SHOW FULL COLUMNS FROM `product_specs_name` [ RunTime:0.016406s ]
+[2021-12-21T16:37:51+08:00][sql] SELECT `id` FROM `product_specs_name` WHERE  `name` = '红色' LIMIT 1 [ RunTime:0.015546s ]
+[2021-12-21T16:37:51+08:00][error] [8]未定义数组索引: sort[D:\Web\www.ruiwen.com\app\common\validate\BaseValidate.php:29]
+[2021-12-21T16:38:36+08:00][sql] CONNECT:[ UseTime:0.023365s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T16:38:36+08:00][sql] SHOW FULL COLUMNS FROM `product_specs_name` [ RunTime:0.016179s ]
+[2021-12-21T16:38:36+08:00][sql] SELECT `id` FROM `product_specs_name` WHERE  `name` = '红色' LIMIT 1 [ RunTime:0.015521s ]
+[2021-12-21T16:38:36+08:00][error] [300][D:\Web\www.ruiwen.com\app\common\middleware\CheckParams.php:64]
+[2021-12-21T16:38:55+08:00][sql] CONNECT:[ UseTime:0.023981s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T16:38:55+08:00][sql] SHOW FULL COLUMNS FROM `product_specs_name` [ RunTime:0.015581s ]
+[2021-12-21T16:38:55+08:00][sql] SELECT `id` FROM `product_specs_name` WHERE  `name` = '红色' LIMIT 1 [ RunTime:0.015246s ]
+[2021-12-21T16:38:55+08:00][error] [300][D:\Web\www.ruiwen.com\app\common\middleware\CheckParams.php:64]
+[2021-12-21T16:39:23+08:00][sql] CONNECT:[ UseTime:0.024596s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T16:39:23+08:00][sql] SHOW FULL COLUMNS FROM `product_specs_name` [ RunTime:0.016341s ]
+[2021-12-21T16:39:23+08:00][sql] SELECT `id` FROM `product_specs_name` WHERE  `name` = '红色' LIMIT 1 [ RunTime:0.015102s ]
+[2021-12-21T16:39:23+08:00][error] [300][D:\Web\www.ruiwen.com\app\common\middleware\CheckParams.php:64]
+[2021-12-21T16:39:55+08:00][sql] CONNECT:[ UseTime:0.022884s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T16:39:55+08:00][sql] SHOW FULL COLUMNS FROM `product_specs_name` [ RunTime:0.016323s ]
+[2021-12-21T16:39:55+08:00][sql] SELECT `id` FROM `product_specs_name` WHERE  `name` = '红色' LIMIT 1 [ RunTime:0.015313s ]
+[2021-12-21T16:40:52+08:00][sql] CONNECT:[ UseTime:0.035499s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T16:40:52+08:00][sql] SHOW FULL COLUMNS FROM `product_specs_name` [ RunTime:0.024205s ]
+[2021-12-21T16:40:52+08:00][sql] SELECT `id` FROM `product_specs_name` WHERE  `name` = '红色' LIMIT 1 [ RunTime:0.022602s ]
+[2021-12-21T16:40:52+08:00][sql] INSERT INTO `product_specs_name` SET `name` = '红色' , `sort` = 0 , `create_time` = 1640076052 , `update_time` = 1640076052 [ RunTime:0.022694s ]
+[2021-12-21T16:43:47+08:00][sql] CONNECT:[ UseTime:0.025842s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T16:43:47+08:00][sql] SHOW FULL COLUMNS FROM `product_specs_name` [ RunTime:0.018251s ]
+[2021-12-21T16:43:47+08:00][sql] SELECT `id` FROM `product_specs_name` WHERE  `name` = '白色' LIMIT 1 [ RunTime:0.017059s ]
+[2021-12-21T16:43:47+08:00][sql] INSERT INTO `product_specs_name` SET `name` = '白色' , `sort` = 0 , `create_time` = 1640076227 , `update_time` = 1640076227 [ RunTime:0.017272s ]
+[2021-12-21T16:45:21+08:00][sql] CONNECT:[ UseTime:0.016957s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T16:45:21+08:00][sql] SHOW FULL COLUMNS FROM `product_specs_name` [ RunTime:0.010573s ]
+[2021-12-21T16:45:21+08:00][sql] SELECT `id` FROM `product_specs_name` WHERE  `name` = '玫瑰金' LIMIT 1 [ RunTime:0.010401s ]
+[2021-12-21T16:45:21+08:00][sql] INSERT INTO `product_specs_name` SET `name` = '玫瑰金' , `sort` = 0 , `create_time` = 1640076321 , `update_time` = 1640076321 [ RunTime:0.021569s ]
+[2021-12-21T16:45:31+08:00][sql] CONNECT:[ UseTime:0.029271s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T16:45:31+08:00][sql] SHOW FULL COLUMNS FROM `product_specs_name` [ RunTime:0.020241s ]
+[2021-12-21T16:45:31+08:00][sql] SELECT `id` FROM `product_specs_name` WHERE  `name` = '黑色' LIMIT 1 [ RunTime:0.021338s ]
+[2021-12-21T16:45:31+08:00][sql] INSERT INTO `product_specs_name` SET `name` = '黑色' , `sort` = 0 , `create_time` = 1640076331 , `update_time` = 1640076331 [ RunTime:0.021018s ]
+[2021-12-21T16:47:24+08:00][sql] CONNECT:[ UseTime:0.014984s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T16:47:24+08:00][sql] SHOW FULL COLUMNS FROM `product_specs_name` [ RunTime:0.008897s ]
+[2021-12-21T16:47:24+08:00][sql] SELECT `id` FROM `product_specs_name` WHERE  `name` = '包邮' LIMIT 1 [ RunTime:0.008073s ]
+[2021-12-21T16:47:24+08:00][sql] INSERT INTO `product_specs_name` SET `name` = '包邮' , `sort` = 0 , `create_time` = 1640076444 , `update_time` = 1640076444 [ RunTime:0.008222s ]
+[2021-12-21T16:58:00+08:00][error] [300][D:\Web\www.ruiwen.com\app\common\middleware\CheckParams.php:64]
+[2021-12-21T17:00:15+08:00][error] [300][D:\Web\www.ruiwen.com\app\common\middleware\CheckParams.php:64]
+[2021-12-21T17:00:33+08:00][error] [300][D:\Web\www.ruiwen.com\app\common\middleware\CheckParams.php:64]
+[2021-12-21T17:01:04+08:00][error] [300][D:\Web\www.ruiwen.com\app\common\middleware\CheckParams.php:64]
+[2021-12-21T17:01:25+08:00][sql] CONNECT:[ UseTime:0.025380s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T17:01:25+08:00][sql] SHOW FULL COLUMNS FROM `product_specs_name` [ RunTime:0.010120s ]
+[2021-12-21T17:01:25+08:00][sql] SELECT `id` FROM `product_specs_name` WHERE  `name` = '天蓝色'  AND `id` <> 10 LIMIT 1 [ RunTime:0.009898s ]
+[2021-12-21T17:01:25+08:00][sql] SELECT * FROM `product_specs_name` WHERE (  `id` = 10 ) AND `product_specs_name`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.009304s ]
+[2021-12-21T17:07:12+08:00][sql] CONNECT:[ UseTime:0.025514s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T17:07:12+08:00][sql] SHOW FULL COLUMNS FROM `product_specs_name` [ RunTime:0.017261s ]
+[2021-12-21T17:07:12+08:00][sql] SELECT `id` FROM `product_specs_name` WHERE  `name` = '布料1'  AND `id` <> 1 LIMIT 1 [ RunTime:0.017338s ]
+[2021-12-21T17:07:12+08:00][sql] SELECT * FROM `product_specs_name` WHERE (  `id` = 1 ) AND `product_specs_name`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.017027s ]
+[2021-12-21T17:07:12+08:00][sql] UPDATE `product_specs_name`  SET `name` = '布料1' , `sort` = 1 , `update_time` = 1640077632  WHERE (  `id` = 1 ) AND `product_specs_name`.`delete_time` IS NULL [ RunTime:0.016783s ]
+[2021-12-21T17:07:55+08:00][sql] CONNECT:[ UseTime:0.014445s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T17:07:55+08:00][sql] SHOW FULL COLUMNS FROM `product_specs_name` [ RunTime:0.009800s ]
+[2021-12-21T17:07:55+08:00][sql] SELECT `id` FROM `product_specs_name` WHERE  `name` = '颜色'  AND `id` <> 1 LIMIT 1 [ RunTime:0.009152s ]
+[2021-12-21T17:07:55+08:00][sql] SELECT * FROM `product_specs_name` WHERE (  `id` = 1 ) AND `product_specs_name`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.009438s ]
+[2021-12-21T17:07:55+08:00][sql] UPDATE `product_specs_name`  SET `name` = '颜色' , `update_time` = 1640077675  WHERE (  `id` = 1 ) AND `product_specs_name`.`delete_time` IS NULL [ RunTime:0.010608s ]
+[2021-12-21T17:08:03+08:00][sql] CONNECT:[ UseTime:0.032349s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T17:08:03+08:00][sql] SHOW FULL COLUMNS FROM `product_specs_name` [ RunTime:0.015898s ]
+[2021-12-21T17:08:03+08:00][sql] SELECT `id` FROM `product_specs_name` WHERE  `name` = '颜色'  AND `id` <> 1 LIMIT 1 [ RunTime:0.015383s ]
+[2021-12-21T17:08:03+08:00][sql] SELECT * FROM `product_specs_name` WHERE (  `id` = 1 ) AND `product_specs_name`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.017080s ]
+[2021-12-21T17:09:26+08:00][sql] CONNECT:[ UseTime:0.030667s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T17:09:26+08:00][sql] SHOW FULL COLUMNS FROM `product_specs_name` [ RunTime:0.022051s ]
+[2021-12-21T17:09:26+08:00][sql] SELECT `id` FROM `product_specs_name` WHERE  `name` = '颜色'  AND `id` <> 1 LIMIT 1 [ RunTime:0.019662s ]
+[2021-12-21T17:09:26+08:00][sql] SELECT * FROM `product_specs_name` WHERE (  `id` = 1 ) AND `product_specs_name`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.023694s ]
+[2021-12-21T17:09:51+08:00][sql] CONNECT:[ UseTime:0.029966s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T17:09:51+08:00][sql] SHOW FULL COLUMNS FROM `product_specs_name` [ RunTime:0.020968s ]
+[2021-12-21T17:09:51+08:00][sql] SELECT `id` FROM `product_specs_name` WHERE  `name` = '阿卡丽' LIMIT 1 [ RunTime:0.015011s ]
+[2021-12-21T17:09:51+08:00][sql] INSERT INTO `product_specs_name` SET `name` = '阿卡丽' , `sort` = 0 , `create_time` = 1640077791 , `update_time` = 1640077791 [ RunTime:0.015055s ]
+[2021-12-21T17:10:16+08:00][sql] CONNECT:[ UseTime:0.022245s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T17:10:16+08:00][sql] SHOW FULL COLUMNS FROM `product_specs_name` [ RunTime:0.014667s ]
+[2021-12-21T17:10:16+08:00][sql] SELECT `id` FROM `product_specs_name` WHERE  `name` = '网络' LIMIT 1 [ RunTime:0.013462s ]
+[2021-12-21T17:10:16+08:00][sql] INSERT INTO `product_specs_name` SET `name` = '网络' , `sort` = 0 , `create_time` = 1640077816 , `update_time` = 1640077816 [ RunTime:0.013366s ]
+[2021-12-21T17:17:47+08:00][error] [0]Class 'app\admin\logic\ProductSpecsName' not found[D:\Web\www.ruiwen.com\app\admin\controller\ProductSpecsName.php:43]
+[2021-12-21T17:22:04+08:00][error] [0]Class 'app\admin\logic\ProductSpecsName' not found[D:\Web\www.ruiwen.com\app\admin\controller\ProductSpecsName.php:43]
+[2021-12-21T17:24:30+08:00][error] [0]Class 'app\admin\logic\ProductSpecsName' not found[D:\Web\www.ruiwen.com\app\admin\controller\ProductSpecsName.php:43]
+[2021-12-21T17:24:50+08:00][error] [0]Class 'app\admin\logic\ProductSpecsName' not found[D:\Web\www.ruiwen.com\app\admin\controller\ProductSpecsName.php:43]
+[2021-12-21T17:26:27+08:00][error] [0]Class 'app\admin\logic\ProductSpecsName' not found[D:\Web\www.ruiwen.com\app\admin\controller\ProductSpecsName.php:43]
+[2021-12-21T17:26:37+08:00][error] [0]Class 'app\admin\logic\ProductSpecsName' not found[D:\Web\www.ruiwen.com\app\admin\controller\ProductSpecsName.php:43]
+[2021-12-21T17:27:23+08:00][sql] CONNECT:[ UseTime:0.035794s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T17:27:23+08:00][sql] SHOW FULL COLUMNS FROM `product_specs_name` [ RunTime:0.016470s ]
+[2021-12-21T17:27:23+08:00][sql] SELECT * FROM `product_specs_name` WHERE (  `id` = 6 ) AND `product_specs_name`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.017439s ]
+[2021-12-21T17:27:23+08:00][sql] SHOW FULL COLUMNS FROM `product_specs_value` [ RunTime:0.016605s ]
+[2021-12-21T17:27:23+08:00][error] [10501]SQLSTATE[42S22]: Column not found: 1054 Unknown column 'product_specs_name_id' in 'where clause'[D:\Web\www.ruiwen.com\vendor\topthink\think-orm\src\db\PDOConnection.php:796]
+[2021-12-21T17:28:52+08:00][sql] CONNECT:[ UseTime:0.039541s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T17:28:52+08:00][sql] SHOW FULL COLUMNS FROM `product_specs_name` [ RunTime:0.015655s ]
+[2021-12-21T17:28:52+08:00][sql] SELECT * FROM `product_specs_name` WHERE (  `id` = 6 ) AND `product_specs_name`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.015780s ]
+[2021-12-21T17:28:52+08:00][sql] SHOW FULL COLUMNS FROM `product_specs_value` [ RunTime:0.015812s ]
+[2021-12-21T17:28:52+08:00][sql] SELECT * FROM `product_specs_value` WHERE  `product_specs_name_id` = 6 [ RunTime:0.015076s ]
+[2021-12-21T17:29:16+08:00][sql] CONNECT:[ UseTime:0.026056s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T17:29:16+08:00][sql] SHOW FULL COLUMNS FROM `product_specs_name` [ RunTime:0.016493s ]
+[2021-12-21T17:29:16+08:00][sql] SELECT * FROM `product_specs_name` WHERE (  `id` = 6 ) AND `product_specs_name`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.015618s ]
+[2021-12-21T17:29:16+08:00][sql] SHOW FULL COLUMNS FROM `product_specs_value` [ RunTime:0.016427s ]
+[2021-12-21T17:29:16+08:00][sql] SELECT * FROM `product_specs_value` WHERE  `product_specs_name_id` = 6 [ RunTime:0.015910s ]
+[2021-12-21T17:29:16+08:00][sql] UPDATE `product_specs_name`  SET `delete_time` = 1640078956 , `update_time` = 1640078956  WHERE (  `id` = 6 ) AND `product_specs_name`.`delete_time` IS NULL [ RunTime:0.015609s ]
+[2021-12-21T17:30:00+08:00][sql] CONNECT:[ UseTime:0.036250s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T17:30:00+08:00][sql] SHOW FULL COLUMNS FROM `product_specs_name` [ RunTime:0.022844s ]
+[2021-12-21T17:30:00+08:00][sql] SELECT * FROM `product_specs_name` WHERE (  `id` = 6 ) AND `product_specs_name`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.022619s ]
+[2021-12-21T17:30:00+08:00][error] [404][D:\Web\www.ruiwen.com\app\admin\logic\ProductSpecsName.php:14]
+[2021-12-21T17:33:01+08:00][sql] CONNECT:[ UseTime:0.029112s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T17:33:01+08:00][sql] SHOW FULL COLUMNS FROM `product_specs_name` [ RunTime:0.021370s ]
+[2021-12-21T17:33:01+08:00][sql] SELECT * FROM `product_specs_name` WHERE (  `id` = 1 ) AND `product_specs_name`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.020234s ]
+[2021-12-21T17:33:09+08:00][sql] CONNECT:[ UseTime:0.023902s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T17:33:09+08:00][sql] SHOW FULL COLUMNS FROM `product_specs_name` [ RunTime:0.016409s ]
+[2021-12-21T17:33:09+08:00][sql] SELECT * FROM `product_specs_name` WHERE (  `id` = 6 ) AND `product_specs_name`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.016049s ]
+[2021-12-21T17:33:09+08:00][error] [400][D:\Web\www.ruiwen.com\app\admin\controller\ProductSpecsName.php:16]
+[2021-12-21T17:33:14+08:00][sql] CONNECT:[ UseTime:0.030814s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T17:33:14+08:00][sql] SHOW FULL COLUMNS FROM `product_specs_name` [ RunTime:0.017485s ]
+[2021-12-21T17:33:14+08:00][sql] SELECT * FROM `product_specs_name` WHERE (  `id` = 1 ) AND `product_specs_name`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.019268s ]
+[2021-12-21T17:33:26+08:00][sql] CONNECT:[ UseTime:0.021271s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T17:33:26+08:00][sql] SHOW FULL COLUMNS FROM `product_specs_name` [ RunTime:0.014905s ]
+[2021-12-21T17:33:26+08:00][sql] SELECT * FROM `product_specs_name` WHERE (  `id` = 1 ) AND `product_specs_name`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.014211s ]
+[2021-12-21T17:34:39+08:00][sql] CONNECT:[ UseTime:0.024462s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T17:34:39+08:00][sql] SHOW FULL COLUMNS FROM `product_specs_name` [ RunTime:0.015875s ]
+[2021-12-21T17:34:39+08:00][sql] SELECT COUNT(*) AS think_count FROM `product_specs_name` WHERE `product_specs_name`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.014713s ]
+[2021-12-21T17:34:39+08:00][sql] SELECT * FROM `product_specs_name` WHERE `product_specs_name`.`delete_time` IS NULL ORDER BY `id` DESC LIMIT 0,10 [ RunTime:0.016204s ]
+[2021-12-21T18:00:16+08:00][error] [300][D:\Web\www.ruiwen.com\app\common\middleware\CheckParams.php:64]
+[2021-12-21T18:01:26+08:00][sql] CONNECT:[ UseTime:0.023384s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T18:01:26+08:00][sql] SHOW FULL COLUMNS FROM `product_specs_value` [ RunTime:0.016176s ]
+[2021-12-21T18:01:26+08:00][error] [10500]method not exist:think\db\Query->saveSpecsValue[D:\Web\www.ruiwen.com\vendor\topthink\think-orm\src\db\BaseQuery.php:117]
+[2021-12-21T18:03:45+08:00][sql] CONNECT:[ UseTime:0.025477s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T18:03:45+08:00][sql] SHOW FULL COLUMNS FROM `product_specs_name` [ RunTime:0.016964s ]
+[2021-12-21T18:03:45+08:00][sql] SELECT * FROM `product_specs_name` WHERE (  `id` = 1 ) AND `product_specs_name`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.015099s ]
+[2021-12-21T18:13:58+08:00][sql] CONNECT:[ UseTime:0.024000s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T18:13:58+08:00][sql] SHOW FULL COLUMNS FROM `product_specs_name` [ RunTime:0.011254s ]
+[2021-12-21T18:13:58+08:00][sql] SELECT * FROM `product_specs_name` WHERE (  `id` = 1 ) AND `product_specs_name`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.010657s ]
+[2021-12-21T18:13:58+08:00][sql] SHOW FULL COLUMNS FROM `product_specs_value` [ RunTime:0.011019s ]
+[2021-12-21T18:13:58+08:00][sql] REPLACE INTO `product_specs_value` SET `product_specs_name_id` = 1 , `value` = '黑色' , `create_time` = 1640081638 , `update_time` = 1640081638 [ RunTime:0.010324s ]
+[2021-12-21T18:13:58+08:00][error] [0]Call to a member function isEmpty() on null[D:\Web\www.ruiwen.com\app\admin\controller\ProductSpecsValue.php:21]
+[2021-12-21T18:14:42+08:00][sql] CONNECT:[ UseTime:0.030756s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T18:14:42+08:00][sql] SHOW FULL COLUMNS FROM `product_specs_name` [ RunTime:0.021907s ]
+[2021-12-21T18:14:42+08:00][sql] SELECT * FROM `product_specs_name` WHERE (  `id` = 1 ) AND `product_specs_name`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.021935s ]
+[2021-12-21T18:14:42+08:00][sql] SHOW FULL COLUMNS FROM `product_specs_value` [ RunTime:0.024438s ]
+[2021-12-21T18:14:42+08:00][sql] REPLACE INTO `product_specs_value` SET `product_specs_name_id` = 1 , `value` = '黑色' , `create_time` = 1640081682 , `update_time` = 1640081682 [ RunTime:0.021327s ]
+[2021-12-21T18:16:17+08:00][sql] CONNECT:[ UseTime:0.027245s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T18:16:17+08:00][sql] SHOW FULL COLUMNS FROM `product_specs_value` [ RunTime:0.017355s ]
+[2021-12-21T18:16:17+08:00][sql] SELECT `id` FROM `product_specs_value` WHERE  `product_specs_name_id` = 1 LIMIT 1 [ RunTime:0.018192s ]
+[2021-12-21T18:16:17+08:00][error] [300][D:\Web\www.ruiwen.com\app\common\middleware\CheckParams.php:64]
+[2021-12-21T18:16:37+08:00][sql] CONNECT:[ UseTime:0.026147s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T18:16:37+08:00][sql] SHOW FULL COLUMNS FROM `product_specs_value` [ RunTime:0.016985s ]
+[2021-12-21T18:16:37+08:00][sql] SELECT `id` FROM `product_specs_value` WHERE  `value` = '黑色' LIMIT 1 [ RunTime:0.015751s ]
+[2021-12-21T18:16:37+08:00][error] [300][D:\Web\www.ruiwen.com\app\common\middleware\CheckParams.php:64]
+[2021-12-21T18:17:15+08:00][sql] CONNECT:[ UseTime:0.014022s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T18:17:15+08:00][sql] SHOW FULL COLUMNS FROM `product_specs_value` [ RunTime:0.008633s ]
+[2021-12-21T18:17:15+08:00][sql] SELECT `id` FROM `product_specs_value` WHERE  `value` = '白色' LIMIT 1 [ RunTime:0.007965s ]
+[2021-12-21T18:17:15+08:00][sql] SHOW FULL COLUMNS FROM `product_specs_name` [ RunTime:0.008797s ]
+[2021-12-21T18:17:15+08:00][sql] SELECT * FROM `product_specs_name` WHERE (  `id` = 1 ) AND `product_specs_name`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.008178s ]
+[2021-12-21T18:17:15+08:00][sql] REPLACE INTO `product_specs_value` SET `product_specs_name_id` = 1 , `value` = '白色' , `create_time` = 1640081835 , `update_time` = 1640081835 [ RunTime:0.007894s ]
+[2021-12-21T18:17:15+08:00][sql] SELECT * FROM `product_specs_value` WHERE  `product_specs_name_id` = 1 [ RunTime:0.008000s ]
+[2021-12-21T18:18:00+08:00][sql] CONNECT:[ UseTime:0.026358s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T18:18:00+08:00][sql] SHOW FULL COLUMNS FROM `product_specs_value` [ RunTime:0.016264s ]
+[2021-12-21T18:18:00+08:00][sql] SELECT `id` FROM `product_specs_value` WHERE  `value` = '红色' LIMIT 1 [ RunTime:0.015124s ]
+[2021-12-21T18:18:00+08:00][sql] SHOW FULL COLUMNS FROM `product_specs_name` [ RunTime:0.016783s ]
+[2021-12-21T18:18:00+08:00][sql] SELECT * FROM `product_specs_name` WHERE (  `id` = 1 ) AND `product_specs_name`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.015420s ]
+[2021-12-21T18:18:00+08:00][sql] REPLACE INTO `product_specs_value` SET `product_specs_name_id` = 1 , `value` = '红色' , `create_time` = 1640081880 , `update_time` = 1640081880 [ RunTime:0.014990s ]
+[2021-12-21T18:18:00+08:00][sql] SELECT * FROM `product_specs_value` WHERE  `product_specs_name_id` = 1 [ RunTime:0.017399s ]
+[2021-12-21T18:18:00+08:00][error] [8]未定义数组索引: id[D:\Web\www.ruiwen.com\vendor\topthink\think-helper\src\Collection.php:589]
+[2021-12-21T18:20:01+08:00][sql] CONNECT:[ UseTime:0.035469s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T18:20:01+08:00][sql] SHOW FULL COLUMNS FROM `product_specs_value` [ RunTime:0.016354s ]
+[2021-12-21T18:20:01+08:00][sql] SELECT `id` FROM `product_specs_value` WHERE  `value` = '天蓝色' LIMIT 1 [ RunTime:0.022941s ]
+[2021-12-21T18:20:01+08:00][sql] SHOW FULL COLUMNS FROM `product_specs_name` [ RunTime:0.019564s ]
+[2021-12-21T18:20:01+08:00][sql] SELECT * FROM `product_specs_name` WHERE (  `id` = 1 ) AND `product_specs_name`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.020321s ]
+[2021-12-21T18:20:01+08:00][sql] REPLACE INTO `product_specs_value` SET `product_specs_name_id` = 1 , `value` = '天蓝色' , `create_time` = 1640082001 , `update_time` = 1640082001 [ RunTime:0.017739s ]
+[2021-12-21T18:21:03+08:00][sql] CONNECT:[ UseTime:0.035614s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T18:21:03+08:00][sql] SHOW FULL COLUMNS FROM `product_specs_value` [ RunTime:0.026311s ]
+[2021-12-21T18:21:03+08:00][sql] SELECT `id` FROM `product_specs_value` WHERE  `value` = '粉色' LIMIT 1 [ RunTime:0.027693s ]
+[2021-12-21T18:21:03+08:00][sql] SHOW FULL COLUMNS FROM `product_specs_name` [ RunTime:0.027909s ]
+[2021-12-21T18:21:03+08:00][sql] SELECT * FROM `product_specs_name` WHERE (  `id` = 1 ) AND `product_specs_name`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.025268s ]
+[2021-12-21T18:21:03+08:00][sql] REPLACE INTO `product_specs_value` SET `product_specs_name_id` = 1 , `value` = '粉色' , `create_time` = 1640082063 , `update_time` = 1640082063 [ RunTime:0.027221s ]
+[2021-12-21T18:42:09+08:00][sql] CONNECT:[ UseTime:0.012551s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2021-12-21T18:42:09+08:00][sql] SHOW FULL COLUMNS FROM `product_specs_value` [ RunTime:0.008518s ]
+[2021-12-21T18:42:09+08:00][sql] SELECT `id` FROM `product_specs_value` WHERE  `value` = '42' LIMIT 1 [ RunTime:0.006580s ]
+[2021-12-21T18:42:09+08:00][sql] SHOW FULL COLUMNS FROM `product_specs_name` [ RunTime:0.023352s ]
+[2021-12-21T18:42:09+08:00][sql] SELECT * FROM `product_specs_name` WHERE (  `id` = 2 ) AND `product_specs_name`.`delete_time` IS NULL LIMIT 1 [ RunTime:0.021161s ]
+[2021-12-21T18:42:09+08:00][sql] REPLACE INTO `product_specs_value` SET `product_specs_name_id` = 2 , `value` = '42' , `create_time` = 1640083329 , `update_time` = 1640083329 [ RunTime:0.018219s ]

@@ -1,0 +1,7 @@
+[2022-03-15T11:48:17+08:00][sql] CONNECT:[ UseTime:0.022222s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2022-03-15T11:48:17+08:00][sql] SHOW FULL COLUMNS FROM `product_category` [ RunTime:0.011026s ]
+[2022-03-15T11:48:17+08:00][sql] SELECT * FROM `product_category` WHERE `product_category`.`delete_time` IS NULL ORDER BY `sort` DESC [ RunTime:0.014416s ]
+[2022-03-15T17:52:28+08:00][sql] CONNECT:[ UseTime:0.023536s ] mysql:host=124.71.218.160;port=3306;dbname=www_akali_ltd;charset=utf8
+[2022-03-15T17:52:28+08:00][sql] SHOW FULL COLUMNS FROM `product_category` [ RunTime:0.016450s ]
+[2022-03-15T17:52:28+08:00][sql] SELECT * FROM `product_category` WHERE `product_category`.`delete_time` IS NULL ORDER BY `sort` DESC [ RunTime:0.015245s ]
+[2022-03-15T18:10:35+08:00][error] [300][D:\Web\www.ruiwen.com\app\common\middleware\CheckParams.php:63]
