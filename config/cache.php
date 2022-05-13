@@ -44,11 +44,10 @@ return [
             // 驱动方式
             'type'     => 'redis',
             // 服务器地址
-            // 'host'     => '127.0.0.1',
-            // 'host'     => '124.71.218.160',
-            'host'     => 'redis',
+            'host'     => '127.0.0.1',
+            // 'host'     => 'redis',
             // 密码
-            'password' => 'Ym-12]i4!gDal^Jc/3@n.c^Mh',
+            // 'password' => 'Ym-12]i4!gDal^Jc/3@n.c^Mh',
             // 缓存有效期 0表示永久缓存
             'expire'   => cache_time('one_month'),
         ],

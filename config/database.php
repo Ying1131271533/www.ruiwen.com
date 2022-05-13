@@ -24,14 +24,15 @@ return [
             // 数据库类型
             'type'            => env('database.type', 'mysql'),
             // 服务器地址
-            // 'hostname'        => env('database.hostname', '127.0.0.1'),
-            'hostname'        => env('database.hostname', '124.71.218.160'),
+            'hostname'        => env('database.hostname', '127.0.0.1'),
+            // 'hostname'        => env('database.hostname', 'mysql'),
             // 数据库名
             'database'        => env('database.database', 'www_ruiwen_com'),
             // 用户名
             'username'        => env('database.username', 'www_ruiwen_com'),
             // 密码
-            'password'        => env('database.password', 'Ak-12]al^iY?i4/3@n.!g'),
+            'password'        => env('database.password', ''),
+            // 'password'        => env('database.password', 'D53YpF_eR-al^iY?zceJ/3D6t'),
             // 端口
             'hostport'        => env('database.hostport', '3306'),
             // 数据库连接参数
