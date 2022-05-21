@@ -8,7 +8,7 @@ class Home
 {
     public function index()
     {
-        return success('神织炼');
+        return success('神织知更');
     }
 
     public function akali()
