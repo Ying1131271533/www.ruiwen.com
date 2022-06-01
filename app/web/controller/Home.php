@@ -3,12 +3,18 @@
 namespace app\web\controller;
 
 use app\common\model\Akali;
+use app\common\mongo\User;
 
 class Home
 {
     public function index()
     {
-        return success('神织知更');
+        $user = User::select()->toArray();
+
+        halt($user);
+        
+
+        return success();
     }
 
     public function akali()

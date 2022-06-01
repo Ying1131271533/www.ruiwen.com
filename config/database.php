@@ -29,10 +29,10 @@ return [
             // 数据库名
             'database'        => env('database.database', 'www_ruiwen_com'),
             // 用户名
-            'username'        => env('database.username', 'www_ruiwen_com'),
+            'username'        => env('database.username', 'root'),
             // 密码
             'password'        => env('database.password', ''),
-            // 'password'        => env('database.password', 'D53YpF_eR-al^iY?zceJ/3D6t'),
+            // 'password'        => env('database.password', 'Hw]al^049cAa83K4sK/3@n.bd'),
             // 端口
             'hostport'        => env('database.hostport', '3306'),
             // 数据库连接参数
@@ -58,6 +58,24 @@ return [
             'trigger_sql'     => env('app_debug', true),
             // 开启字段缓存
             'fields_cache'    => false,
+        ],
+        'mongo'    =>    [
+            // 数据库类型
+            'type'        => 'mongo',
+            // 服务器地址
+            'hostname'    => '127.0.0.1',
+            // 数据库名
+            'database'    => 'www_ruiwen_com',
+            // 数据库用户名
+            'username'    => '',
+            // 数据库密码
+            'password'    => '',
+            // 数据库连接端口
+            'hostport'    => '27017',
+            // 数据库连接参数
+            'params'      => [],
+            // 数据库编码默认采用utf8
+            'charset'     => 'utf8',
         ],
 
         // 更多的数据库配置信息
