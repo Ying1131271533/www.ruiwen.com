@@ -11,7 +11,7 @@ class Product
         $product = ModelProduct::with(['specs' => function($query){
             // $query -> field(['id','specs_value_id','price','stock','product_id']);
             $query -> withoutField(['sales']);
-        }])->withCache(dawn_time($id))->find($id);
+        }, 'imgs'])->withCache(dawn_time($id))->cache(dawn_time($id))->find($id);
 
         if (!$product) throw new Miss();
 
