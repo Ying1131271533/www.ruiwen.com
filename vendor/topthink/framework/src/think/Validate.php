@@ -1153,11 +1153,6 @@ class Validate
 
         $pk = !empty($rule[3]) ? $rule[3] : $db->getPk();
 
-        // 获取多个主键中的第一个既是 id
-        if (is_array($pk) && !empty($pk[0])) {
-            $pk = $pk[0];
-        }
-
         if (is_string($pk)) {
             if (isset($rule[2])) {
                 $map[] = [$pk, '<>', $rule[2]];

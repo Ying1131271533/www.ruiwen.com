@@ -246,8 +246,4 @@ class Redis extends Driver
         return $this->handler->sMembers($key);
     }
 
-    // 红叶的添加字段
-    public function rawCommand($command, $arguments){
-        return $this -> handler -> rawCommand($command, $arguments);
-    }
 }
