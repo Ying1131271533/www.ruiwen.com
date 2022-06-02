@@ -463,31 +463,47 @@ function get_memcache_server($serverConfArr = [])
 function cache_time(string $type = 'dawn_rand_time')
 {
     switch ($type) {
+        // 6小时
+        case 'six_hour':
+            $time = 3600 * 6;
+            break;
+        // 12小时 半天
+        case 'half_day':
+            $time = 3600 * 12;
+            break;
+        // 一天
         case 'one_day':
             $time = 3600 * 24;
             break;
+        // 一周
         case 'one_week':
             $time = 3600 * 24 * 7;
             break;
+        // 一个月
         case 'one_month':
             $time = 3600 * 24 * 30;
             break;
+        // 一年
         case 'one_year':
             $time = 3600 * 24 * 365;
             break;
+        // 随机 3-9 小时
         case 'rand_time':
-            $time = rand(3600 * 24 * 3, 3600 * 24 * 9);
+            $time = rand(3600 * 3, 3600 * 9);
             break;
+        // 凌晨0点
         case 'over_day':
             $time = 86400 - (time() + 8 * 3600) % 86400;
             break;
+        // 凌晨3点
         case 'dawn_time':
             $time = 86400 - (time() + 8 * 3600) % 86400 + 3600 * 3;
             break;
+        // 凌晨3点 + 随机时间
         case 'dawn_rand_time':
             $time = 86400 - (time() + 8 * 3600) % 86400 + 3600 * 3 + rand(1, 3600);
             break;
-
+        // 默认：凌晨3点 + 随机时间
         default:
             $time = 86400 - (time() + 8 * 3600) % 86400 + 3600 * 3 + rand(1, 3600);
             break;
@@ -505,6 +521,6 @@ function cache_time(string $type = 'dawn_rand_time')
 function dawn_time($id)
 {
     $number = substr(crc32($id), 6);
-    $time = 86400 - (strtotime(date('Ymd H:i:30')) + 8 * 3600) % 86400 + 3600 * 3 + (int)$number;
+    $time = 86400 - (strtotime(date('Y-m-d H:i:30')) + 8 * 3600) % 86400 + 3600 * 3 + (int)$number;
     return $time;
 }

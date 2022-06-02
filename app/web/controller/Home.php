@@ -4,13 +4,26 @@ namespace app\web\controller;
 
 use app\common\model\Akali;
 use app\common\mongo\User;
+use think\db\builder\Mongo;
 
 class Home
 {
     public function index()
     {
-        $user = User::select()->toArray();
+        $data = [
+            'name' => '光辉',
+            'age' => 17,
+            'gender' => '女',
+        ];
+        // $result = User::insert($data);
+        // $result = User::where('_id', '629887ed04cfb81ffd0f4739')->update($data);
+        // $result = User::where('name', '光辉')->delete();
+        // dump($result);
 
+        // $user = User::skip(3)->limit(2)->order('_id', 'desc')->select()->toArray();
+        // $user = User::paginate(2);
+
+        $user = User::select()->toArray();
         halt($user);
         
 
