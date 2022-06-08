@@ -374,7 +374,7 @@ function delete_dir($dir)
  *
  * 递归找子级数据
  *
- * @param  array    $data            二维数组
+ * @param  array    $data           二维数组
  * @param  int      $parent_id      父级id
  * @return array                    返回处理好的数组
  */

@@ -1,9 +1,10 @@
 <?php
 namespace app\common\mongo;
 
-use think\Model;
-
-class User extends Model
+class User extends BaseModel
 {
-    protected $connection = 'mongo';
+    public function info()
+    {
+        return $this->hasOne(Info::class, 'user_id', 'id');
+    }
 }

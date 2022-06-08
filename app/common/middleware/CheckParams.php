@@ -17,7 +17,7 @@ class CheckParams
         // 验证请求是否超时
         // $this->check_time($params['time']);
         // 验证参数，参数过滤
-
+        
         // 页码，条数赋值
         $request->page = $request->param('page') ? $request->param('page') : config('app.page');
         $request->size = $request->param('size') ? $request->param('size') : config('app.size');

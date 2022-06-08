@@ -67,9 +67,9 @@ return [
             // 数据库名
             'database'    => 'www_ruiwen_com',
             // 数据库用户名
-            'username'    => '',
+            'username'    => 'testAdmin',
             // 数据库密码
-            'password'    => '',
+            'password'    => '123456',
             // 数据库连接端口
             'hostport'    => '27017',
             // 数据库连接参数

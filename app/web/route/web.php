@@ -55,7 +55,6 @@ Route::group('redis', function () {
     Route::post('sentinel', 'RedisDemo/sentinel');
 })->middleware([app\common\middleware\RedisClose::class]);
 
-
 /**
  * 验证码
  */
@@ -95,28 +94,13 @@ Route::group('docker', function () {
     Route::get('index', 'Docker/index');
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/**
+ * Mongo
+ */
+Route::group('mongo', function () {
+    Route::get('', 'Mongo/index');
+    Route::get(':id', 'Mongo/read');
+    Route::post('', 'Mongo/save');
+    Route::put('', 'Mongo/update');
+    Route::delete(':id', 'Mongo/delete');
+});
