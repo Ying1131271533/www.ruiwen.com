@@ -40,6 +40,7 @@ class CheckParams
         $controller = $request->controller(); // 控制器
         $action     = $request->action(); // 方法名
         $params     = $request->filter(['htmlspecialchars'])->all(); // 获取当前参数
+        
         // halt($params);
         
         // 拼接验证类名，注意路径不要出错

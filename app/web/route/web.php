@@ -104,3 +104,15 @@ Route::group('mongo', function () {
     Route::put('', 'Mongo/update');
     Route::delete(':id', 'Mongo/delete');
 });
+
+/**
+ * Comment 评论
+ */
+Route::group('comment', function () {
+    Route::get('', 'Comment/index');
+    Route::get('', 'Comment/getComment');
+    Route::get(':id', 'Comment/read');
+    Route::post('', 'Comment/save');
+    Route::put('', 'Comment/update');
+    Route::delete(':id', 'Comment/delete');
+});

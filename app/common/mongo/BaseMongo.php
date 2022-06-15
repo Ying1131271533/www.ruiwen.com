@@ -3,7 +3,7 @@ namespace app\common\mongo;
 
 use think\model;
 
-abstract class BaseModel extends model
+abstract class BaseMongo extends model
 {
     protected $connection = 'mongo';
     

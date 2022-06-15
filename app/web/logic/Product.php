@@ -12,7 +12,7 @@ class Product
             // $query -> field(['id','specs_value_id','price','stock','product_id']);
             $query -> withoutField(['sales']);
         }, 'imgs'])->withCache(cache_time('one_day'))->cache(cache_time())->find($id);
-
+        
         if (!$product) throw new Miss();
 
         $product = $product->toArray();

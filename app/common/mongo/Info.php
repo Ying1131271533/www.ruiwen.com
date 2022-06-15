@@ -1,7 +1,6 @@
 <?php
 namespace app\common\mongo;
 
-class Info extends BaseModel
+class Info extends BaseMongo
 {
-    protected $connection = 'mongo';
 }

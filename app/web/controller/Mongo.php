@@ -22,12 +22,14 @@ class Mongo
 
     public function read(Request $request)
     {
+        // $use = User::command();
+        // $id   = $request->params['id'];
         $id   = (int) $request->params['id'];
         $user = LogicMongo::findUserById($id);
         return success($user);
     }
 
-    public function save_jinx(Request $request)
+    public function save(Request $request)
     {
         // 组装数据
         $data = [
@@ -60,7 +62,7 @@ class Mongo
         return success();
     }
 
-    public function save(Request $request)
+    public function save_jinx(Request $request)
     {
         // 组装数据
         $data = [
@@ -109,6 +111,7 @@ class Mongo
             'age'    => $request->param('age/d'),
             'gender' => $request->param('gender/s'),
         ];
+        
         // $params = $request->params;
         // halt($data);
         $result = User::where('id', $data['id'])->update($data);

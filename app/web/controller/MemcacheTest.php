@@ -11,8 +11,8 @@ class MemcacheTest
     // TP6框架使用memcache缓存
     public function index()
     {
-        // $result = Cache::store('memcache')->set('jinx', '爆爆');
-        $result = Cache::store('memcache')->get('jinx');
+        $result = Cache::store('memcache')->set('jinx', '爆爆');
+        // $result = Cache::store('memcache')->get('jinx');
         return success($result);
     }
 
@@ -22,7 +22,7 @@ class MemcacheTest
         // set()方式是以覆盖的形式赋值
         // add()方式，如果有值了的话，则不能赋值
 
-        $memcahce = new Memcache();
+        $memcahce = new Memcache(['host' => 'memcached']);
         // 4.设置缓存数据
         // 基本数据类型
         $int     = 123;

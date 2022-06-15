@@ -27,8 +27,8 @@ class Product extends BaseModel
     public static function getProductById(int $id)
     {
         $product = self::with(['imgs', 'specs'])
-            ->withCache(dawn_time($id))
-            ->cache(dawn_time($id))
+            ->withCache(cache_time('one_day'))
+            ->cache(cache_time())
             ->find($id);
         return $product;
     }
