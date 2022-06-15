@@ -1,7 +1,6 @@
 <?php
 namespace app\web\controller;
 
-use app\common\mongo\BaseMongo;
 use app\common\mongo\Comment as MongoComment;
 use app\common\mongo\Info;
 use app\common\mongo\User;
@@ -10,12 +9,10 @@ use app\lib\exception\Miss;
 use app\lib\exception\Params;
 use app\Request;
 use app\web\logic\Mongo as LogicMongo;
-use think\db\builder\Mongo as BuilderMongo;
-use think\db\Mongo;
-use think\db\connector\Mongo as MongoDB;
-
-use MongoDB\Driver\Command;
+use MongoDB\Driver\BulkWrite;
 use MongoDB\Driver\Manager;
+use MongoDB\Driver\Query;
+use MongoDB\Driver\WriteConcern;
 
 class Comment
 {
@@ -67,30 +64,17 @@ class Comment
             'status'      => $request->param('status/d'),
             'create_time' => time(),
         ];
-        
-        
-        /* 
-        
-        $manager = new Manager('mongodb://127.0.0.1:27017');
-        $cmd = [
-            // 集合名
-            'update' => 'comment',
-            'indexes' => [
-                [
-                    // 索引名
-                    'name' => 'user_id',
-                    // 索引字段数组
-                    'key' => ['user_id' => 1],
-                ]
-            ]
-        ];
-        $command = new Command($cmd);
-        $res = $manager->executeCommand('www_ruiwen_com', $command);
-        halt($res); */
 
-        $user = MongoComment::where('id', $data['id'])->inc('likenum');
-        // $user = MongoComment::where('id', $data['id'])->update($data);
-        if (!$user) {
+        $manager = new Manager("mongodb://localhost:27017");
+        $buck    = new BulkWrite(['ordered' => true]);
+
+        // $buck->update(['id'=>$data['id']], ['$set'=>$data], ['multi'=>true]);
+        $buck->update(['id' => $data['id']], ['$set' => $data]);
+
+        $wirte = new WriteConcern(WriteConcern::MAJORITY, 1000);
+
+        $result = $manager->executeBulkWrite('www_ruiwen_com.comment', $buck, $wirte);
+        if (!$result) {
             throw new \Exception('评论失败');
         }
 
@@ -119,5 +103,19 @@ class Comment
         $size    = $request->param('size/d');
         $comment = MongoComment::getPageData($page, $size);
         return success($comment);
+    }
+
+    // 文章点赞
+    public function like(Request $request)
+    {
+        $manager = new Manager("mongodb://localhost:27017");
+        $buck    = new BulkWrite(['ordered' => true]);
+
+        // 文章点赞加一
+        $id = $request->param('id/d');
+        $buck->update(['id' => $id], ['$inc' => ['likenum' => 1]]);
+
+        $wirte  = new WriteConcern(WriteConcern::MAJORITY, 1000);
+        $result = $manager->executeBulkWrite('www_ruiwen_com.comment', $buck, $wirte);
     }
 }
