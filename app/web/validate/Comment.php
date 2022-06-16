@@ -13,7 +13,6 @@ class Comment extends BaseValidate
         'article_id' => 'require|number|gt:0',
         'content'    => 'require',
         'nickname'   => 'require',
-        'likenum'    => 'require|number',
         'status'     => 'in:1,2',
         // 分页
         'page|页码'    => 'require|number|gt:0',
@@ -27,10 +26,11 @@ class Comment extends BaseValidate
 
     // 验证场景
     protected $scene = [
-        'read'       => ['id'],
-        'save'       => ['id', 'user_id', 'article_id', 'content', 'nickname', 'likenum', 'status'],
-        'update'     => ['id', 'user_id', 'article_id', 'content', 'nickname', 'likenum', 'status'],
-        'delete'     => ['id'],
-        'getComment' => ['page', 'size'],
+        'read'             => ['id'],
+        'save'             => ['id', 'user_id', 'article_id', 'content', 'nickname', 'status', 'parent_id'],
+        'update'           => ['id', 'content', 'nickname'],
+        'delete'           => ['id'],
+        'getParentComment' => ['id', 'page', 'size'],
+        'like'             => ['id'],
     ];
 }

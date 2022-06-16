@@ -110,9 +110,10 @@ Route::group('mongo', function () {
  */
 Route::group('comment', function () {
     Route::get('', 'Comment/index');
-    Route::get('', 'Comment/getComment');
+    Route::get('getParentComment', 'Comment/getParentComment');
     Route::get(':id', 'Comment/read');
     Route::post('', 'Comment/save');
     Route::put('', 'Comment/update');
     Route::delete(':id', 'Comment/delete');
+    Route::get('like/:id', 'Comment/like');
 });
