@@ -17,7 +17,8 @@ class Comment
     
     public function __construct()
     {
-        $this->manager = new Manager("mongodb://localhost:27017");
+        $this->manager = new Manager("mongodb://mongo:27017");
+        // $this->manager = new Manager("mongodb://localhost:27017");
         $this->buck    = new BulkWrite(['ordered' => true]);
         $this->wirte   = new WriteConcern(WriteConcern::MAJORITY, 1000);
     }
