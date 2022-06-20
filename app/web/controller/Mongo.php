@@ -8,7 +8,6 @@ use app\lib\exception\Miss;
 use app\lib\exception\Params;
 use app\Request;
 use app\web\logic\Mongo as LogicMongo;
-use think\db\builder\Mongo as BuilderMongo;
 
 class Mongo
 {
@@ -49,19 +48,20 @@ class Mongo
             throw new Fail('用户id已存在');
         }
 
-        $user = User::insert($data);
+        $user = User::create($data);
         if (!$user) {
             throw new \Exception('用户创建失败');
         }
 
-        $info = Info::insert($infoData);
-        if (!$info) {
+        $info = $user->info()->save($infoData);
+        if ($info) {
             throw new \Exception('用户信息创建失败');
         }
 
         return success();
     }
 
+    // 还是用不了事务
     public function save_jinx(Request $request)
     {
         // 组装数据
@@ -84,17 +84,17 @@ class Mongo
 
         User::startTrans();
         try {
-            $user = User::insert($data);
+            $user = User::create($data);
             if (!$user) {
                 throw new \Exception('用户创建失败');
             }
-
+            
             $info = $user->info()->save($infoData);
-            if (!$info) {
+            if ($info) {
                 throw new \Exception('用户信息创建失败');
             }
 
-            User::startTrans();
+            User::commit();
             return success();
         } catch (\Exception $e) {
             User::rollback();
@@ -108,10 +108,15 @@ class Mongo
         $data = [
             'id'     => $request->param('id/d'),
             'name'   => $request->param('name/s'),
-            'age'    => $request->param('age/d'),
+            // 'age'    => $request->param('age/d'),
             'gender' => $request->param('gender/s'),
         ];
         
+        $user = User::where('id', $data['id'])->find();
+        if (!$user) {
+            throw new Miss();
+        }
+
         // $params = $request->params;
         // halt($data);
         $result = User::where('id', $data['id'])->update($data);
