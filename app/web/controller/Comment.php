@@ -20,6 +20,8 @@ class Comment
 
     public function read(int $id)
     {
+        $akali = MongoComment::select();
+        halt($akali);
         $comment = MongoComment::findCommentById($id);
         return success($comment);
     }
