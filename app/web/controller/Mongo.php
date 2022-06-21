@@ -54,7 +54,7 @@ class Mongo
         }
 
         $info = $user->info()->save($infoData);
-        if ($info) {
+        if (!$info) {
             throw new \Exception('用户信息创建失败');
         }
 

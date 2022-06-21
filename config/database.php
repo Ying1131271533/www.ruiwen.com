@@ -59,11 +59,11 @@ return [
             // 开启字段缓存
             'fields_cache'    => false,
         ],
-        'mongo'    =>    [
+        'mongo_docker'    =>    [
             // 数据库类型
             'type'        => 'mongo',
             // 服务器地址
-            'hostname'    => '127.0.0.1',
+            'hostname'    => 'mongo',
             // 数据库名
             'database'    => 'www_ruiwen_com',
             // 数据库用户名
@@ -76,6 +76,32 @@ return [
             'params'      => [],
             // 数据库编码默认采用utf8
             'charset'     => 'utf8',
+        ],
+        'mongo'    =>    [
+            // 数据库类型
+            'type'        => 'mongo',
+            // 服务器地址
+            'hostname'    => '192.168.0.184',
+            // 数据库名
+            'database'    => 'www_ruiwen_com',
+            // 数据库用户名
+            'username'    => '',
+            // 数据库密码
+            'password'    => '',
+            // 数据库连接端口
+            'hostport'    => '27018',
+            // 数据库连接参数
+            'params'      => [],
+            // 数据库编码默认采用utf8
+            'charset'     => 'utf8',
+
+            // 暂时不想做下面的配置~~~~
+            // 数据库部署方式:0 集中式(单一服务器),1 分布式(主从服务器)
+            'deploy' => 1,
+            // 数据库读写是否分离 主从式有效
+            'rw_separate' => false,
+            // 读写分离后 主服务器数量
+            'slave_no' => '192.168.0.184:27018',
         ],
 
         // 更多的数据库配置信息

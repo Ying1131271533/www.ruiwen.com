@@ -17,8 +17,10 @@ class Comment
     
     public function __construct()
     {
-        $this->manager = new Manager("mongodb://mongo:27017");
-        // $this->manager = new Manager("mongodb://localhost:27017");
+        // $this->manager = new Manager("mongodb://mongo:27017");
+        // 可惜没用
+        // $this->manager = new Manager("mongodb://192.168.0.184:27018,192.168.0.184:27019,192.168.0.184:27020/www_ruiwen_com?connect=replicaSet&slaveOk=true&replicaSet=myrs");
+        $this->manager = new Manager("mongodb://192.168.0.184:27018");
         $this->buck    = new BulkWrite(['ordered' => true]);
         $this->wirte   = new WriteConcern(WriteConcern::MAJORITY, 1000);
     }
