@@ -20,6 +20,11 @@ class Comment
 
     public function read(int $id)
     {
+        // cmd命令
+        $comment = (new LogicComment)->findCommentById($id);
+        return success($comment);
+
+        // 模型
         $comment = MongoComment::findCommentById($id);
         return success($comment);
     }

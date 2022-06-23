@@ -53,7 +53,8 @@ class Mongo
             throw new \Exception('用户创建失败');
         }
 
-        $info = $user->info()->save($infoData);
+        $info = Info::create($infoData);
+        // $info = $user->info()->save($infoData);
         if (!$info) {
             throw new \Exception('用户信息创建失败');
         }

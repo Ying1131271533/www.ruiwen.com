@@ -4,9 +4,9 @@ namespace app\web\logic;
 use app\common\mongo\Comment as MongoComment;
 use app\lib\exception\Fail;
 use app\lib\exception\Miss;
-
 use MongoDB\Driver\BulkWrite;
 use MongoDB\Driver\Manager;
+use MongoDB\Driver\Query;
 use MongoDB\Driver\WriteConcern;
 
 class Comment
@@ -14,13 +14,15 @@ class Comment
     protected $manager;
     protected $buck;
     protected $wirte;
-    
+
     public function __construct()
     {
+        // 单机实例
         // $this->manager = new Manager("mongodb://mongo:27017");
-        // 可惜没用
-        // $this->manager = new Manager("mongodb://192.168.0.184:27018,192.168.0.184:27019,192.168.0.184:27020/www_ruiwen_com?connect=replicaSet&slaveOk=true&replicaSet=myrs");
-        $this->manager = new Manager("mongodb://192.168.0.184:27018");
+        // 副本集
+        // $this->manager = new Manager("mongodb://192.168.0.184:27018,192.168.0.184:27019,192.168.0.184:27020");
+        // 路由节点连接，竟然起效了！！！
+        $this->manager = new Manager("mongodb://192.168.0.184:27017,192.168.0.184:27117");
         $this->buck    = new BulkWrite(['ordered' => true]);
         $this->wirte   = new WriteConcern(WriteConcern::MAJORITY, 1000);
     }
@@ -55,7 +57,19 @@ class Comment
 
         return $commentList;
     }
-    
+
+    // cmd命令找评论
+    public function findCommentById(int $id)
+    {
+        $query  = new Query(['id' => $id]);
+        $result = $this->manager->executeQuery('www_ruiwen_com.comment', $query);
+        $data   = [];
+        foreach ($result as $value) {
+            $data[] = $value;
+        }
+        return $data;
+    }
+
     public function saveComment($request)
     {
         // 组装数据
@@ -71,13 +85,13 @@ class Comment
             'parent_id'   => $request->param('parent_id/d', 0),
             'create_time' => time(),
         ];
-        
+
         // 添加数据
         $user = MongoComment::insert($data);
         if (!$user) {
             throw new \Exception('评论失败');
         }
-        
+
         // 评论回复数加一
         if ($data['parent_id'] !== 0) {
             $parent_id = $request->param('parent_id/d');
@@ -89,16 +103,16 @@ class Comment
             return success();
         }
     }
-    
+
     public function updateComment($request)
     {
         // 组装数据
         $data = [
-            'id'          => $request->param('id/d'),
-            'content'     => $request->param('content/s'),
-            'nickname'    => $request->param('nickname/s'),
+            'id'       => $request->param('id/d'),
+            'content'  => $request->param('content/s'),
+            'nickname' => $request->param('nickname/s'),
         ];
-        
+
         $comment = MongoComment::find($data['id']);
         if (!$comment) {
             throw new Miss('找不到该评论');
@@ -119,7 +133,7 @@ class Comment
             throw new Miss('找不到该评论');
         }
 
-        $result =  $comment->delete();
+        $result = $comment->delete();
         // $result = MongoComment::where('id', $id)->delete();
         if (!$result) {
             throw new Fail();
@@ -133,11 +147,13 @@ class Comment
         if (!$comment) {
             throw new Miss('找不到该评论');
         }
-        
+
         $this->buck->update(['id' => $id], ['$inc' => ['likenum' => 1]]);
         $result = $this->manager($this->buck, $this->wirte);
         if (!$result) {
             throw new Fail();
         }
+
+        return success();
     }
 }
