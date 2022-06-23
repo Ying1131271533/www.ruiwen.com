@@ -1,6 +1,7 @@
 <?php
 namespace app\web\controller;
 
+use app\common\mongo\Comment;
 use app\common\mongo\Info;
 use app\common\mongo\User;
 use app\lib\exception\Fail;
@@ -21,8 +22,7 @@ class Mongo
 
     public function read(Request $request)
     {
-        // $use = User::command();
-        // $id   = $request->params['id'];
+        $id   = $request->params['id'];
         $id   = (int) $request->params['id'];
         $user = LogicMongo::findUserById($id);
         return success($user);
