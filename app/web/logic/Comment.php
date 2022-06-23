@@ -20,7 +20,7 @@ class Comment
         // 单机实例
         // $this->manager = new Manager("mongodb://mongo:27017");
         // 副本集
-        $this->manager = new Manager("mongodb://192.168.0.184:27018,192.168.0.184:27019,192.168.0.184:27020");
+        $this->manager = new Manager("mongodb://192.168.0.184:27017,192.168.0.184:27018,192.168.0.184:27019");
         // 路由节点连接，竟然起效了！！！
         // $this->manager = new Manager("mongodb://192.168.0.184:27017,192.168.0.184:27117");
         $this->buck    = new BulkWrite(['ordered' => true]);
