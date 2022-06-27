@@ -11,7 +11,6 @@ use app\web\logic\Comment as LogicComment;
 
 class Comment
 {
-
     public function index(Request $request)
     {
         $comment = MongoComment::select();

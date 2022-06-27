@@ -18,10 +18,11 @@ class Comment
     public function __construct()
     {
         // 单机实例
-        // $this->manager = new Manager("mongodb://mongo:27017");
-        // 副本集
-        $this->manager = new Manager("mongodb://192.168.0.184:27017,192.168.0.184:27018,192.168.0.184:27019");
-        // 路由节点连接，竟然起效了！！！
+        $this->manager = new Manager("mongodb://myroot:123456@192.168.0.184:27017");
+        // 副本集，关闭了27017，却显示不是主节点(not primary)，所以暂时不会用，不过最起码还有可以读
+        // $this->manager = new Manager("mongodb://akali:123456@192.168.0.184:27017,192.168.0.184:27018,192.168.0.184:27019/www_ruiwen_com?connect=replicaSet&slaveOk=true&replicaSet=myrs");
+        // $this->manager = new Manager("mongodb://192.168.0.184:27017,192.168.0.184:27018,192.168.0.184:27019");
+        // 路由节点连接有效，就不知道关闭了27017会不会跟上面一样
         // $this->manager = new Manager("mongodb://192.168.0.184:27017,192.168.0.184:27117");
         $this->buck    = new BulkWrite(['ordered' => true]);
         $this->wirte   = new WriteConcern(WriteConcern::MAJORITY, 1000);
@@ -67,6 +68,11 @@ class Comment
         foreach ($result as $value) {
             $data[] = $value;
         }
+
+        if(empty($data)){
+            throw new Miss();
+        }
+
         return $data;
     }
 

@@ -40,7 +40,7 @@ class Mongo
 
         $infoData = [
             'profession' => $request->param('profession/s'),
-            'user_id'    => $data['id'],
+            // 'user_id'    => $data['id'],
         ];
 
         $result = User::where('id', $data['id'])->find();
@@ -53,8 +53,8 @@ class Mongo
             throw new \Exception('用户创建失败');
         }
 
-        $info = Info::create($infoData);
-        // $info = $user->info()->save($infoData);
+        // $info = Info::create($infoData);
+        $info = $user->info()->save($infoData);
         if (!$info) {
             throw new \Exception('用户信息创建失败');
         }
@@ -137,6 +137,8 @@ class Mongo
         }
 
         $result = $user->delete();
+        Info::where('user_id', $id)->delete();
+        // $result = $user->together(['info'])->delete();
         if (!$result) {
             throw new Fail();
         }
