@@ -47,7 +47,7 @@ class RabbitTest
         $connection = new AMQPStreamConnection('192.168.0.184', 5672, 'akali', '123456', '/akali');
         $channel    = $connection->channel();
 
-        $channel->queue_declare('akali', false, true, false, false);
+        $channel->queue_declare('task_queue', false, true, false, false);
 
         $argv = [];
         $data = implode(' ', array_slice($argv, 1));
@@ -57,9 +57,9 @@ class RabbitTest
 
         $msg = new AMQPMessage($data, array('delivery_mode' => AMQPMessage::DELIVERY_MODE_PERSISTENT));
 
-        $channel->basic_publish($msg, '', 'akali');
+        $channel->basic_publish($msg, '', 'task_queue');
 
-        echo " Send Message: ", $data, "\n";
+        echo "[x] Send Message: ", $data, "\n";
 
         $channel->close();
         $connection->close();
@@ -68,49 +68,29 @@ class RabbitTest
     // 消费者
     public function consumer()
     {
-        // 声明一个路由键
-        $routingKey = 'key_1';
-        // 设置一个交换机名称
-        $exchangeName = 'exchange_1';
+        $connection = new AMQPStreamConnection('192.168.0.184', 5672, 'akali', '123456', '/akali');
+        $channel    = $connection->channel();
 
-        // 声明交换机
-        try {
-            // 加载连接类 connection.php
-            include '../extend/lib/RabbitMQConnection.php';
+        $channel->queue_declare('task_queue', false, true, false, false);
 
-            //创建一个消息队列
-            $q = new \AMQPQueue($ch);
+        echo ' [*] Waiting for messages. To exit press CTRL+C', "\n";
 
-            //设置队列名称
-            $q->setName('queue_1');
+        $callback = function ($msg) {
+            echo " [x] Received ", $msg->body, "\n";
+            sleep(substr_count($msg->body, '.'));
+            echo " [x] Done", "\n";
+            $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
+        };
 
-            //设置队列持久化
-            $q->setFlags(AMQP_DURABLE);
+        $channel->basic_qos(null, 1, null);
+        $channel->basic_consume('task_queue', '', false, false, false, false, $callback);
 
-            //声明消息队列
-            $q->declareQueue();
-
-            // 交换机和队列通过$routingKey进行绑定
-            $q->bind($ex->getName(), $routingKey);
-
-            include '../extend/lib/Akali.php';
-
-            //设置消息队列消费者回调方法
-            $q->consume('recevie');
-
-        } catch (\AMQPConnectionException $e) {
-            echo '创建连接异常：' . $e->getMessage();
-            exit();
-        } catch (\AMQPChannelException $e) {
-            echo '创建通道异常：' . $e->getMessage();
-            exit();
-        } catch (\AMQPQueueException $e) {
-            echo '创建消息队列异常：' . $e->getMessage();
-            exit();
-        } catch (\AMQPEnvelopeException $e) {
-            echo '消息消费异常：' . $e->getMessage();
-            exit();
+        while (count($channel->callbacks)) {
+            $channel->wait();
         }
+
+        $channel->close();
+        $connection->close();
     }
 
     // 生产者
