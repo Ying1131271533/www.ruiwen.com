@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '5669949abe07dc69b4b68a9d516089a6a17e048b',
+        'reference' => '48c71249591be908a8634a58d54eddfc3182279f',
         'name' => 'topthink/think',
         'dev' => true,
     ),
@@ -89,6 +89,15 @@
             'install_path' => __DIR__ . '/../myclabs/php-enum',
             'aliases' => array(),
             'reference' => 'b942d263c641ddb5190929ff840c68f78713e937',
+            'dev_requirement' => false,
+        ),
+        'php-amqplib/php-amqplib' => array(
+            'pretty_version' => 'v3.1.2',
+            'version' => '3.1.2.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../php-amqplib/php-amqplib',
+            'aliases' => array(),
+            'reference' => 'e8aba06c4e1c467612f2d99304f672f2660e8492',
             'dev_requirement' => false,
         ),
         'phpoffice/phpspreadsheet' => array(
@@ -223,7 +232,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '5669949abe07dc69b4b68a9d516089a6a17e048b',
+            'reference' => '48c71249591be908a8634a58d54eddfc3182279f',
             'dev_requirement' => false,
         ),
         'topthink/think-helper' => array(
@@ -261,6 +270,12 @@
             'aliases' => array(),
             'reference' => '9a9fa8f767b6c66c5a133ad21ca1bc96ad329444',
             'dev_requirement' => true,
+        ),
+        'videlalvaro/php-amqplib' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => 'v3.1.2',
+            ),
         ),
     ),
 );

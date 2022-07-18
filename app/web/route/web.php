@@ -117,3 +117,15 @@ Route::group('comment', function () {
     Route::delete(':id', 'Comment/delete');
     Route::get('like/:id', 'Comment/like');
 });
+
+/**
+ * rabbit_test 
+ */
+Route::group('rabbit_test', function () {
+    Route::get('index', 'RabbitTest/index');
+    Route::get('publisher', 'RabbitTest/publisher');
+    Route::get('consumer', 'RabbitTest/consumer');
+    Route::get('process_message', 'RabbitTest/processMessage');
+    // Send
+    Route::get('testSendMessage', 'RabbitTest/testSendMessage');
+});
