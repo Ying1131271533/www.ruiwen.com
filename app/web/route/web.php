@@ -123,9 +123,6 @@ Route::group('comment', function () {
  */
 Route::group('rabbit_test', function () {
     Route::get('index', 'RabbitTest/index');
-    Route::get('publisher', 'RabbitTest/publisher');
-    Route::get('consumer', 'RabbitTest/consumer');
-    Route::get('process_message', 'RabbitTest/processMessage');
-    // Send
-    Route::get('testSendMessage', 'RabbitTest/testSendMessage');
+    // 生产者
+    Route::post('publisher', 'RabbitTest/publisher');
 });
