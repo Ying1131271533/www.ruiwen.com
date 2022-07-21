@@ -121,8 +121,8 @@ Route::group('comment', function () {
 /**
  * rabbit_test 
  */
-Route::group('rabbit_test', function () {
-    Route::get('index', 'RabbitTest/index');
+Route::group('rabbitmq_test', function () {
+    Route::get('index', 'RabbitmqTest/index');
     // 生产者
-    Route::post('publisher', 'RabbitTest/publisher');
+    Route::post('publisher', 'RabbitmqTest/publisher');
 });

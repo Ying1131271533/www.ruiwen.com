@@ -4,7 +4,7 @@ namespace app\web\validate;
 
 use app\common\validate\BaseValidate;
 
-class RabbitTest extends BaseValidate
+class RabbitmqTest extends BaseValidate
 {
     // 验证规则
     protected $rule = [

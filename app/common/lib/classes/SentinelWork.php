@@ -5,7 +5,7 @@
  * @time: 2020/4/19 19:04
  *
  */
-namespace app\lib;
+namespace app\common\lib\classes;
 
 use think\cache\driver\Redis;
 use think\facade\Cache;
