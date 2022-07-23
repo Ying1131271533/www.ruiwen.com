@@ -1,6 +1,6 @@
 <?php
 
-// RabbitMQ 消费者
+// RabbitMQ 消费者 练习
 
 require_once __DIR__ . '/vendor/autoload.php';
 use PhpAmqpLib\Connection\AMQPStreamConnection;
@@ -12,8 +12,11 @@ $connection = new AMQPStreamConnection('127.0.0.1', 5672, 'akali', '123456', '/a
 
 // 创建通道
 $channel = $connection->channel();
+
 // 通道绑定对象
-$channel->queue_declare('akali_queue', false, false, false, true);
+// 这里要注意的是，生产者和消费者的队列参数必需一致
+// 参数1：队列名称
+$channel->queue_declare('akali_queue', false, true, false, true);
 // $channel->queue_declare('hello', false, false, false, true);
 
 echo ' [*] Waiting for messages. To exit press Ctrl+C', "\n";

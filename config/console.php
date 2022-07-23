@@ -9,6 +9,7 @@ return [
     // php think simple_work --option msg=akali
     // 未定义的话则是 php think common/command/simple_work --option msg=akali
     'commands' => [
+        // 正式
         'simple_work'  => 'app\common\command\SimpleWork',
         'work_queue'   => 'app\common\command\WorkQueue',
         'send_queue'   => 'app\common\command\SendQueue',

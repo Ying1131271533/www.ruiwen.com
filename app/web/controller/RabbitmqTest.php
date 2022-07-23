@@ -39,7 +39,7 @@ class RabbitmqTest
         return success('神织恋');
     }
 
-     // 生产者
+    // 生产者
     public function publisher(Request $request)
     {
         $msg          = $request->params['msg'];
@@ -48,10 +48,10 @@ class RabbitmqTest
         return success("Send Message: " . $msg);
     }
 
-    // 生产者
+    // 生产者 详细描述
     public function publisher_jinx(Request $request)
     {
-        /* // 自己封装的
+        /* // 自己封装的连接，用于练习
         $connection = RabbitMqConnection::getConnection();
         $channel = $connection->channel();
         $msg = $request->params['msg'];
@@ -67,13 +67,16 @@ class RabbitmqTest
         // 获取连接中通道
         $channel = $connection->channel();
 
+        // 这里要注意的是，生产者和消费者的队列参数必需一致
         // 通道绑定对应消息队列
         // 参数1:队列名称如果队列不存在时自动创建
         // 参数2:
         // 参数3:用来定义队列特性是否要持久化 true持久化队列 false不持久化
-        // 参数4:exclusive是否独占队列 true 独占队列 false 不独占
-        // 参数5:autoDelete:是否在消费完成后自动删除队列 true自动删除 false不自动删除,cmd退出时才会删除
-        $channel->queue_declare('hello', false, false, false, true);
+        // 参数4:exclusive是否独占队列 true 独占队列 false 不独占，如果是true，那么只能被当前通道绑定
+        // 参数4:exclusive一般都是false，因为工作中，我们一般希望是共用一个通道
+        // 参数5:autoDelete:是否在消费完成后自动删除队列 true自动删除 false不自动删除
+        // 参数5:退出连接，没有消费者监听时才会自动删除队列
+        $channel->queue_declare('hello', false, true, false, true);
 
         // 接收消息参数
         $msg = $request->params['msg'];
@@ -98,28 +101,32 @@ class RabbitmqTest
         return success("Send Message: " . $msg);
     }
 
-    // 订阅、发布 添加工作队列
-    public function task()
+    // 生产者
+    public function work(Request $request)
     {
-        $connection = new AMQPStreamConnection('localhost', 5672, 'guest', 'guest');
-        $channel    = $connection->channel();
-
-        $channel->queue_declare('task_queue', false, true, false, false);
-
-        $data = implode(' ', array_slice($argv, 1));
-        if (empty($data)) {
-            $data = "Hello World!";
+        $msg          = $request->params['msg'];
+        $RabbitMqWork = new RabbitMqWork();
+        for($i = 0; $i < 20; $i++){
+            $RabbitMqWork->addTask($i.' - '.$msg);
         }
+        
+        return success("Send Message: " . $msg);
+    }
 
-        $msg = new AMQPMessage($data,
-            array('delivery_mode' => AMQPMessage::DELIVERY_MODE_PERSISTENT)
-        );
-
-        $channel->basic_publish($msg, '', 'task_queue');
-
-        echo " [x] Sent ", $data, "\n";
-
-        $channel->close();
-        $connection->close();
+    // 添加工作队列
+    public function work_jinx(Request $request)
+    {
+        // 获取连接
+        $connection = RabbitMqConnection::getConnection();
+        // 获取通道
+        $channel = $connection->channel();
+        // 获取数据
+        $msg = $request->params['msg'];
+        // 发送
+        RabbitMqConnection::work($channel, $msg);
+        // 关闭连接
+        RabbitMqConnection::closeConnectionAndChannel($connection, $channel);
+        // 返回结果
+        return success("Send Message: " . $msg);
     }
 }

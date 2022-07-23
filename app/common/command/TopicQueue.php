@@ -6,9 +6,9 @@
  */
  
 namespace app\common\command;
- 
-use app\common\lib\classes\RabbitMq;
-use app\common\lib\classes\RabbitMqWork;
+
+use app\common\lib\classes\rabbitmq\RabbitMq;
+use app\common\lib\classes\rabbitmq\RabbitMqWork;
 use think\console\Command;
 use think\console\Input;
 use think\console\Output;

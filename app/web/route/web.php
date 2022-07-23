@@ -125,4 +125,6 @@ Route::group('rabbitmq_test', function () {
     Route::get('index', 'RabbitmqTest/index');
     // 生产者
     Route::post('publisher', 'RabbitmqTest/publisher');
+    // 工作队列
+    Route::post('work', 'RabbitmqTest/work');
 });

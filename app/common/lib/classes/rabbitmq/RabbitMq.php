@@ -79,11 +79,11 @@ class RabbitMq
      */
     public function send($msg)
     {
-        self::$channel->queue_declare('hello', false, false, false, true);
+        self::$channel->queue_declare('hello', false, true, false, true);
         if (empty($msg)) $msg = 'Hello World!';
-        // 持久化
         $amqpMsg = new AMQPMessage(
             $msg,
+            // 这里是消息持久化
             array('delivery_mode' => AMQPMessage::DELIVERY_MODE_PERSISTENT)
         );
         self::$channel->basic_publish($amqpMsg, '', 'hello');
@@ -97,7 +97,7 @@ class RabbitMq
      */
     public function receive($callback)
     {
-        self::$channel->queue_declare('hello', false, false, false, true);
+        self::$channel->queue_declare('hello', false, true, false, true);
         echo "[*] Waiting for messages. To exit press CTRL+C\n";
  
         self::$channel->basic_consume('hello', '', false, true, false, false, $callback);
@@ -113,15 +113,15 @@ class RabbitMq
      */
     public function addTask($data = '')
     {
-        self::$channel->queue_declare('task_queue', false, true, false, true);
+        self::$channel->queue_declare('task', false, true, false, true);
         if (empty($data)) $data = 'Hello World!';
         $msg = new AMQPMessage(
             $data,
             array('delivery_mode' => AMQPMessage::DELIVERY_MODE_PERSISTENT)
         );
-        self::$channel->basic_publish($msg, '', 'task_queue');
+        self::$channel->basic_publish($msg, '', 'task');
  
-        echo "[x] Sent $data \n";
+        // echo "[x] Sent $data \n";
     }
  
     /**
@@ -130,11 +130,12 @@ class RabbitMq
      */
     public function workTask($callback)
     {
-        self::$channel->queue_declare('task_queue', false, true, false, true);
+        self::$channel->queue_declare('task', false, true, false, true);
         echo ' [*] Waiting for messages. To exit press CTRL+C', "\n";
- 
+        
+        // 能者多劳模式
         self::$channel->basic_qos(null, 1, null);
-        self::$channel->basic_consume('task_queue', '', false, false, false, false, $callback);
+        self::$channel->basic_consume('task', '', false, false, false, false, $callback);
  
         while (count(self::$channel->callbacks)) {
             self::$channel->wait();

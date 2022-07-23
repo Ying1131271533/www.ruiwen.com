@@ -30,7 +30,7 @@ class SimpleWork extends Command
             $isAck     = true;
             echo 'Msg:' . $msgData . "\n";
             echo 'QueueName:' . $queueName . "\n";
-            // 如过调用接受方法：receive的basic_consume()函数里面的no_ack参数是true
+            // 如果接受方法：receive的basic_consume()函数里面的no_ack参数是true
             // 那么下面这里可以注释掉，因为已经进行了消息确认，不需要再次消息确认
             /* if ($isAck) {
                 $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);

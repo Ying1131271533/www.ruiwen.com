@@ -2,10 +2,11 @@
 
 namespace app\index\controller;
 
-use app\common\lib\classes\RabbitMqWork;
-use app\common\lib\classes\RabbitMq;
 // use app\polymerize\tool\module\es\SearchBlog;
 // use app\polymerize\tool\module\es\SyncBlog;
+
+use app\common\lib\classes\rabbitmq\RabbitMq;
+use app\common\lib\classes\rabbitmq\RabbitMqWork;
 use think\Collection;
 
 class Index extends Collection
