@@ -29,6 +29,7 @@ class WorkQueue extends Command
             // sleep(substr_count($msg->body, '.'));
             // sleep(1);
             echo " [x] Done", "\n";
+            // 如果有业务需求，就使用下面的消息确认，不需要在basic_consume的no_ack赋值为true
             $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
         };
         $RabbitMqWork->workTask($callback);

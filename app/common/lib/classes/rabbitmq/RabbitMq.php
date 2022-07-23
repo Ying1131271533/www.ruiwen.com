@@ -100,7 +100,7 @@ class RabbitMq
         self::$channel->queue_declare('hello', false, true, false, true);
         echo "[*] Waiting for messages. To exit press CTRL+C\n";
  
-        self::$channel->basic_consume('hello', '', false, true, false, false, $callback);
+        self::$channel->basic_consume('hello', '', false, false, false, false, $callback);
  
         while (count(self::$channel->callbacks)) {
             self::$channel->wait();

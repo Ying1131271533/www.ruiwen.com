@@ -31,10 +31,10 @@ class SimpleWork extends Command
             echo 'Msg:' . $msgData . "\n";
             echo 'QueueName:' . $queueName . "\n";
             // 如果接受方法：receive的basic_consume()函数里面的no_ack参数是true
-            // 那么下面这里可以注释掉，因为已经进行了消息确认，不需要再次消息确认
-            /* if ($isAck) {
+            // 如果有业务需求，就使用下面的消息确认，不需要在basic_consume的no_ack赋值为true
+            if ($isAck) {
                 $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
-            } */
+            }
         };
         $RabbitMqWork->receive($callback);
     }
