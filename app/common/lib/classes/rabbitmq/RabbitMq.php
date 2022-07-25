@@ -134,7 +134,9 @@ class RabbitMq
         echo ' [*] Waiting for messages. To exit press CTRL+C', "\n";
         
         // 能者多劳模式
+        // 参数2：每一次只能消费多少个消息
         self::$channel->basic_qos(null, 1, null);
+        // 关闭自动确认 no_ack = false
         self::$channel->basic_consume('task', '', false, false, false, false, $callback);
  
         while (count(self::$channel->callbacks)) {
@@ -143,12 +145,12 @@ class RabbitMq
     }
  
     /**
-     * 发布
+     * 发布(广播)
      * @param string $data
      */
     public function sendQueue($data = '')
     {
-        if (empty($data)) $data = 'info:Hello World!';
+        if (empty($data)) $data = 'Info:Hello World!';
         $msg = new AMQPMessage($data);
         self::$channel->basic_publish($msg, self::$exchangeName);
         echo "[x] Sent $data \n";
@@ -160,6 +162,7 @@ class RabbitMq
      */
     public function subscribeQueue($callback)
     {
+        // 获取临时队列名称
         list($queue_name, ,) = self::$channel->queue_declare(
             "", //队列名称
             false, //don't check if a queue with the same name exists 是否检测同名队列

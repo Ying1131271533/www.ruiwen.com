@@ -127,4 +127,6 @@ Route::group('rabbitmq_test', function () {
     Route::post('publisher', 'RabbitmqTest/publisher');
     // 工作队列
     Route::post('work', 'RabbitmqTest/work');
+    // 广播
+    Route::post('fanout', 'RabbitmqTest/fanout');
 });

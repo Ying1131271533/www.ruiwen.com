@@ -20,5 +20,6 @@ class RabbitmqTest extends BaseValidate
     protected $scene = [
         'publisher' => ['msg'],
         'work' => ['msg'],
+        'fanout' => ['msg'],
     ];
 }
