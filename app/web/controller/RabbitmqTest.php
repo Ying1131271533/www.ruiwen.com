@@ -2,6 +2,7 @@
 
 namespace app\web\controller;
 
+use app\common\lib\classes\rabbitmq\RabbitMq;
 use app\common\lib\classes\rabbitmq\RabbitMqConnection;
 use app\common\lib\classes\rabbitmq\RabbitMqWork;
 use app\lib\exception\Fail;
@@ -138,6 +139,16 @@ class RabbitmqTest
     // 广播
     public function fanout(Request $request)
     {
+        $RabbitMqWork = new RabbitMqWork(RabbitMq::FANOUT);
+        // 获取数据
+        $msg = $request->params['msg'];
+        $RabbitMqWork->sendQueue($msg);
+        return success("Send Message: " . $msg);
+    }
+
+    // 广播
+    public function fanout_jinx(Request $request)
+    {
         // 获取连接对象
         $connection = RabbitMqConnection::getConnection();
         // 获取通道
@@ -148,15 +159,39 @@ class RabbitmqTest
         // 将通道声明指定交换机
         // 参数1：交换机名称 随便起名 交换机不存在的时候会自动创建
         // 参数2：交换机类型 fanout 广播类型，这里管理界面的exchanges能看到amq.fanout自带的交换机
-        $channel->exchange_declare('fanout_exchange', 'fanout');
-        // $channel->exchange_declare('fanout_exchange', 'fanout',false,true,true);
+        // 参数3：是否检测同名队列
+        // 参数4：是否开启队列持久化
+        // 参数5：通道关闭后是否删除队列 不自动删除队列
+        $channel->exchange_declare('logs', 'fanout', false, true, false);
         // 发送消息
-        // 广播模式下，routing_key 没有任何意义，不需要赋值
-        $channel->basic_publish($amqpMsg, 'fanout');
+        // fanout广播模式下，routing_key 没有任何意义，不需要赋值
+        $channel->basic_publish($amqpMsg, 'logs');
         // 关闭连接
         RabbitMqConnection::closeConnectionAndChannel($connection, $channel);
         // 返回结果
         return success("Send Message: " . $msg);
     }
-
+    
+    // 订阅模型
+    public function direct(Request $request)
+    {
+        // 获取连接
+        $connection = RabbitMqConnection::getConnection();
+        // 获取连接通道
+        $channel = $connection->channel();
+        // 通过通道声明交换机
+        // 参数1：交换机名称
+        // 参数2：direct 路由模式
+        $channel->exchange_declare('logs_direct', 'direct', false, true, true);
+        // 接收数据
+        $routing_key = $request->params['routing_key'];
+        $msg = $request->params['msg'];
+        // 获取消息对象
+        $amqpMsg = new AMQPMessage($msg);
+        // 发送消息
+        $channel->basic_publish($amqpMsg, 'logs_direct', $routing_key);
+        // 关闭连接
+        RabbitMqConnection::closeConnectionAndChannel($channel, $connection);// 返回结果
+        return success("Send Message: " . $msg);
+    }
 }

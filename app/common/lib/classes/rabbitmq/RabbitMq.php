@@ -21,6 +21,7 @@ class RabbitMq
         self::HEADERS => 'headers_exchange',
         self::FANOUT => 'fanout_exchange',
     ];
+    // 路由键类型，自己定义
     const SEVERITYS = [
         'info',
         'warning',
@@ -150,10 +151,10 @@ class RabbitMq
      */
     public function sendQueue($data = '')
     {
-        if (empty($data)) $data = 'Info:Hello World!';
+        if (empty($data)) $data = 'Hello World!';
         $msg = new AMQPMessage($data);
         self::$channel->basic_publish($msg, self::$exchangeName);
-        echo "[x] Sent $data \n";
+        // echo "[x] Sent $data \n";
     }
  
     /**
@@ -170,6 +171,7 @@ class RabbitMq
             true, //the queue might be accessed by other channels 队列是否可以被其他队列访问
             false //the queue will be deleted once the channel is closed. 通道关闭后是否删除队列
         );
+        // 绑定队列和交换机
         self::$channel->queue_bind($queue_name, self::$exchangeName);
         echo "[*] Waiting for logs. To exit press CTRL+C \n";
         self::$channel->basic_consume($queue_name, '', false, true, false, false, $callback);

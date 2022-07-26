@@ -13,6 +13,7 @@ return [
         'consumer'     => 'app\common\command\Consumer',
         'work'         => 'app\common\command\Work',
         'fanout'       => 'app\common\command\Fanout',
+        'direct'       => 'app\common\command\Direct',
         // 正式
         'simple_work'  => 'app\common\command\SimpleWork',
         'work_queue'   => 'app\common\command\WorkQueue',

@@ -50,7 +50,7 @@ class RabbitMqWork
     }
  
     /**
-     * 发布(扇形交换机)
+     * 发布(扇形交换机) 广播
      * @param $data
      */
     public function sendQueue($data)
@@ -68,7 +68,7 @@ class RabbitMqWork
     }
  
     /**
-     * 发送(直接交换机)
+     * 发送(直接交换机) 订阅模型
      * @param $bindingKey
      * @param $data
      */
@@ -78,7 +78,7 @@ class RabbitMqWork
     }
  
     /**
-     * 接收(直接交换机)
+     * 接收(直接交换机) 
      * @param \Closure $callback
      * @param array $bindingKeys
      */
