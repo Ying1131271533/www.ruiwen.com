@@ -14,6 +14,7 @@ return [
         'work'         => 'app\common\command\Work',
         'fanout'       => 'app\common\command\Fanout',
         'direct'       => 'app\common\command\Direct',
+        'topic'       => 'app\common\command\Topic',
         // 正式
         'simple_work'  => 'app\common\command\SimpleWork',
         'work_queue'   => 'app\common\command\WorkQueue',

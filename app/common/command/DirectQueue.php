@@ -26,6 +26,9 @@ class DirectQueue extends Command
     {
         $RabbitMqWork = new RabbitMqWork(RabbitMq::DIRECT);
         $callback     = function ($msg) {
+            // echo "[x] 消费者1-" . $msg->delivery_info['routing_key'] . ":$msg->body \n";
+            // echo "[x] 消费者2-" . $msg->delivery_info['routing_key'] . ":$msg->body \n";
+            echo "[x] 消费者3-" . $msg->delivery_info['routing_key'] . ":$msg->body \n";
             echo "[x] " . $msg->delivery_info['routing_key'] . ":$msg->body \n";
             // 保存到日志，这里可以用于日后错误日志的保存
             Log::error("Msg: $msg->body");

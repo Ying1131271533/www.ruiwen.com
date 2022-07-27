@@ -222,7 +222,7 @@ class RabbitMq
         if (empty($data)) $data = "Hello World!";
         $msg = new AMQPMessage($data);
         self::$channel->basic_publish($msg, self::$exchangeName, $routingKey);
-        echo " [x] Sent ", $routingKey, ':', $data, " \n";
+        // echo " [x] Sent ", $routingKey, ':', $data, " \n";
     }
  
     /**
@@ -237,7 +237,7 @@ class RabbitMq
             self::$channel->queue_bind($queueName, self::$exchangeName, $bindingKey);
         }
  
-        echo ' [*] Waiting for logs. To exit press CTRL+C', "\n";
+        echo '[*] Waiting for logs. To exit press CTRL+C', "\n";
         self::$channel->basic_consume($queueName, '', false, true, false, false, $callback);
  
         while (count(self::$channel->callbacks)) {

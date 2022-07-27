@@ -131,4 +131,6 @@ Route::group('rabbitmq_test', function () {
     Route::post('fanout', 'RabbitmqTest/fanout');
     // 订阅模型
     Route::post('direct', 'RabbitmqTest/direct');
+    // 订阅模型-Topic 动态路由
+    Route::post('topic', 'RabbitmqTest/topic');
 });

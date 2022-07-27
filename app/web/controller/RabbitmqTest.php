@@ -175,6 +175,17 @@ class RabbitmqTest
     // 订阅模型
     public function direct(Request $request)
     {
+        // 接受数据
+        $routing_key = $request->params['routing_key'];
+        $msg = $request->params['msg'];
+        $RabbitMqWork = new RabbitMqWork(RabbitMq::DIRECT);
+        $RabbitMqWork->sendDirect($routing_key, $msg);
+        return success("Send Message: " . $msg);
+    }
+
+    // 订阅模型
+    public function direct_jinx(Request $request)
+    {
         // 获取连接
         $connection = RabbitMqConnection::getConnection();
         // 获取连接通道
@@ -192,6 +203,42 @@ class RabbitmqTest
         $channel->basic_publish($amqpMsg, 'logs_direct', $routing_key);
         // 关闭连接
         RabbitMqConnection::closeConnectionAndChannel($channel, $connection);// 返回结果
+        return success("Send Message: " . $msg);
+    }
+
+    // 订阅模型-Topic 动态路由
+    public function topic(Request $request)
+    {
+        $RabbitMqWork = new RabbitMqWork(RabbitMq::TOPIC);
+        // 接收参数
+        $route_key = $request->params['route_key'];
+        $msg = $request->params['msg'];
+        // 发送
+        $RabbitMqWork->sendTopic($route_key, $msg);
+        // 返回结果
+        return success('Send Message: '.$msg);
+    }
+
+    // 订阅模型-Topic 动态路由
+    public function topic_jinx(Request $request)
+    {
+        // 获取连接对象
+        $connection = RabbitMqConnection::getConnection();
+        $channel = $connection->channel();
+
+        // 声明交换机以及交换机类型 topic
+        $channel->exchange_declare('topics', 'topic', false, true, false);
+
+        // 获取参数
+        $route_key = $request->params['route_key'];
+        $msg = $request->params['msg'];
+        $amqpMsg = new AMQPMessage($msg);
+
+        // 发布消息
+        $channel->basic_publish($amqpMsg, 'topics', $route_key);
+
+        // 关闭资源
+        RabbitMqConnection::closeConnectionAndChannel($channel, $connection);
         return success("Send Message: " . $msg);
     }
 }
