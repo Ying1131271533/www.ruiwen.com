@@ -30,11 +30,12 @@ class TopicQueue extends Command
             // echo "[x] 消费者2\n";
             echo '[x] 路由键: ', $msg->delivery_info['routing_key'], "\n";
             echo '[x] 消息: ', $msg->body, "\n";
+            echo '[x] --------------------------------', "\n";
         };
         $bindingKeys = [
             'user.*',
             '*.orange.*',
-            // '*.*.rabbit',
+            '*.*.rabbit',
             // 'lazy.#',
         ];
         $RabbitMqWork->receiveTopic($callback, $bindingKeys);

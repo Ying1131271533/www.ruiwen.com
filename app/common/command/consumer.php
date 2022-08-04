@@ -7,7 +7,7 @@ use app\common\lib\classes\rabbitmq\RabbitMqConnection;
 use think\console\Command;
 use think\console\Input;
 use think\console\Output;
-use think\Log;
+use think\facade\Log;
 
 class Consumer extends Command
 {
@@ -27,15 +27,32 @@ class Consumer extends Command
         // 通道绑定对象
         // 这里要注意的是，生产者和消费者的队列参数必需一致
         // 参数1：队列名称
-        $channel->queue_declare('akali_queue', false, true, false, true);
+        $channel->queue_declare('hello', false, true, false, true);
         // $channel->queue_declare('hello', false, false, false, true);
 
         echo ' [*] Waiting for messages. To exit press Ctrl+C', "\n";
 
         // 回调函数
         $callback = function ($msg) {
-            echo " [x] Received ", $msg->body, "\n";
-
+            echo "[x] 消费者-1：", $msg->body, "\n";
+            // echo "[x] 消费者-2：", $msg->body, "\n";
+            $isAck = true;
+            // basic_consume()函数里面的no_ack参数是true
+            // 如果有业务需求，就使用下面的消息确认，不需要在basic_consume的no_ack赋值为true
+            // 如果不确认消息的话，消息还会保留在队列里面，状态是未确认
+            // 消息会一直保留，除非设置了通道关闭后自动删除队列
+            // 还没有确认的消息，开启basic_ack()，会把未确认的消息再消费一次并且确认，
+            // 如果消费者1没有确认应答消息，在没有关闭消费者监听时，消息暂时不会被将会被其他消费者消费
+            // 当消费者1退出监听后，会被其他消费者消费，直到消息被确认为止，一直保留在队列
+            // 参数1: tag
+            // 参数2: 是否批量应答，会将次信道所有的消息变成确认应答，减少网络拥堵，不过一般是false
+            if ($isAck) {
+                $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
+            }
+            // 关于消息确认的一些函数
+            // $channel->basic_ack($delivery_tag, $multiple = false) 用于肯定确认
+            // $channel->basic_nack() 用于肯定否定确认
+            // $channel->basic_reject() 用于肯定否定确认，不处理该消息直接拒绝，可以将其丢弃
             // 判断获取到quit后退出
             if (trim($msg->body) == 'quit') {
                 $msg->getChannel()->basic_cancel($msg->getConsumerTag());
@@ -47,10 +64,11 @@ class Consumer extends Command
         // 参数2:虚拟主机
         // 参数4:开始消息的自动确认机制
         // 参数7:消费时的回调接口
-        $channel->basic_consume('akali_queue', '', false, true, false, false, $callback);
+        // 只要消费者从队列获取到了消费后，消息的状态就会自动变成未确认
+        $channel->basic_consume('hello', '', false, false, false, false, $callback);
         // $channel->basic_consume('hello', '', false, true, false, false, $callback);
 
-        // 监听通道消息
+        // 监听通道消息，这里没有的话，消费完消息就会自动退出
         while (count($channel->callbacks)) {
             $channel->wait();
         }

@@ -5,6 +5,7 @@ namespace app\web\controller;
 use app\lib\exception\Error;
 use app\lib\exception\Fail;
 use app\lib\exception\Success;
+use phpmailer\PHPMailer;
 use think\cache\driver\Redis;
 
 class Code
@@ -76,7 +77,7 @@ class Code
         // 发送短信次数
         if (!$count) {
             // 获取当天剩余时间
-            $over_time = over_time();
+            $over_time = cache_time('over_day');
             // 使用redis的setex()命令，设置过期时间为今天剩余时间，发送次数为1
             $result = $redis->setex($countKey, $over_time, 1);
             if (!$result) {

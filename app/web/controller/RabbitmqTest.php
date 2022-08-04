@@ -12,15 +12,9 @@ use PhpAmqpLib\Message\AMQPMessage;
 
 class RabbitmqTest
 {
-    /* protected $config = array(
-    'host'     => 'rabbitmq',
-    'vhost'    => '/akali',
-    'port'     => 5672,
-    'login'    => 'akali',
-    'password' => '123456',
-    ); */
     protected $config = array(
         'host'     => '192.168.0.184',
+        // 'host'     => 'rabbitmq',
         'vhost'    => '/akali',
         'port'     => 5672,
         'login'    => 'akali',
@@ -59,15 +53,14 @@ class RabbitmqTest
         RabbitMqConnection::send($channel, $msg);
         RabbitMqConnection::closeConnectionAndChannel($connection, $channel);
         return success("Send Message: " . $msg); */
-
-        // 创建连接rabbitmq的连接工厂对象，连接rabbitmq主机，获取连接对象
-        $connection = new AMQPStreamConnection('127.0.0.1', 5672, 'akali', '123456', '/akali');
+        
+        // 获取连接
+        $connection = RabbitMqConnection::getConnection();
         // $connection = new AMQPStreamConnection('192.168.0.184', 5672, 'akali', '123456', '/akali');
         // $connection = new AMQPStreamConnection('rabbitmq', 5672, 'akali', '123456', '/akali');
-
+        
         // 获取连接中通道
         $channel = $connection->channel();
-
         // 这里要注意的是，生产者和消费者的队列参数必需一致
         // 通道绑定对应消息队列
         // 参数1:队列名称如果队列不存在时自动创建
@@ -76,9 +69,8 @@ class RabbitmqTest
         // 参数4:exclusive是否独占队列 true 独占队列 false 不独占，如果是true，那么只能被当前通道绑定
         // 参数4:exclusive一般都是false，因为工作中，我们一般希望是共用一个通道
         // 参数5:autoDelete:是否在消费完成后自动删除队列 true自动删除 false不自动删除
-        // 参数5:退出连接，没有消费者监听时才会自动删除队列
+        // 参数5:退出连接，没有消费者监听时是否自动删除队列
         $channel->queue_declare('hello', false, true, false, true);
-
         // 接收消息参数
         $msg = $request->params['msg'];
 
@@ -91,7 +83,7 @@ class RabbitmqTest
         // 发布消息
         // 参数1:amqp消息对象
         // 参数2:交换机名称 不填写会使用默认的交换机amq.default
-        // 参数3:队列名称
+        // 参数3:队列名称，这不是路由吗？
         // 参数4:传递消息额外设置
         $channel->basic_publish($amqpMsg, '', 'hello');
 
@@ -172,7 +164,7 @@ class RabbitmqTest
         return success("Send Message: " . $msg);
     }
     
-    // 订阅模型
+    // 订阅模型 路由
     public function direct(Request $request)
     {
         // 接受数据
@@ -183,7 +175,7 @@ class RabbitmqTest
         return success("Send Message: " . $msg);
     }
 
-    // 订阅模型
+    // 订阅模型-direct 固定频道
     public function direct_jinx(Request $request)
     {
         // 获取连接
@@ -213,7 +205,7 @@ class RabbitmqTest
         // 接收参数
         $route_key = $request->params['route_key'];
         $msg = $request->params['msg'];
-        // 发送
+        // 发送消息
         $RabbitMqWork->sendTopic($route_key, $msg);
         // 返回结果
         return success('Send Message: '.$msg);

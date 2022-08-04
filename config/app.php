@@ -47,12 +47,16 @@ return [
 
     // rabbitmq连接配置
     'rabbitmq'         => [
+        // 'host'     => '124.71.218.160',
         'host'     => '127.0.0.1',
         // 'host'     => '192.168.0.184',
         // 'host'     => 'rabbitmq',
         'port'     => 5672,
+        // 'port'     => 5673,
+        // 'port'     => 5674,
         'login'    => 'akali',
         'password' => '123456',
-        'vhost'    => '/akali',
+        'vhost'    => '/',
+        // 'vhost'    => '/akali',
     ],
 ];

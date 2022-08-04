@@ -135,7 +135,8 @@ class RabbitMq
         echo ' [*] Waiting for messages. To exit press CTRL+C', "\n";
         
         // 能者多劳模式
-        // 参数2：每一次只能消费多少个消息
+        // 参数2：每一次从队列获取多少个消息，当为1时，只能获取一条，处理完获取下一条
+        // 当为0时不限制，所以队列中的消息可以轮询着一次性发完
         self::$channel->basic_qos(null, 1, null);
         // 关闭自动确认 no_ack = false
         self::$channel->basic_consume('task', '', false, false, false, false, $callback);

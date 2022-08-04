@@ -1,6 +1,6 @@
 <?php
 
-// RabbitMQ 广播 练习
+// RabbitMQ 主题模式
 namespace app\common\command;
 
 use app\common\lib\classes\rabbitmq\RabbitMqConnection;
@@ -39,8 +39,8 @@ class Topic extends Command
         echo "[*] Waiting for logs. To exit press CTRL+C \n";
 
         $callback = function ($msg) {
-            // echo "[x] 消费者1\n";
-            echo "[x] 消费者2\n";
+            echo "[x] 消费者1\n";
+            // echo "[x] 消费者2\n";
             echo '[x] 路由键: ', $msg->delivery_info['routing_key'], "\n";
             echo '[x] 消息: ', $msg->body, "\n";
         };
@@ -51,7 +51,7 @@ class Topic extends Command
         while (count($channel->callbacks)) {
             $channel->wait();
         }
-
+        
         // 关闭连接
         RabbitMqConnection::closeConnectionAndChannel($connection, $channel);
     }

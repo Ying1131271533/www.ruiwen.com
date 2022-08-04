@@ -16,9 +16,9 @@ return [
         'direct'       => 'app\common\command\Direct',
         'topic'       => 'app\common\command\Topic',
         // 正式
-        'simple_work'  => 'app\common\command\SimpleWork',
+        'simple_queue'  => 'app\common\command\SimpleQueue',
         'work_queue'   => 'app\common\command\WorkQueue',
-        'send_queue'   => 'app\common\command\SendQueue',
+        'fanout_queue'   => 'app\common\command\FanoutQueue',
         'direct_queue' => 'app\common\command\DirectQueue',
         'topic_queue'  => 'app\common\command\TopicQueue',
     ],

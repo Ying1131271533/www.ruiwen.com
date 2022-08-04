@@ -3,7 +3,9 @@
 namespace app\common\lib\classes\rabbitmq;
 
 use PDO;
+use PhpAmqpLib\Connection\AMQPSocketConnection;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
+
 
 // 参考不良人老师
 class RabbitMqConnection
@@ -11,7 +13,13 @@ class RabbitMqConnection
     public static function getConnection()
     {
         try {
-            return new AMQPStreamConnection('127.0.0.1', 5672, 'akali', '123456', '/akali');
+            return new AMQPStreamConnection(
+                config('app.rabbitmq.host'),
+                config('app.rabbitmq.port'),
+                config('app.rabbitmq.login'),
+                config('app.rabbitmq.password'),
+                config('app.rabbitmq.vhost')
+            );
         } catch (\Throwable $th) {
             throw $th;
         }

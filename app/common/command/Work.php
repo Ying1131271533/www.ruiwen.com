@@ -1,6 +1,6 @@
 <?php
 
-// RabbitMQ 广播 练习
+// RabbitMQ 工作队列 练习
 namespace app\common\command;
 
 use app\common\lib\classes\rabbitmq\RabbitMqConnection;
@@ -23,7 +23,6 @@ class Work extends Command
         $connection = RabbitMqConnection::getConnection();
         // 获取通道
         $channel = $connection->channel();
-
         // 通道绑定对象
         $channel->queue_declare('task', false, true, false, true);
         echo ' [*] Waiting for messages. To exit press CTRL+C', "\n";
@@ -31,7 +30,7 @@ class Work extends Command
         // 能者多劳模式
         // 参数2：每一次只能消费多少个消息
         $channel->basic_qos(null, 1, null);
-
+        
         $callback = function ($msg) {
             echo " [x] 消费者-1：", $msg->body, "\n";
             // echo " [x] 消费者-2： ", $msg->body, "\n";
@@ -39,9 +38,8 @@ class Work extends Command
             $isAck = true;
             // sleep(substr_count($msg->body, '.'));
             sleep(1);
+            // sleep(10);
             echo " [x] Done", "\n";
-            // 如果有业务需求，就使用下面的手动消息确认，不需要在basic_consume的自动确认no_ack赋值为true
-            // 还没有确认的，再次开启basic_ack()，竟然会把之前拿到了还没消费的消息，自动确认了
             if ($isAck) {
                 $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
             }
