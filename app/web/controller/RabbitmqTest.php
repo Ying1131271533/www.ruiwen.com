@@ -35,7 +35,7 @@ class RabbitmqTest
     }
 
     // 生产者
-    public function publisher(Request $request)
+    public function publisher_akali(Request $request)
     {
         $msg          = $request->params['msg'];
         $RabbitMqWork = new RabbitMqWork();
@@ -53,12 +53,12 @@ class RabbitmqTest
         RabbitMqConnection::send($channel, $msg);
         RabbitMqConnection::closeConnectionAndChannel($connection, $channel);
         return success("Send Message: " . $msg); */
-        
+
         // 获取连接
         $connection = RabbitMqConnection::getConnection();
         // $connection = new AMQPStreamConnection('192.168.0.184', 5672, 'akali', '123456', '/akali');
         // $connection = new AMQPStreamConnection('rabbitmq', 5672, 'akali', '123456', '/akali');
-        
+
         // 获取连接中通道
         $channel = $connection->channel();
         // 这里要注意的是，生产者和消费者的队列参数必需一致
@@ -94,6 +94,46 @@ class RabbitmqTest
         return success("Send Message: " . $msg);
     }
 
+    // 生产者 发布确认
+    public function publisher(Request $request)
+    {
+        // 获取连接
+        $connection = RabbitMqConnection::getConnection();
+
+        // 获取连接中通道
+        $channel = $connection->channel();
+
+        // 确认投放队列，并将队列持久化
+        $channel->queue_declare('hello', false, true, false, false);
+
+        //异步回调消息确认
+        $channel->set_ack_handler(
+            function (AMQPMessage $message) {
+                echo "Message acked with content " . $message->body . PHP_EOL;
+            }
+        );
+        $channel->set_nack_handler(
+            function (AMQPMessage $message) {
+                echo "Message nacked with content " . $message->body . PHP_EOL;
+            }
+        );
+        //开启消息确认
+        $channel->confirm_select();
+
+        // 接收消息参数
+        $msg     = $request->params['msg'];
+        $amqpMsg = new AMQPMessage($msg,array('delivery_mode' =>  AMQPMessage::DELIVERY_MODE_PERSISTENT));
+        $channel->basic_publish($amqpMsg, '', 'hello');
+
+        //阻塞等待消息确认
+        $channel->wait_for_pending_acks();
+
+        // 关闭连接
+        RabbitMqConnection::closeConnectionAndChannel($channel, $connection);
+
+        return success("Send Message: " . $msg);
+    }
+
     // 添加工作队列
     public function work(Request $request)
     {
@@ -113,12 +153,14 @@ class RabbitmqTest
         $connection = RabbitMqConnection::getConnection();
         // 获取通道
         $channel = $connection->channel();
+        // 开启发布确认
+        $channel->confirm_select();
         // 获取数据
         $msg = $request->params['msg'];
         // 发送
         $channel->queue_declare('task', false, true, false, true);
-        for($i = 0; $i < 20; $i++){
-            $amqpMsg = new AMQPMessage($i.' - '.$msg);
+        for ($i = 0; $i < 20; $i++) {
+            $amqpMsg = new AMQPMessage($i . ' - ' . $msg);
             // 生产消息
             $channel->basic_publish($amqpMsg, '', 'task');
         }
@@ -146,7 +188,7 @@ class RabbitmqTest
         // 获取通道
         $channel = $connection->channel();
         // 获取数据
-        $msg = $request->params['msg'];
+        $msg     = $request->params['msg'];
         $amqpMsg = new AMQPMessage($msg);
         // 将通道声明指定交换机
         // 参数1：交换机名称 随便起名 交换机不存在的时候会自动创建
@@ -163,13 +205,13 @@ class RabbitmqTest
         // 返回结果
         return success("Send Message: " . $msg);
     }
-    
+
     // 订阅模型 路由
     public function direct(Request $request)
     {
         // 接受数据
-        $routing_key = $request->params['routing_key'];
-        $msg = $request->params['msg'];
+        $routing_key  = $request->params['routing_key'];
+        $msg          = $request->params['msg'];
         $RabbitMqWork = new RabbitMqWork(RabbitMq::DIRECT);
         $RabbitMqWork->sendDirect($routing_key, $msg);
         return success("Send Message: " . $msg);
@@ -188,13 +230,13 @@ class RabbitmqTest
         $channel->exchange_declare('logs_direct', 'direct', false, true, true);
         // 接收数据
         $routing_key = $request->params['routing_key'];
-        $msg = $request->params['msg'];
+        $msg         = $request->params['msg'];
         // 获取消息对象
         $amqpMsg = new AMQPMessage($msg);
         // 发送消息
         $channel->basic_publish($amqpMsg, 'logs_direct', $routing_key);
         // 关闭连接
-        RabbitMqConnection::closeConnectionAndChannel($channel, $connection);// 返回结果
+        RabbitMqConnection::closeConnectionAndChannel($channel, $connection); // 返回结果
         return success("Send Message: " . $msg);
     }
 
@@ -204,11 +246,11 @@ class RabbitmqTest
         $RabbitMqWork = new RabbitMqWork(RabbitMq::TOPIC);
         // 接收参数
         $route_key = $request->params['route_key'];
-        $msg = $request->params['msg'];
+        $msg       = $request->params['msg'];
         // 发送消息
         $RabbitMqWork->sendTopic($route_key, $msg);
         // 返回结果
-        return success('Send Message: '.$msg);
+        return success('Send Message: ' . $msg);
     }
 
     // 订阅模型-Topic 动态路由
@@ -216,15 +258,15 @@ class RabbitmqTest
     {
         // 获取连接对象
         $connection = RabbitMqConnection::getConnection();
-        $channel = $connection->channel();
+        $channel    = $connection->channel();
 
         // 声明交换机以及交换机类型 topic
         $channel->exchange_declare('topics', 'topic', false, true, false);
 
         // 获取参数
         $route_key = $request->params['route_key'];
-        $msg = $request->params['msg'];
-        $amqpMsg = new AMQPMessage($msg);
+        $msg       = $request->params['msg'];
+        $amqpMsg   = new AMQPMessage($msg);
 
         // 发布消息
         $channel->basic_publish($amqpMsg, 'topics', $route_key);
