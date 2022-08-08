@@ -30,7 +30,7 @@ return [
     // 显示错误信息
     'show_error_msg'   => false,
 
-    // 签名
+    // 签名，签名由参数变成字符串组合起来的，可以参照微信的接口
     'sign'             => 'Akali',
     // jwt密钥
     'token_key'        => 'U2OpdWDyzQ4iSUWaCAaXaGg3qEzR00Qv3fwMkkWKQ5CXjIWLJTmg8g==',
@@ -44,6 +44,21 @@ return [
     'redis_server'     => ['127.0.0.1:6381', '127.0.0.1:6382', '127.0.0.1:6383'],
     // memcache的服务器群
     'memcache_server'  => ['127.0.0.1:11212', '127.0.0.1:11213', '127.0.0.1:11214'],
+
+    // redis连接配置
+    'redis'            => [
+        'host'     => '127.0.0.1',
+        // 'host' => 'redis',
+        'password' => 'Ym-12]i4!gDal^Jc/3@n.c^Mh',
+        'port'     => 6379,
+    ],
+
+    // memcache连接配置
+    'memcache'         => [
+        'host'     => 'memcache',
+        'password' => '',
+        'port'     => 1121,
+    ],
 
     // rabbitmq连接配置
     'rabbitmq'         => [

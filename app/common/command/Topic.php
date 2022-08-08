@@ -34,6 +34,9 @@ class Topic extends Command
         // .*可以匹配1个
         // $channel->queue_bind($queueName, 'topics', '*.user.*');
         // .#可以匹配0到多个，所以user也可以消费
+        // 当队列绑定关系是下列这种情况时需要引起注意
+        // 当一个队列绑定键是#,那么这个队列将接收所有数据，就有点像fanout了
+        // 如果队列绑定键当中没有#和*出现，那么该队列绑定类型就是像direct 了
         $channel->queue_bind($queueName, 'topics', '*.user.#');
         // $channel->queue_bind($queueName, 'topics', '#.user.#');
         echo "[*] Waiting for logs. To exit press CTRL+C \n";

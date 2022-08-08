@@ -10,16 +10,21 @@ return [
     // 未定义的话则是 php think common/command/simple_work --option msg=akali
     'commands' => [
         // 练习
-        'consumer'     => 'app\common\command\Consumer',
-        'work'         => 'app\common\command\Work',
-        'fanout'       => 'app\common\command\Fanout',
-        'direct'       => 'app\common\command\Direct',
-        'topic'       => 'app\common\command\Topic',
+        'consumer'          => 'app\common\command\Consumer',
+        'consumer_confirm'  => 'app\common\command\ConsumerConfirm',
+        'publisher_confirm' => 'app\common\command\PublisherConfirm',
+        'work'              => 'app\common\command\Work',
+        'fanout'            => 'app\common\command\Fanout',
+        'direct'            => 'app\common\command\Direct',
+        'topic'             => 'app\common\command\Topic',
+        // 死信 练习
+        'normal'            => 'app\common\command\Normal',
+        'dead'              => 'app\common\command\Dead',
         // 正式
-        'simple_queue'  => 'app\common\command\SimpleQueue',
-        'work_queue'   => 'app\common\command\WorkQueue',
-        'fanout_queue'   => 'app\common\command\FanoutQueue',
-        'direct_queue' => 'app\common\command\DirectQueue',
-        'topic_queue'  => 'app\common\command\TopicQueue',
+        'simple_queue'      => 'app\common\command\SimpleQueue',
+        'work_queue'        => 'app\common\command\WorkQueue',
+        'fanout_queue'      => 'app\common\command\FanoutQueue',
+        'direct_queue'      => 'app\common\command\DirectQueue',
+        'topic_queue'       => 'app\common\command\TopicQueue',
     ],
 ];

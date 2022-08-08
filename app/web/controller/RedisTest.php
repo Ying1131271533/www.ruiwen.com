@@ -14,7 +14,7 @@ class RedisTest
     public function __construct()
     {
         // 创建Redis对象
-        $this->redis = new Redis(['host' => '127.0.0.1', 'password' => 'Ak-12]al^iY?i4/3@n.!g']);
+        $this->redis = new Redis(config('app.redis'));
         // $del = $this->redis->flushdb();exit;
         // $redis_keys = $this->redis->keys('*');
     }

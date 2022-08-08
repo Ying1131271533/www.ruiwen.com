@@ -27,10 +27,8 @@ class Consumer extends Command
         // 通道绑定对象
         // 这里要注意的是，生产者和消费者的队列参数必需一致
         // 参数1：队列名称
-        // $channel->queue_declare('hello', false, true, false, true);
-        
-        // 发布确认
-        $channel->queue_declare('hello', false, true, false, false);
+        $channel->queue_declare('hello', false, true, false, true);
+        // $channel->queue_declare('hello', false, false, false, true);
 
         echo ' [*] Waiting for messages. To exit press Ctrl+C', "\n";
 

@@ -44,10 +44,13 @@ return [
             // 驱动方式
             'type'     => 'redis',
             // 服务器地址
+            'host'     => config('app.redis.host'),
             // 'host'     => '127.0.0.1',
-            'host'     => 'redis',
-            // 密码
+            // 'host'     => 'redis',
+            // 密码.
             'password' => 'Ym-12]i4!gDal^Jc/3@n.c^Mh',
+            // 端口
+            'port' => config('app.redis.port'),
             // 缓存有效期 0表示永久缓存
             'expire'   => cache_time('one_month'),
         ],
@@ -56,7 +59,7 @@ return [
             // 驱动方式
             'type'   => 'redis',
             // 服务器地址
-            'host'   => '127.0.0.1',
+            'host'   => config('app.redis.host'),
             // 缓存有效期 0表示永久缓存
             'expire' => cache_time('one_month'),
             // 端口
@@ -67,9 +70,9 @@ return [
             // 驱动方式
             'type'   => 'memcache',
             // 服务器地址
-            'host'   => '127.0.0.1',
+            'host'   => config('app.memcache.host'),
             // 端口
-            'port'   => 11211,
+            'port'   => config('app.memcache.port'),
             // 缓存有效期 0表示memcache的最大缓存时间一个月
             'expire' => 0,
         ],

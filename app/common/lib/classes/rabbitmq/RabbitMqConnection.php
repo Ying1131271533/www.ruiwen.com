@@ -2,23 +2,22 @@
 
 namespace app\common\lib\classes\rabbitmq;
 
-use PDO;
-use PhpAmqpLib\Connection\AMQPSocketConnection;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 
 
 // 参考不良人老师
 class RabbitMqConnection
 {
-    public static function getConnection()
+    public static function getConnection(array $config = [])
     {
         try {
+            $config = array_replace(config('app.rabbitmq'), $config);
             return new AMQPStreamConnection(
-                config('app.rabbitmq.host'),
-                config('app.rabbitmq.port'),
-                config('app.rabbitmq.login'),
-                config('app.rabbitmq.password'),
-                config('app.rabbitmq.vhost')
+                $config['host'],
+                $config['port'],
+                $config['login'],
+                $config['password'],
+                $config['vhost']
             );
         } catch (\Throwable $th) {
             throw $th;
@@ -26,7 +25,7 @@ class RabbitMqConnection
         return null;
     }
 
-    public static function closeConnectionAndChannel($connection, $channel)
+    public static function closeConnectionAndChannel($channel, $connection)
     {
         try {
             if(!$connection != null) $connection->close();

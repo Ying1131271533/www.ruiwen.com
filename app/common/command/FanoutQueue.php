@@ -25,10 +25,10 @@ class FanoutQueue extends Command
     {
         $RabbitMqWork = new RabbitMqWork(RabbitMq::FANOUT);
         $callback     = function ($msg) {
-            // echo '消费者1-';
+            echo '消费者1-';
             // echo '消费者2-';
-            echo '消费者3-';
-            echo 'Receive: ';
+            // echo '消费者3-';
+            // echo 'Receive: ';
             echo "$msg->body \n";
             // 保存到日志，这里可以用于日后错误日志的保存
             Log::error("Msg:$msg->body");

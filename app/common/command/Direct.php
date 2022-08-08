@@ -29,7 +29,8 @@ class Direct extends Command
 
         // 创建一个临时队列并且获取临时队列名称
         list($queue_namme, ) = $channel->queue_declare('', false, true, true, false);
-        // 基于routing_key绑定队列和交换机，一个交换机可以绑定多个路由
+        // 将队列名与交换器名进行绑定，并指定routing_key
+        // 队列基于routing_key绑定交换机，一个交换机可以绑定多个路由，队列也是
         $channel->queue_bind($queue_namme, 'logs_direct', 'info');
         $channel->queue_bind($queue_namme, 'logs_direct', 'error');
         $channel->queue_bind($queue_namme, 'logs_direct', 'warning');

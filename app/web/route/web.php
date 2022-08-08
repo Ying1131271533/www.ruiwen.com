@@ -125,6 +125,8 @@ Route::group('rabbitmq_test', function () {
     Route::get('index', 'RabbitmqTest/index');
     // 生产者
     Route::post('publisher', 'RabbitmqTest/publisher');
+    // 生产者 发布确认
+    Route::post('publisher_confirm', 'RabbitmqTest/publisher_confirm');
     // 工作队列
     Route::post('work', 'RabbitmqTest/work');
     // 广播
@@ -133,4 +135,6 @@ Route::group('rabbitmq_test', function () {
     Route::post('direct', 'RabbitmqTest/direct');
     // 订阅模型-Topic 动态路由
     Route::post('topic', 'RabbitmqTest/topic');
+    // 死信队列
+    Route::post('publisher_dead', 'RabbitmqTest/publisher_dead');
 });

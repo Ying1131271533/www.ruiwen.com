@@ -524,3 +524,13 @@ function dawn_time($id)
     $time = 86400 - (strtotime(date('Y-m-d H:i:30')) + 8 * 3600) % 86400 + 3600 * 3 + (int)$number;
     return $time;
 }
+
+// 返回当前的毫秒时间戳
+function msectime() {
+    list($t1, $t2) = explode(' ', microtime());
+    $msectime =  (float)sprintf('%.0f',(floatval($t1)+floatval($t2))*1000);
+    $msectime2 = (string)sprintf('%.0f',(floatval($t1)+floatval($t2))*1000);
+    // var_dump("float类型:".$msectime);  // string(29) "float类型:1.60981667462E+12"
+    // var_dump("string类型:".$msectime2); // string(26) "string类型:1609816674622"
+    return $msectime;
+}
