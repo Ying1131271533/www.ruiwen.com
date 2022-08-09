@@ -42,7 +42,7 @@ class RedisDemo
         // 普通
         // $result = DosecKill::getDosecKill($user_id, $product_id);
         // Lua脚本
-        $result = DosecKill::getDosecKillScript($user_id, $product_id);
+        $result = DosecKill::getDosecKillLuaScript($user_id, $product_id);
         if (!$result) {
             throw new Fail('抢购失败');
         }

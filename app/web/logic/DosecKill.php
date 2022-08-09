@@ -1,6 +1,7 @@
 <?php
 namespace app\web\logic;
 
+use app\common\lib\classes\rabbitmq\RabbitMqConnection;
 use app\lib\exception\Fail;
 use app\lib\exception\Miss;
 use lib\RedisLock;
@@ -8,7 +9,7 @@ use lib\RedisPool;
 
 class DosecKill
 {
-    
+    // 普通秒杀代码
     public static function getDosecKill(int $user_id, int $product_id): bool
     {
         // $redis = new Redis(['host' => '124.71.218.160', 'password' => 'Ak12al&iYi4%3*@n.!g']);
@@ -64,16 +65,16 @@ class DosecKill
      * @param  int      $product_id     商品id
      * @return bool                     返回结果
      */
-    public static function getDosecKillScript(int $user_id, int $product_id)
+    public static function getDosecKillLuaScript(int $user_id, int $product_id)
     {
         // $redis = new Redis(['host' => '124.71.218.160', 'password' => 'Ak12al&iYi4%3*@n.!g']);
         RedisPool::addServer(config('app.redis_pool')); // 添加Redis配置
         $redis = RedisPool::getRedis('RA'); // 连接RA，使用默认0库
 
         // 库存key
-        $stockKey = "sk:" . $product_id . ":qt";
+        $stockKey = "stock_key:" . $product_id . ":qt";
         // 秒杀成功用户key
-        $userIdKey = "sk:" . $product_id . ":user";
+        $userIdKey = "stock_key:" . $product_id . ":user";
         
         // 实例化redisLock
         $redisLock = new RedisLock();
@@ -99,6 +100,26 @@ class DosecKill
 
             $redis->decr($stockKey);
             $redis->sadd($userIdKey, $user_id);
+
+            // 下面是保存到RabbitMQ里面的业务代码
+
+            // 发送给生成订单数据的RabbitMQ
+            // 获取连接
+            // $rabbitmqConnection = RabbitMqConnection::getConnection(['vhost' => 'order']);
+            // 获取通道
+            // $channel = $rabbitmqConnection->channel();
+            // $channel->queue_declare('order_mysql', false, true, false, false);
+            // $msg = serialize(['user_id' => $user_id, 'goods_id' => $product_id]);
+            // $amqpMsg = new AMQPMessage($msg);
+
+            // 发送给需要半小时支付的RabbitMQ
+            // 获取连接
+            // $rabbitmqConnection = RabbitMqConnection::getConnection(['vhost' => 'order']);
+            // 获取通道
+            // $channel = $rabbitmqConnection->channel();
+            // $channel->queue_declare('order_pay', false, true, false, false);
+            // $msg = serialize(['user_id' => $user_id, 'goods_id' => $product_id]);
+            // $amqpMsg = new AMQPMessage($msg);
 
             $result = $redisLock->unlock($key);
             if (!$result) {

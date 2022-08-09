@@ -321,8 +321,7 @@ class RabbitmqTest
         $normal_queue = 'normal_queue';
         // 普通routing_key
         $normal_routing_key = 'normal_routing_key';
-        // 第一种死信情况 消息TTL过期
-        // 设置延迟时间10s过期，等待10秒未进行消费，数据进入到死信队列中(还真跑到死信队列了)
+        // 设置延迟时间10s过期，等待10秒未进行消费，数据会自动跑去死信队列中(还真跑到死信队列了)
         $ttl = 10000;
 
         // 死信队列名称
@@ -339,12 +338,14 @@ class RabbitmqTest
 
         // 设置队列中数据存活时间、死信队列、死信路由key
         $arguments = new AMQPTable([
+            // 第一种死信情况 消息TTL过期
+            // 如果不设置放到其它队列arguments，不知道是不起效，还是回到了原本队列中
             // 'x-message-ttl'             => $ttl,
             'x-dead-letter-exchange'    => $dead_exchange,
             'x-dead-letter-routing-key' => $dead_routing_key,
             // 第二种死信情况 队列达到最大长度
             // 设置队列长度的限制
-            'x-max-length'              => 6,
+            // 'x-max-length'              => 6,
             // 设置队列最大字节数
             // 'x-max-length-bytes' => 1024;
         ]);
