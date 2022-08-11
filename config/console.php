@@ -20,6 +20,8 @@ return [
         // 死信 练习
         'normal'            => 'app\common\command\Normal',
         'dead'              => 'app\common\command\Dead',
+        // 延迟队列
+        'delay'              => 'app\common\command\Delay',
         // 正式
         'simple_queue'      => 'app\common\command\SimpleQueue',
         'work_queue'        => 'app\common\command\WorkQueue',

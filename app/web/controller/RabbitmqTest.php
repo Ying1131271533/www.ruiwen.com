@@ -464,13 +464,15 @@ class RabbitmqTest
         $channel->queue_bind($delay_queue, $delay_exchange, $delay_routing_key);
 
 
-        // amqp对象
-        $amqpMsg = new AMQPMessage($msg, ['delivery_mode' => AMQPMessage::DELIVERY_MODE_NON_PERSISTENT]);
-        
+        // amqp对象A
+        $amqpMsgA = new AMQPMessage('消息来自ttl为10s的A队列: '.$msg, ['delivery_mode' => AMQPMessage::DELIVERY_MODE_NON_PERSISTENT]);
         // 发送A
-        $channel->basic_publish($amqpMsg, $normal_exchange, $routing_key_a);
+        $channel->basic_publish($amqpMsgA, $normal_exchange, $routing_key_a);
+
+        // amqp对象B
+        $amqpMsgB = new AMQPMessage('消息来自ttl为40s的B队列: '.$msg, ['delivery_mode' => AMQPMessage::DELIVERY_MODE_NON_PERSISTENT]);
         // 发送B
-        $channel->basic_publish($amqpMsg, $normal_exchange, $routing_key_b);
+        $channel->basic_publish($amqpMsgB, $normal_exchange, $routing_key_b);
 
         // 关闭连接
         RabbitMqConnection::closeConnectionAndChannel($channel, $connection);
