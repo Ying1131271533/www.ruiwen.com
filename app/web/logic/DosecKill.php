@@ -101,9 +101,30 @@ class DosecKill
             $redis->decr($stockKey);
             $redis->sadd($userIdKey, $user_id);
 
-            // 下面是保存到RabbitMQ里面的业务代码
+            // 这里代码写到logic里面，例如：OrderMq.php
+            // 下面是调用提交订单RabbitMQ里面的业务代码分析
+            // 1.发布到数据库生产订单的队列，这里需要用死信队列
+            // 如果失败，例如库存车票为零，则发布到记录订单提交失败原因的队列，跳转到订单生成失败页面
+            // 如果成功，则把页面跳转到支付页面
+            
 
-            // 发送给生成订单数据的RabbitMQ
+            // 已支付的代码处理
+
+            // 订单状态改为已支付
+            // 发送短信提醒支付成功，什么时候发车(这里不知道要不要用RabbitMQ)
+            // 延时队列1，发车五小时前，发短信提醒用户今天要坐高铁
+            // 延时队列2，发车30分钟前，发短信提醒用户即将发车
+
+
+            // 未支付的代码处理
+
+            // 直连(direct)队列1：发短信告诉用户30分钟内付款
+            // 延时队列2：30分钟后查询订单的支付状态，未支付的话就把订单状态改变失效
+
+
+            // 下面的代码应该要放到OrderMq.php
+
+            // 发送消息给生成订单数据的RabbitMQ
             // 获取连接
             // $rabbitmqConnection = RabbitMqConnection::getConnection(['vhost' => 'order']);
             // 获取通道
@@ -112,7 +133,8 @@ class DosecKill
             // $msg = serialize(['user_id' => $user_id, 'goods_id' => $product_id]);
             // $amqpMsg = new AMQPMessage($msg);
 
-            // 发送给需要半小时支付的RabbitMQ
+
+            // 30分钟后查询订单是否付款，然后更新订单状态的RabbitMQ
             // 获取连接
             // $rabbitmqConnection = RabbitMqConnection::getConnection(['vhost' => 'order']);
             // 获取通道

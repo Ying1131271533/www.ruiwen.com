@@ -131,10 +131,12 @@ Route::group('rabbitmq_test', function () {
     Route::post('work', 'RabbitmqTest/work');
     // 广播
     Route::post('fanout', 'RabbitmqTest/fanout');
-    // 订阅模型
+    // 订阅模型 - 直连模式
     Route::post('direct', 'RabbitmqTest/direct');
-    // 订阅模型-Topic 动态路由
+    // 订阅模型 - Topic 动态路由
     Route::post('topic', 'RabbitmqTest/topic');
     // 死信队列
     Route::post('publisher_dead', 'RabbitmqTest/publisher_dead');
+    // 延迟队列
+    Route::post('delay', 'RabbitmqTest/delay');
 });

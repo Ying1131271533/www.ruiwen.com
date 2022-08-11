@@ -48,7 +48,7 @@ return [
             // 'host'     => '127.0.0.1',
             // 'host'     => 'redis',
             // 密码.
-            'password' => 'Ym-12]i4!gDal^Jc/3@n.c^Mh',
+            'password' => config('app.redis.password'),
             // 端口
             'port' => config('app.redis.port'),
             // 缓存有效期 0表示永久缓存

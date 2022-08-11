@@ -33,5 +33,7 @@ class RabbitmqTest extends BaseValidate
         'topic'             => ['msg', 'route_key'],
         // 死信队列
         'publisher_dead'    => ['msg', 'routing_key'],
+        // 延迟队列
+        'delay'             => ['msg', 'routing_key'],
     ];
 }

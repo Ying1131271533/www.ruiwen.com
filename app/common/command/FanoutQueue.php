@@ -31,7 +31,7 @@ class FanoutQueue extends Command
             // echo 'Receive: ';
             echo "$msg->body \n";
             // 保存到日志，这里可以用于日后错误日志的保存
-            Log::error("Msg:$msg->body");
+            Log::error("Msg: $msg->body");
         };
         $RabbitMqWork->subscribeQueue($callback);
     }

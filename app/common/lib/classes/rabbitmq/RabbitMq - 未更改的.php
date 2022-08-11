@@ -12,16 +12,32 @@ class RabbitMq
     static private $instance;
     static private $connection;
     static private $channel;
-    static private $arguments;
+    const DIRECT = 'direct';
+    const TOPIC = 'topic';
+    const HEADERS = 'headers';
+    const FANOUT = 'fanout';
+    static private $exchangeNames = [
+        self::DIRECT => 'direct_exchange',
+        self::TOPIC => 'topic_exchange',
+        self::HEADERS => 'headers_exchange',
+        self::FANOUT => 'fanout_exchange',
+    ];
+    
+    // 路由键类型，自己定义
+    const SEVERITYS = [
+        'info',
+        'warning',
+        'error'
+    ];
     static private $exchangeName = '';
  
     /**
      * RabbitMq constructor.
      * @param $exchangeType
      */
-    private function __construct($exchangeName, $exchangeType, $arguments, $config = [])
+    private function __construct($exchangeType)
     {
-        $config = array_replace(config('app.rabbitmq'), $config);
+        $config = config('app.rabbitmq');
         self::$connection = new AMQPStreamConnection(
             $config['host'],
             $config['port'],
@@ -31,16 +47,17 @@ class RabbitMq
         );
         self::$channel = self::$connection->channel();
         if (!empty($exchangeType)) {
-            self::$exchangeName = $exchangeName;
+            self::$exchangeName = self::$exchangeNames[$exchangeType];
             self::$channel->exchange_declare(
                 self::$exchangeName, //交换机名称
                 $exchangeType, //路由类型
-                false, // 是否检测同名队列
-                true, // 是否开启队列持久化
-                false // 通道关闭后是否删除队列
+                false, //don't check if a queue with the same name exists 是否检测同名队列
+                true, //the queue will not survive server restarts 是否开启队列持久化
+                false, //the queue will be deleted once the channel is closed. 通道关闭后是否删除队列
+                false
             );
         }
-        !empty($arguments) ? self::$arguments = new AMQPTable($arguments) : self::$arguments = new AMQPTable();
+        
     }
  
     /**
@@ -48,10 +65,10 @@ class RabbitMq
      * @param string $exchangeType
      * @return RabbitMq
      */
-    public static function instance($exchangeName, $exchangeType = '', $arguments = [], $config = [])
+    public static function instance($exchangeType = '')
     {
         if (!self::$instance instanceof self) {
-            self::$instance = new self($exchangeName, $exchangeType, $queue_name = '', $arguments, $config = []);
+            self::$instance = new self($exchangeType);
         }
         return self::$instance;
     }
@@ -68,7 +85,7 @@ class RabbitMq
      */
     public function send($msg)
     {
-        self::$channel->queue_declare('hello', false, true, false, true, false, self::$arguments);
+        self::$channel->queue_declare('hello', false, true, false, true);
         if (empty($msg)) $msg = 'Hello World!';
         $amqpMsg = new AMQPMessage(
             $msg,
@@ -140,6 +157,7 @@ class RabbitMq
      */
     public function sendQueue($data = '')
     {
+        if (empty($data)) $data = 'Hello World!';
         $msg = new AMQPMessage($data);
         self::$channel->basic_publish($msg, self::$exchangeName);
         // echo "[x] Sent $data \n";
@@ -151,13 +169,14 @@ class RabbitMq
      */
     public function subscribeQueue($callback)
     {
+        // 获取临时队列名称
         list($queue_name, ,) = self::$channel->queue_declare(
-                "", //队列名称
-                false, //don't check if a queue with the same name exists 是否检测同名队列
-                true, //the queue will not survive server restarts 是否开启队列持久化
-                true, //the queue might be accessed by other channels 队列是否可以被其他队列访问
-                false //the queue will be deleted once the channel is closed. 通道关闭后是否删除队列
-            );
+            "", //队列名称
+            false, // 是否检测同名队列
+            true, // 是否开启队列持久化
+            true, // 队列是否可以被其他队列访问
+            false // 通道关闭后是否删除队列
+        );
         // 绑定队列和交换机
         self::$channel->queue_bind($queue_name, self::$exchangeName);
         echo "[*] Waiting for logs. To exit press CTRL+C \n";
@@ -173,12 +192,9 @@ class RabbitMq
      * @param $routingKey
      * @param string $data
      */
-    public function sendDirect($data = '', $routingKey, $queue_name = '')
+    public function sendDirect($routingKey, $data = '')
     {
-        if (!empty($queue_name)) {
-            self::$channel->queue_declare($queue_name, false, true, false, false, false, self::$arguments);
-            self::$channel->queue_bind($queue_name, self::$exchangeName, $routingKey);
-        }
+        if (empty($data)) $data = "Hello World!";
         $msg = new AMQPMessage($data);
         self::$channel->basic_publish($msg, self::$exchangeName, $routingKey);
         echo "[x] Sent $routingKey:$data \n";
@@ -189,16 +205,14 @@ class RabbitMq
      * @param \Closure $callback
      * @param array $bindingKeys
      */
-    public function receiveDirect(\Closure $callback, array $bindingKeys, $queue_name = '')
+    public function receiveDirect(\Closure $callback, array $bindingKeys)
     {
-        if (empty($queue_name)) {
-            list($queue_name, ,) = self::$channel->queue_declare('', false, true, true, false);
-            foreach ($bindingKeys as $bindingKey) {
-                self::$channel->queue_bind($queue_name, self::$exchangeName, $bindingKey);
-            }
+        list($queue_namme, ,) = self::$channel->queue_declare('', false, true, true, false);
+        foreach ($bindingKeys as $bindingKey) {
+            self::$channel->queue_bind($queue_namme, self::$exchangeName, $bindingKey);
         }
         echo "[x] Waiting for logs. To exit press CTRL+C \n";
-        self::$channel->basic_consume($queue_name, '', false, true, false, false, $callback);
+        self::$channel->basic_consume($queue_namme, '', false, true, false, false, $callback);
         while (count(self::$channel->callbacks)) {
             self::$channel->wait();
         }
@@ -209,12 +223,9 @@ class RabbitMq
      * @param $routingKey
      * @param string $data
      */
-    public function sendTopic($routingKey, $data = '', $queue_name = '')
+    public function sendTopic($routingKey, $data = '')
     {
-        if (!empty($queue_name)) {
-            self::$channel->queue_declare($queue_name, false, true, false, false, false, self::$arguments);
-            self::$channel->queue_bind($queue_name, self::$exchangeName, $routingKey);
-        }
+        if (empty($data)) $data = "Hello World!";
         $msg = new AMQPMessage($data);
         self::$channel->basic_publish($msg, self::$exchangeName, $routingKey);
         // echo " [x] Sent ", $routingKey, ':', $data, " \n";
@@ -225,14 +236,13 @@ class RabbitMq
      * @param \Closure $callback
      * @param array $bindingKeys
      */
-    public function receiveTopic(\Closure $callback, array $bindingKeys, $queue_name = '')
+    public function receiveTopic(\Closure $callback, array $bindingKeys)
     {
-        if (empty($queue_name)){
-            list($queueName, ,) = self::$channel->queue_declare("", false, true, true, false);
-            foreach ($bindingKeys as $bindingKey) {
-                self::$channel->queue_bind($queueName, self::$exchangeName, $bindingKey);
-            }
+        list($queueName, ,) = self::$channel->queue_declare("", false, true, true, false);
+        foreach ($bindingKeys as $bindingKey) {
+            self::$channel->queue_bind($queueName, self::$exchangeName, $bindingKey);
         }
+ 
         echo '[*] Waiting for logs. To exit press CTRL+C', "\n";
         self::$channel->basic_consume($queueName, '', false, true, false, false, $callback);
  
