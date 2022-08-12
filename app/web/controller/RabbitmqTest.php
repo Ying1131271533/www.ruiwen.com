@@ -393,7 +393,7 @@ class RabbitmqTest
         // 接收数据
         $msg = $request->params['msg'];
         // 保存到日志
-        Log::info(date('Y-m-d H:i:s') . " 发一条信息给两个延迟(TTL)队列: " . $msg);
+        Log::info("发一条信息给两个延迟(TTL)队列: " . $msg);
 
         // 获取连接对象
         $connection = RabbitMqConnection::getConnection();
@@ -480,12 +480,12 @@ class RabbitmqTest
         $channel->queue_bind($delay_queue, $delay_exchange, $delay_routing_key);
 
         // amqp对象A
-        $amqpMsgA = new AMQPMessage('消息来自ttl为10s的A队列: ' . $msg, ['delivery_mode' => AMQPMessage::DELIVERY_MODE_NON_PERSISTENT]);
+        $amqpMsgA = new AMQPMessage(date('Y-m-d H:i:s') . ' 消息来自ttl为10s的A队列: ' . $msg, ['delivery_mode' => AMQPMessage::DELIVERY_MODE_NON_PERSISTENT]);
         // 发送A
         $channel->basic_publish($amqpMsgA, $normal_exchange, $routing_key_a);
 
         // amqp对象B
-        $amqpMsgB = new AMQPMessage('消息来自ttl为40s的B队列: ' . $msg, ['delivery_mode' => AMQPMessage::DELIVERY_MODE_NON_PERSISTENT]);
+        $amqpMsgB = new AMQPMessage(date('Y-m-d H:i:s') . ' 消息来自ttl为40s的B队列: ' . $msg, ['delivery_mode' => AMQPMessage::DELIVERY_MODE_NON_PERSISTENT]);
         // 发送B
         $channel->basic_publish($amqpMsgB, $normal_exchange, $routing_key_b);
 
@@ -504,7 +504,7 @@ class RabbitmqTest
         $ttl = $request->params['ttl_time'];
 
         // 保存到日志
-        $log_msg = date('Y-m-d H:i:s') . " 发一条信息给时长为" . ($ttl / 1000) . "s的延迟(TTL)队列C: " . $msg;
+        $log_msg = " 发一条信息给时长为" . ($ttl / 1000) . "s的延迟(TTL)队列C: " . $msg;
         Log::info($log_msg);
 
         // 获取连接对象
@@ -554,7 +554,7 @@ class RabbitmqTest
         // 因为队列是先进先出的，所以在队列中先进入的过期时间为20秒的A消息
         // 把后进入的过期时间为2秒的B消息阻塞在了后面，所以B消息出不来
         $amqpMsg = new AMQPMessage(
-            '消息来自ttl为' . ($ttl / 1000). 's的C优化队列: ' . $msg,
+            date('Y-m-d H:i:s') . ' 消息来自ttl为' . ($ttl / 1000). 's的C优化队列: ' . $msg,
             [
                 // 消息持久化
                 'delivery_mode' => AMQPMessage::DELIVERY_MODE_NON_PERSISTENT,
@@ -586,15 +586,12 @@ class RabbitmqTest
         // 延迟队列路由键
         $delayed_routing_key = 'delayed_routing_key';
 
-        // 设置延迟交换机的队列类型为direct，也可以选topic或者其它的
-        // $arguments = new AMQPTable(['x-daleyed-type' => 'direct']);
-        // 声明交换机 - 交换机类型为 x-delayed-message 
-        $channel->exchange_declare($delayed_exchange, 'x-delayed-message', false, true, false);
-
-        // 设置延迟交换机的队列类型为direct，也可以选topic或者其它的
-        $arguments = new AMQPTable(['x-daleyed-type' => 'direct']);
+        // 设置延迟交换机的队列类型为direct，也可以选topic和其它的交换机类型
+        $arguments = new AMQPTable(['x-delayed-type' => 'direct']);
+        $channel->exchange_declare($delayed_exchange, 'x-delayed-message', false, true, false, false, false, $arguments);
+        
         // 声明队列
-        $channel->queue_declare($delayed_queue, false, true, false, false, false, $arguments);
+        $channel->queue_declare($delayed_queue, false, true, false, false, false);
         // 将队列名与交换机名进行绑定，并指定routing_key
         $channel->queue_bind($delayed_queue, $delayed_exchange, $delayed_routing_key);
 
@@ -604,12 +601,12 @@ class RabbitmqTest
         $ttl = $request->params['ttl'];
 
         // 保存到日志
-        $log_msg = date('Y-m-d H:i:s') . " 发一条信息给时长为" . ($ttl / 1000) . "s的延迟(TTL)队列: " . $msg;
+        $log_msg = "发一条信息给时长为" . ($ttl / 1000) . "s的延迟插件(TTL)队列: " . $msg;
         Log::info($log_msg);
 
         // 创建消息
         $amqpMsg = new AMQPMessage(
-            '消息来自ttl为' . ($ttl / 1000). 's的插件优化队列: ' . $msg,
+            date('Y-m-d H:i:s') . ' 消息来自ttl为' . ($ttl / 1000). 's的插件优化队列: ' . $msg,
             [
                 // 消息持久化
                 'delivery_mode' => AMQPMessage:: DELIVERY_MODE_NON_PERSISTENT,
@@ -619,7 +616,7 @@ class RabbitmqTest
         );
         
         // 发送
-        $channel->basic_publish($amqpMsg, $delayed_exchange, $delayed_queue);
+        $channel->basic_publish($amqpMsg, $delayed_exchange, $delayed_routing_key);
 
         // 关闭连接
         RabbitMqConnection::closeConnectionAndChannel($channel, $connection);

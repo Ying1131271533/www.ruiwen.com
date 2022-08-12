@@ -14,7 +14,7 @@ class RabbitmqTest extends BaseValidate
         // 变化的
         'route_key|路由'    => 'require',
         // 过期时间
-        'ttl_time|过期时间'   => 'require',
+        'ttl|过期时间'        => 'require',
     ];
 
     // 验证消息
@@ -22,7 +22,7 @@ class RabbitmqTest extends BaseValidate
         'msg.require'         => '消息不能为空',
         'routing_key.require' => '路由键不能为空',
         'route_key.require'   => '路由不能为空',
-        'ttl_time.require'    => '过期时间不能为空',
+        'ttl.require'         => '过期时间不能为空',
     ];
 
     // 验证场景

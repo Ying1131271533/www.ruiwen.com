@@ -22,6 +22,8 @@ return [
         'dead'              => 'app\common\command\Dead',
         // 延迟队列
         'delay'              => 'app\common\command\Delay',
+        // 延迟队列 - 插件
+        'delayed'              => 'app\common\command\Delayed',
         // 正式
         'simple_queue'      => 'app\common\command\SimpleQueue',
         'work_queue'        => 'app\common\command\WorkQueue',
