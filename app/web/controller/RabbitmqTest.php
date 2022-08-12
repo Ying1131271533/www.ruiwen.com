@@ -8,6 +8,7 @@ use app\common\lib\classes\rabbitmq\RabbitMqWork;
 use app\Request;
 use PhpAmqpLib\Message\AMQPMessage;
 use PhpAmqpLib\Wire\AMQPTable;
+use think\console\input\Argument;
 use think\facade\Log;
 
 class RabbitmqTest
@@ -304,7 +305,7 @@ class RabbitmqTest
         return success("Send Message: " . $msg);
     }
 
-    // 延迟队列
+    // 死信队列
     public function publisher_dead(Request $request)
     {
         // 获取连接对象，order虚拟机
@@ -318,29 +319,29 @@ class RabbitmqTest
         $queue = 'queue';
         // 普通routing_key
         $routing_key = 'routing_key';
-        // 设置延迟时间10s过期，等待10秒未进行消费，数据会自动跑去延迟队列中(还真跑到延迟队列了)
+        // 设置死信时间10s过期，等待10秒未进行消费，数据会自动跑去死信队列中(还真跑到死信队列了)
         $ttl = 10000;
 
-        // 延迟队列名称
+        // 死信队列名称
         $dead_queue = 'dead_queue';
-        // 延迟交换机名称
+        // 死信交换机名称
         $dead_exchange = 'dead_exchange';
-        // 延迟routing_key
+        // 死信routing_key
         $dead_routing_key = 'dead_routing_key';
 
         /*********************  普通队列  *********************/
 
-        // 声明普通交换机和延迟交换机 类型为direct
+        // 声明普通交换机和死信交换机 类型为direct
         $channel->exchange_declare($normal_exchange, 'direct', false, false, false);
 
-        // 设置队列中数据存活时间、延迟队列、延迟路由key
+        // 设置队列中数据存活时间、死信队列、死信路由key
         $arguments = new AMQPTable([
-            // 第一种延迟情况 消息TTL过期
+            // 第一种死信情况 消息TTL过期
             // 如果不设置放到其它队列arguments，不知道是不起效，还是回到了原本队列中
             // 'x-message-ttl'             => $ttl,
             'x-dead-letter-exchange'    => $dead_exchange,
             'x-dead-letter-routing-key' => $dead_routing_key,
-            // 第二种延迟情况 队列达到最大长度
+            // 第二种死信情况 队列达到最大长度
             // 设置队列长度的限制
             // 'x-max-length'              => 6,
             // 设置队列最大字节数
@@ -356,9 +357,9 @@ class RabbitmqTest
         // 将队列名与交换机名进行绑定，并指定routing_key
         $channel->queue_bind($queue, $normal_exchange, $routing_key);
 
-        /*********************  延迟队列  *********************/
+        /*********************  死信队列  *********************/
 
-        // 声明延迟交换机和队列
+        // 声明死信交换机和队列
         $channel->exchange_declare($dead_exchange, 'direct', false, false, false);
         $channel->queue_declare($dead_queue, false, true, false, false);
         $channel->queue_bind($dead_queue, $dead_exchange, $dead_routing_key);
@@ -373,7 +374,7 @@ class RabbitmqTest
         // 发送消息
         $channel->basic_publish($amqpMsg, $normal_exchange, $routing_key); */
 
-        // 模拟第二种延迟情况 长度限制
+        // 模拟第二种死信情况 长度限制
         for ($i = 1; $i < 11; $i++) {
             $amqpMsg = new AMQPMessage($i, ['delivery_mode' => AMQPMessage::DELIVERY_MODE_NON_PERSISTENT]);
             $channel->basic_publish($amqpMsg, $normal_exchange, $routing_key);
@@ -392,7 +393,7 @@ class RabbitmqTest
         // 接收数据
         $msg = $request->params['msg'];
         // 保存到日志
-        Log::info("发一条信息给两个延迟(TTL)队列: " . $msg);
+        Log::info(date('Y-m-d H:i:s') . " 发一条信息给两个延迟(TTL)队列: " . $msg);
 
         // 获取连接对象
         $connection = RabbitMqConnection::getConnection();
@@ -416,11 +417,15 @@ class RabbitmqTest
         // 延迟routing_key
         $delay_routing_key = 'delay_routing_key';
 
+        // 普通队列名称C 用于优化队列
+        $queue_c = 'queue_c';
+        // 普通routing_key C
+        $routing_key_c = 'routing_key_c';
+
         // 延迟时间A
         $ttl_a = 10000;
         // 延迟时间B
         $ttl_b = 40000;
-
 
         // 声明普通交换机
         $channel->exchange_declare($normal_exchange, 'direct', false, false, false);
@@ -428,11 +433,11 @@ class RabbitmqTest
         // 设置队列A的中数据存活时间、延迟队列、延迟路由key
         $arguments = new AMQPTable([
             // 设置TTL过期时间
-            'x-message-ttl'          => $ttl_a,
+            'x-message-ttl'             => $ttl_a,
             // 设置延迟队列
-            'x-dead-letter-exchange' => $delay_exchange,
+            'x-dead-letter-exchange'    => $delay_exchange,
             // 设置延迟routing_key
-            'x-dead-letter-routing-key'     => $delay_routing_key
+            'x-dead-letter-routing-key' => $delay_routing_key,
         ]);
 
         // 声明普通队列A
@@ -455,6 +460,17 @@ class RabbitmqTest
         // 将队列名与交换机名进行绑定，并指定routing_key
         $channel->queue_bind($queue_b, $normal_exchange, $routing_key_b);
 
+        // 设置队列C的中数据延迟队列、延迟路由key
+        $argumentsC = new AMQPTable([
+            // 设置延迟队列
+            'x-dead-letter-exchange'    => $delay_exchange,
+            // 设置延迟routing_key
+            'x-dead-letter-routing-key' => $delay_routing_key,
+        ]);
+        // 声明普通队列C 用于优化队列
+        $channel->queue_declare($queue_c, false, true, false, false, false, $argumentsC);
+        // 将队列名与交换机名进行绑定，并指定routing_key
+        $channel->queue_bind($queue_c, $normal_exchange, $routing_key_c);
 
         // 延迟交换机
         $channel->exchange_declare($delay_exchange, 'direct', false, false, false);
@@ -463,22 +479,153 @@ class RabbitmqTest
         // 将队列名与交换机名进行绑定，并指定routing_key
         $channel->queue_bind($delay_queue, $delay_exchange, $delay_routing_key);
 
-
         // amqp对象A
-        $amqpMsgA = new AMQPMessage('消息来自ttl为10s的A队列: '.$msg, ['delivery_mode' => AMQPMessage::DELIVERY_MODE_NON_PERSISTENT]);
+        $amqpMsgA = new AMQPMessage('消息来自ttl为10s的A队列: ' . $msg, ['delivery_mode' => AMQPMessage::DELIVERY_MODE_NON_PERSISTENT]);
         // 发送A
         $channel->basic_publish($amqpMsgA, $normal_exchange, $routing_key_a);
 
         // amqp对象B
-        $amqpMsgB = new AMQPMessage('消息来自ttl为40s的B队列: '.$msg, ['delivery_mode' => AMQPMessage::DELIVERY_MODE_NON_PERSISTENT]);
+        $amqpMsgB = new AMQPMessage('消息来自ttl为40s的B队列: ' . $msg, ['delivery_mode' => AMQPMessage::DELIVERY_MODE_NON_PERSISTENT]);
         // 发送B
         $channel->basic_publish($amqpMsgB, $normal_exchange, $routing_key_b);
 
         // 关闭连接
         RabbitMqConnection::closeConnectionAndChannel($channel, $connection);
-        
 
         return success('发送消息: ' . $msg);
+    }
+
+    // 延迟队列优化 - 单个消息延迟
+    public function delay_optimization(Request $request)
+    {
+        // 消息
+        $msg = $request->params['msg'];
+        // 延迟时间
+        $ttl = $request->params['ttl_time'];
+
+        // 保存到日志
+        $log_msg = date('Y-m-d H:i:s') . " 发一条信息给时长为" . ($ttl / 1000) . "s的延迟(TTL)队列C: " . $msg;
+        Log::info($log_msg);
+
+        // 获取连接对象
+        $connection = RabbitMqConnection::getConnection();
+        // 获取通道
+        $channel = $connection->channel();
+
+        // 普通交换机名称
+        $normal_exchange = 'normal_exchange';
+        // 普通队列名称C 用于优化队列
+        $queue_c = 'queue_c';
+        // 普通routing_key C
+        $routing_key_c = 'routing_key_c';
+
+        // 延迟交换机名称
+        $delay_exchange = 'delay_exchange';
+        // 延迟队列名称
+        $delay_queue = 'delay_queue';
+        // 延迟routing_key
+        $delay_routing_key = 'delay_routing_key';
+
+        // 声明普通交换机
+        $channel->exchange_declare($normal_exchange, 'direct', false, false, false);
+
+        // 设置队列C的中数据延迟队列、延迟路由key
+        $argumentsC = new AMQPTable([
+            // 设置延迟队列
+            'x-dead-letter-exchange'    => $delay_exchange,
+            // 设置延迟routing_key
+            'x-dead-letter-routing-key' => $delay_routing_key,
+        ]);
+        // 声明普通队列C 用于优化队列
+        $channel->queue_declare($queue_c, false, true, false, false, false, $argumentsC);
+        // 将队列名与交换机名进行绑定，并指定routing_key
+        $channel->queue_bind($queue_c, $normal_exchange, $routing_key_c);
+
+        // 延迟交换机
+        $channel->exchange_declare($delay_exchange, 'direct', false, false, false);
+        // 延迟队列
+        $channel->queue_declare($delay_queue, false, true, false, false);
+        // 将队列名与交换机名进行绑定，并指定routing_key
+        $channel->queue_bind($delay_queue, $delay_exchange, $delay_routing_key);
+
+        // amqp对象，这是用使用单条消息过期时间，而不是使用队列过期时间
+        // 老师演示的时候发现这种设置消息的方式，会有先进先出问题，就算第二条消息过期时间
+        // 比第一条消息过期时间少，也是得等第一条消息出来之后，才会跟着出来
+        // 因为队列是先进先出的，所以在队列中先进入的过期时间为20秒的A消息
+        // 把后进入的过期时间为2秒的B消息阻塞在了后面，所以B消息出不来
+        $amqpMsg = new AMQPMessage(
+            '消息来自ttl为' . ($ttl / 1000). 's的C优化队列: ' . $msg,
+            [
+                // 消息持久化
+                'delivery_mode' => AMQPMessage::DELIVERY_MODE_NON_PERSISTENT,
+                // 设置消息过期时间
+                'expiration' => $ttl,
+            ]
+        );
+        // 发送
+        $channel->basic_publish($amqpMsg, $normal_exchange, $routing_key_c);
+
+        // 关闭连接
+        RabbitMqConnection::closeConnectionAndChannel($channel, $connection);
+
+        return success('发送消息: ' . $log_msg);
+    }
+
+    // 延迟队列 - 延迟队列插件
+    public function delayed(Request $request)
+    {
+        // 获取连接
+        $connection = RabbitMqConnection::getConnection();
+        // 获取信道
+        $channel = $connection->channel();
+
+        // 延迟队列交换机
+        $delayed_exchange = 'delayed_exchange';
+        // 延迟队列名称
+        $delayed_queue = 'delayed_queue';
+        // 延迟队列路由键
+        $delayed_routing_key = 'delayed_routing_key';
+
+        // 设置延迟交换机的队列类型为direct，也可以选topic或者其它的
+        // $arguments = new AMQPTable(['x-daleyed-type' => 'direct']);
+        // 声明交换机 - 交换机类型为 x-delayed-message 
+        $channel->exchange_declare($delayed_exchange, 'x-delayed-message', false, true, false);
+
+        // 设置延迟交换机的队列类型为direct，也可以选topic或者其它的
+        $arguments = new AMQPTable(['x-daleyed-type' => 'direct']);
+        // 声明队列
+        $channel->queue_declare($delayed_queue, false, true, false, false, false, $arguments);
+        // 将队列名与交换机名进行绑定，并指定routing_key
+        $channel->queue_bind($delayed_queue, $delayed_exchange, $delayed_routing_key);
+
+        // 获取消息
+        $msg = $request->params['msg'];
+        // 获取延迟时间
+        $ttl = $request->params['ttl'];
+
+        // 保存到日志
+        $log_msg = date('Y-m-d H:i:s') . " 发一条信息给时长为" . ($ttl / 1000) . "s的延迟(TTL)队列: " . $msg;
+        Log::info($log_msg);
+
+        // 创建消息
+        $amqpMsg = new AMQPMessage(
+            '消息来自ttl为' . ($ttl / 1000). 's的插件优化队列: ' . $msg,
+            [
+                // 消息持久化
+                'delivery_mode' => AMQPMessage:: DELIVERY_MODE_NON_PERSISTENT,
+                // 设置过期时间
+                'application_headers' => new AMQPTable(['x-delay' => $ttl])
+            ]
+        );
+        
+        // 发送
+        $channel->basic_publish($amqpMsg, $delayed_exchange, $delayed_queue);
+
+        // 关闭连接
+        RabbitMqConnection::closeConnectionAndChannel($channel, $connection);
+
+        // 返回
+        return success('发送消息: ' . $log_msg);
     }
 
 }

@@ -139,4 +139,8 @@ Route::group('rabbitmq_test', function () {
     Route::post('publisher_dead', 'RabbitmqTest/publisher_dead');
     // 延迟队列
     Route::post('delay', 'RabbitmqTest/delay');
+    // 延迟队列优化 - 单个消息延迟
+    Route::post('delay_optimization', 'RabbitmqTest/delay_optimization');
+    // 延迟队列优化 - 延时队列插件
+    Route::post('delayed', 'RabbitmqTest/delayed');
 });
