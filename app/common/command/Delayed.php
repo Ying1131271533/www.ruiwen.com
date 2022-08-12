@@ -57,7 +57,7 @@ class Delayed extends Command
         $channel->basic_consume($delayed_queue, '', false, false, false, false, $callback);
 
         // 监听通道消息
-        while($channel->callbacks){
+        while($channel->is_open()){
             $channel->wait();
         }
 
