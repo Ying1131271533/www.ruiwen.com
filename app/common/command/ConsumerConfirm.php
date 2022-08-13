@@ -40,6 +40,11 @@ class ConsumerConfirm extends Command
             $isAck = true;
             // $isAck = false;
             if ($isAck) {
+                // 参数1：是否批量处理 默认false
+                // $msg->ack();
+                // 参数1：是否把消息放回队列 默认false
+                // 参数2：是否批量处理 默认false
+                // $msg->nack();
                 $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
             }
             // 判断获取到quit后退出
@@ -48,7 +53,7 @@ class ConsumerConfirm extends Command
             }
         };
 
-        // 开启消息确认模式
+        // 开启消费
         $channel->basic_consume('hello', '', false, false, false, false, $callback);
         // $channel->basic_consume('hello', '', false, true, false, false, $callback);
 

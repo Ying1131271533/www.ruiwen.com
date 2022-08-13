@@ -31,11 +31,9 @@ class Delayed extends Command
         $delayed_queue = 'delayed_queue';
         // 延迟队列路由键
         $delayed_routing_key = 'delayed_routing_key';
-
+        
         // 声明交换机
         $channel->exchange_declare($delayed_exchange, 'x-delayed-message', false, true, false);
-        // 声明队列 先启动消费者需要
-        // $channel->queue_declare($delayed_queue, false, true, false, false);
         // 将队列名和交换机进行绑定，并指定routing_key
         $channel->queue_bind($delayed_queue, $delayed_exchange, $delayed_routing_key);
 
@@ -43,7 +41,7 @@ class Delayed extends Command
         // 回调
         $callback = function($msg){
             // 打印信息
-            echo " 延迟插件消费者: $msg->body \n";
+            echo "延迟插件消费者: $msg->body \n";
             // 确认消息
             $msg->ack();
             // 保存日志

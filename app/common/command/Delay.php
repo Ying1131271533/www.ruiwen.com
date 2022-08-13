@@ -42,7 +42,7 @@ class Delay extends Command
         echo "[*] Waiting for logs. To exit press CTRL+C \n";
         // 回调
         $callback = function ($msg) {
-            echo " 延迟消费者: $msg->body \n";
+            echo "延迟消费者: $msg->body \n";
             // 确认消息
             $msg->ack();
             // 保存到日志

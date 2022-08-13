@@ -28,14 +28,16 @@ class RabbitmqTest extends BaseValidate
     // 验证场景
     protected $scene = [
         'publisher'          => ['msg'],
-        // 发布确认
-        'publisher_confirm'  => ['msg'],
         'work'               => ['msg'],
         'fanout'             => ['msg'],
         'direct'             => ['msg', 'routing_key'],
         'topic'              => ['msg', 'route_key'],
+        // 发布确认
+        'publisher_confirm'  => ['msg'],
+        // 发布确认 - 高级
+        'confirm_high'       => ['msg'],
         // 死信队列
-        'publisher_dead'     => ['msg', 'routing_key'],
+        'dead'               => ['msg', 'routing_key'],
         // 延迟队列
         'delay'              => ['msg', 'routing_key'],
         // 延迟队列优化 - 单个消息延迟

@@ -47,7 +47,7 @@ class Consumer extends Command
             // 参数1: tag
             // 参数2: 是否批量应答，会将次信道所有的消息变成确认应答，减少网络拥堵，不过一般是false
             if ($isAck) {
-                $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
+                // $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
             }
             // 关于消息确认的一些函数
             // $channel->basic_ack($delivery_tag, $multiple = false) 用于肯定确认

@@ -95,74 +95,6 @@ class RabbitmqTest
         return success("Send Message: " . $msg);
     }
 
-    // 生产者 发布确认
-    public function publisher_confirm(Request $request)
-    {
-        // 获取连接
-        $connection = RabbitMqConnection::getConnection();
-
-        // 获取连接中通道
-        $channel = $connection->channel();
-
-        // 已发布的消息数组，不知道要不要用redis保存，用了redis耗时超大
-        // $outStandingConfirm = [];
-
-        // 确认投放队列，并将队列持久化
-        $channel->queue_declare('hello', false, true, false, false);
-        // 这里只是看看耗时，不持久化
-        // $channel->queue_declare('hello', false, false, false, false);
-
-        // 异步回调消息确认 成功
-        $channel->set_ack_handler(
-            function (AMQPMessage $message) {
-                echo "Message acked with content " . $message->body . PHP_EOL;
-                echo "Tag " . $message->delivery_info['delivery_tag'] . PHP_EOL;
-                // 删除已经确认的消息
-                // (new Redis(config('app.redis')))->hDel('hello', $message->delivery_info['delivery_tag']);
-            }
-        );
-        // 异步回调消息确认 失败
-        $channel->set_nack_handler(
-            function (AMQPMessage $message) {
-                echo "Message nacked with content " . $message->body . PHP_EOL;
-            }
-        );
-
-        // 开启消息发布确认，选择为 confirm 模式（此模式不可以和事务模式 兼容）
-        $channel->confirm_select();
-
-        // 获取当前毫秒时间
-        $time = msectime();
-
-        for ($i = 0; $i < 100; $i++) {
-            // 接收消息参数
-            // $msg     = $request->params['msg'];
-            $msg     = '消息 ' . $i;
-            $amqpMsg = new AMQPMessage($msg);
-            // 发布
-            $channel->basic_publish($amqpMsg, '', 'hello');
-            // 记录下所有要发送的消息 消息的总和
-            // (new Redis(config('app.redis')))->hset('hello', $amqpMsg->delivery_info['delivery_tag'], $i);
-
-            // 阻塞等待消息确认，单个确认 341ms
-            // $channel->wait_for_pending_acks();
-
-            // 批量确认，每次确认100个 187ms
-            /*  if ($i % 100 == 0) {
-        $channel->wait_for_pending_acks();
-        } */
-        }
-
-        // 异步消息确认 140ms
-        $channel->wait_for_pending_acks();
-
-        // 关闭连接
-        RabbitMqConnection::closeConnectionAndChannel($channel, $connection);
-
-        // return success("Send Message: " . $msg);
-        return success('耗时' . (msectime() - $time) . 'ms');
-    }
-
     // 添加工作队列
     public function work(Request $request)
     {
@@ -305,8 +237,119 @@ class RabbitmqTest
         return success("Send Message: " . $msg);
     }
 
-    // 死信队列
-    public function publisher_dead(Request $request)
+    // 发布确认
+    public function publisher_confirm(Request $request)
+    {
+        // 获取连接
+        $connection = RabbitMqConnection::getConnection();
+
+        // 获取连接中通道
+        $channel = $connection->channel();
+
+        // 已发布的消息数组，不知道要不要用redis保存，用了redis耗时超大
+        // $outStandingConfirm = [];
+
+        // 确认投放队列，并将队列持久化
+        $channel->queue_declare('hello', false, true, false, false);
+        // 这里只是看看耗时，不持久化
+        // $channel->queue_declare('hello', false, false, false, false);
+
+        // 异步回调消息确认 成功
+        $channel->set_ack_handler(
+            function (AMQPMessage $message) {
+                echo "Message acked with content " . $message->body . PHP_EOL;
+                echo "Tag " . $message->delivery_info['delivery_tag'] . PHP_EOL;
+                // 删除已经确认的消息
+                // (new Redis(config('app.redis')))->hDel('hello', $message->delivery_info['delivery_tag']);
+            }
+        );
+        // 异步回调消息确认 失败
+        $channel->set_nack_handler(
+            function (AMQPMessage $message) {
+                echo "Message nacked with content " . $message->body . PHP_EOL;
+            }
+        );
+
+        // 开启消息发布确认，选择为 confirm 模式（此模式不可以和事务模式 兼容）
+        $channel->confirm_select();
+
+        // 获取当前毫秒时间
+        $time = msectime();
+
+        for ($i = 0; $i < 100; $i++) {
+            // 接收消息参数
+            // $msg     = $request->params['msg'];
+            $msg     = '消息 ' . $i;
+            $amqpMsg = new AMQPMessage($msg);
+            // 发布
+            $channel->basic_publish($amqpMsg, '', 'hello');
+            // 记录下所有要发送的消息 消息的总和
+            // (new Redis(config('app.redis')))->hset('hello', $amqpMsg->delivery_info['delivery_tag'], $i);
+
+            // 阻塞等待消息确认，单个确认 341ms
+            // $channel->wait_for_pending_acks();
+
+            // 批量确认，每次确认100个 187ms
+            /*  if ($i % 100 == 0) {
+        $channel->wait_for_pending_acks();
+        } */
+        }
+
+        // 异步消息确认 140ms
+        $channel->wait_for_pending_acks();
+
+        // 关闭连接
+        RabbitMqConnection::closeConnectionAndChannel($channel, $connection);
+
+        // return success("Send Message: " . $msg);
+        return success('耗时' . (msectime() - $time) . 'ms');
+    }
+
+    // 发布确认 - 高级
+    public function confirm_high(Request $request)
+    {
+        // 获取连接
+        $connection = RabbitMqConnection::getConnection();
+        // 获取消息通道
+        $channel = $connection->channel();
+
+        // 交换姬名称
+        $confirm_exchange = 'confirm_exchange';
+        // 队列名称
+        $confirm_queue = 'confirm_queue';
+        // 路由键
+        $confirm_routing_key = 'confirm_routing_key';
+
+        // 获取消息
+        $msg  = $request->params['msg'];
+        // 获取routing_key
+        // $routing_key  = $request->params['routing_key'];
+
+        // 声明交换姬
+        $channel->exchange_declare($confirm_exchange, 'direct', false, true, false);
+        // 声明队列
+        $channel->queue_declare($confirm_queue, false, true, false, false);
+        // 将交换姬和队列进行绑定，并且指定routing_key
+        $channel->queue_bind($confirm_queue, $confirm_exchange, $confirm_routing_key);
+
+        // 创建消息
+        $amqpMsg = new AMQPMessage($msg);
+        // 发布消息
+        $channel->basic_publish($amqpMsg, $confirm_exchange, $confirm_routing_key);
+
+        // 关闭连接
+        RabbitMqConnection::closeConnectionAndChannel($channel, $connection);
+
+        // 保存到日志
+        $log_msg = "发一条信息给发布确认高级的队列: " . $msg;
+        Log::info($log_msg);
+
+        // 返回
+        return success($log_msg);
+    }
+
+    // 死信队列 - 可以保证消息不会丢失
+    public function dead(Request $request)
     {
         // 获取连接对象，order虚拟机
         $connection = RabbitMqConnection::getConnection(['vhost' => 'order']);
@@ -579,7 +622,7 @@ class RabbitmqTest
         // 获取信道
         $channel = $connection->channel();
 
-        // 延迟队列交换机
+        // 延迟队列交换姬
         $delayed_exchange = 'delayed_exchange';
         // 延迟队列名称
         $delayed_queue = 'delayed_queue';

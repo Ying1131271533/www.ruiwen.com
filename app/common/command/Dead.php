@@ -35,7 +35,7 @@ class Dead extends Command
         // 声明交换机
         $channel->exchange_declare($dead_exchange, 'direct', false, false, false);
         // 如果要先启动消费者，必须要声明队列
-        // $channel->queue_declare($dead_queue, false, true, false, false);
+        $channel->queue_declare($dead_queue, false, true, false, false);
         // 将队列名与交换机名进行绑定，并指定routing_key
         $channel->queue_bind($dead_queue, $dead_exchange, $dead_routing_key);
 

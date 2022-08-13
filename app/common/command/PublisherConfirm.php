@@ -50,6 +50,23 @@ class PublisherConfirm extends Command
                 echo "Message nacked with content " . $message->body . PHP_EOL;
             }
         );
+        //消息到达交换机,但是没有进入合适的队列,消息回退
+        $channel->set_return_listener(function (
+            $reply_code,
+            $reply_text,
+            $exchange,
+            $routing_key,
+            AMQPMessage $msg
+        ) use (
+            $channel,
+            $connection
+        )
+        {
+            echo '消息退回,入队失败逻辑'.PHP_EOL;
+            // 关闭连接
+            RabbitMqConnection::closeConnectionAndChannel($channel, $connection);
+            exit();
+        });
 
         // 开启消息发布确认，选择为 confirm 模式（此模式不可以和事务模式 兼容）
         $channel->confirm_select();
