@@ -135,8 +135,6 @@ Route::group('rabbitmq_test', function () {
     Route::post('topic', 'RabbitmqTest/topic');
     // 生产者 发布确认
     Route::post('publisher_confirm', 'RabbitmqTest/publisher_confirm');
-    // 生产者 发布确认
-    Route::post('confirm_high', 'RabbitmqTest/confirm_high');
     // 死信队列
     Route::post('dead', 'RabbitmqTest/dead');
     // 延迟队列
@@ -145,4 +143,8 @@ Route::group('rabbitmq_test', function () {
     Route::post('delay_optimization', 'RabbitmqTest/delay_optimization');
     // 延迟队列优化 - 延时队列插件
     Route::post('delayed', 'RabbitmqTest/delayed');
+    // 生产者 发布确认 高级 消息回退
+    Route::post('confirm_high', 'RabbitmqTest/confirm_high');
+    // 生产者 发布确认 高级 备用交换机
+    Route::post('confirm_backup', 'RabbitmqTest/confirm_backup');
 });

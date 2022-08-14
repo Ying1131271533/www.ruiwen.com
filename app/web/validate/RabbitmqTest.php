@@ -34,8 +34,6 @@ class RabbitmqTest extends BaseValidate
         'topic'              => ['msg', 'route_key'],
         // 发布确认
         'publisher_confirm'  => ['msg'],
-        // 发布确认 - 高级
-        'confirm_high'       => ['msg'],
         // 死信队列
         'dead'               => ['msg', 'routing_key'],
         // 延迟队列
@@ -44,5 +42,9 @@ class RabbitmqTest extends BaseValidate
         'delay_optimization' => ['msg', 'ttl'],
         // 延迟队列 - 延时队列插件
         'delayed'            => ['msg', 'ttl'],
+        // 发布确认 - 高级
+        'confirm_high'       => ['msg', 'routing_key'],
+        // 发布确认 - 高级 备用交换机
+        'confirm_backup'       => ['msg'],
     ];
 }

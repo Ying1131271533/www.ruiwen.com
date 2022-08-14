@@ -1,10 +1,9 @@
 <?php
 
-// 发布确认 - 高级
+// 发布确认 - 高级 消息回退
 namespace app\common\command;
 
 use app\common\lib\classes\rabbitmq\RabbitMqConnection;
-use PhpAmqpLib\Wire\AMQPTable;
 use think\console\Command;
 use think\console\Input;
 use think\console\Output;
@@ -30,7 +29,8 @@ class ConfirmHigh extends Command
         // 队列名称
         $confirm_queue = 'confirm_queue';
         // 路由键
-        $confirm_routing_key = 'confirm_routing_key';
+        $confirm_routing_key = 'akali';
+        // $confirm_routing_key = 'jinx';
 
         // 声明交换姬
         $channel->exchange_declare($confirm_exchange, 'direct', false, true, false);

@@ -107,7 +107,7 @@ class RabbitmqTest
         return success("Send Message: " . $msg);
     }
 
-    // 添加工作队列
+    // 工作队列
     public function work_jinx(Request $request)
     {
         // 获取连接
@@ -178,7 +178,7 @@ class RabbitmqTest
         return success("Send Message: " . $msg);
     }
 
-    // 订阅模型-direct 固定频道
+    // 直连
     public function direct_jinx(Request $request)
     {
         // 获取连接
@@ -214,7 +214,7 @@ class RabbitmqTest
         return success('Send Message: ' . $msg);
     }
 
-    // 订阅模型-Topic 动态路由
+    // 主题
     public function topic_jinx(Request $request)
     {
         // 获取连接对象
@@ -237,7 +237,7 @@ class RabbitmqTest
         return success("Send Message: " . $msg);
     }
 
-    // 发布确认
+    // 发布确认 单个 批量 异步确认
     public function publisher_confirm(Request $request)
     {
         // 获取连接
@@ -304,50 +304,7 @@ class RabbitmqTest
         // return success("Send Message: " . $msg);
         return success('耗时' . (msectime() - $time) . 'ms');
     }
-
-    // 发布确认 - 高级
-    public function confirm_high(Request $request)
-    {
-        // 获取连接
-        $connection = RabbitMqConnection::getConnection();
-        // 获取消息通道
-        $channel = $connection->channel();
-
-        // 交换姬名称
-        $confirm_exchange = 'confirm_exchange';
-        // 队列名称
-        $confirm_queue = 'confirm_queue';
-        // 路由键
-        $confirm_routing_key = 'confirm_routing_key';
-
-        // 获取消息
-        $msg  = $request->params['msg'];
-        // 获取routing_key
-        // $routing_key  = $request->params['routing_key'];
-
-        // 声明交换姬
-        $channel->exchange_declare($confirm_exchange, 'direct', false, true, false);
-        // 声明队列
-        $channel->queue_declare($confirm_queue, false, true, false, false);
-        // 将交换姬和队列进行绑定，并且指定routing_key
-        $channel->queue_bind($confirm_queue, $confirm_exchange, $confirm_routing_key);
-
-        // 创建消息
-        $amqpMsg = new AMQPMessage($msg);
-        // 发布消息
-        $channel->basic_publish($amqpMsg, $confirm_exchange, $confirm_routing_key);
-
-        // 关闭连接
-        RabbitMqConnection::closeConnectionAndChannel($channel, $connection);
-
-        // 保存到日志
-        $log_msg = "发一条信息给发布确认高级的队列: " . $msg;
-        Log::info($log_msg);
-
-        // 返回
-        return success($log_msg);
-    }
-
+    
     // 死信队列 - 可以保证消息不会丢失
     public function dead(Request $request)
     {
@@ -359,7 +316,7 @@ class RabbitmqTest
         // 普通交换机名称
         $normal_exchange = 'normal_exchange';
         // 普通队列名称
-        $queue = 'queue';
+        $normal_queue = 'normal_queue';
         // 普通routing_key
         $routing_key = 'routing_key';
         // 设置死信时间10s过期，等待10秒未进行消费，数据会自动跑去死信队列中(还真跑到死信队列了)
@@ -386,7 +343,7 @@ class RabbitmqTest
             'x-dead-letter-routing-key' => $dead_routing_key,
             // 第二种死信情况 队列达到最大长度
             // 设置队列长度的限制
-            // 'x-max-length'              => 6,
+            'x-max-length'              => 6,
             // 设置队列最大字节数
             // 'x-max-length-bytes' => 1024;
         ]);
@@ -396,9 +353,9 @@ class RabbitmqTest
         $args->set('x-dead-letter-routing-key', $dead_routing_key); */
 
         // 声明普通队列
-        $channel->queue_declare($queue, false, true, false, false, false, $arguments);
+        $channel->queue_declare($normal_queue, false, true, false, false, false, $arguments);
         // 将队列名与交换机名进行绑定，并指定routing_key
-        $channel->queue_bind($queue, $normal_exchange, $routing_key);
+        $channel->queue_bind($normal_queue, $normal_exchange, $routing_key);
 
         /*********************  死信队列  *********************/
 
@@ -538,7 +495,7 @@ class RabbitmqTest
         return success('发送消息: ' . $msg);
     }
 
-    // 延迟队列优化 - 单个消息延迟
+    // 延迟队列优化 - 单个消息延迟 有缺点 先进先出
     public function delay_optimization(Request $request)
     {
         // 消息
@@ -597,12 +554,12 @@ class RabbitmqTest
         // 因为队列是先进先出的，所以在队列中先进入的过期时间为20秒的A消息
         // 把后进入的过期时间为2秒的B消息阻塞在了后面，所以B消息出不来
         $amqpMsg = new AMQPMessage(
-            date('Y-m-d H:i:s') . ' 消息来自ttl为' . ($ttl / 1000). 's的C优化队列: ' . $msg,
+            date('Y-m-d H:i:s') . ' 消息来自ttl为' . ($ttl / 1000) . 's的C优化队列: ' . $msg,
             [
                 // 消息持久化
                 'delivery_mode' => AMQPMessage::DELIVERY_MODE_NON_PERSISTENT,
                 // 设置消息过期时间
-                'expiration' => $ttl,
+                'expiration'    => $ttl,
             ]
         );
         // 发送
@@ -632,7 +589,7 @@ class RabbitmqTest
         // 设置延迟交换机的队列类型为direct，也可以选topic和其它的交换机类型
         $arguments = new AMQPTable(['x-delayed-type' => 'direct']);
         $channel->exchange_declare($delayed_exchange, 'x-delayed-message', false, true, false, false, false, $arguments);
-        
+
         // 声明队列
         $channel->queue_declare($delayed_queue, false, true, false, false, false);
         // 将队列名与交换机名进行绑定，并指定routing_key
@@ -649,15 +606,15 @@ class RabbitmqTest
 
         // 创建消息
         $amqpMsg = new AMQPMessage(
-            date('Y-m-d H:i:s') . ' 消息来自ttl为' . ($ttl / 1000). 's的插件优化队列: ' . $msg,
+            date('Y-m-d H:i:s') . ' 消息来自ttl为' . ($ttl / 1000) . 's的插件优化队列: ' . $msg,
             [
                 // 消息持久化
-                'delivery_mode' => AMQPMessage:: DELIVERY_MODE_NON_PERSISTENT,
+                'delivery_mode'       => AMQPMessage::DELIVERY_MODE_NON_PERSISTENT,
                 // 设置过期时间
-                'application_headers' => new AMQPTable(['x-delay' => $ttl])
+                'application_headers' => new AMQPTable(['x-delay' => $ttl]),
             ]
         );
-        
+
         // 发送
         $channel->basic_publish($amqpMsg, $delayed_exchange, $delayed_routing_key);
 
@@ -666,6 +623,257 @@ class RabbitmqTest
 
         // 返回
         return success('发送消息: ' . $log_msg);
+    }
+
+    // 发布确认 - 高级 消息回退
+    // 问题1: jinx的消息也能被akali消费？
+    public function confirm_high(Request $request)
+    {
+        // 获取连接
+        $connection = RabbitMqConnection::getConnection();
+        // 获取消息通道
+        $channel = $connection->channel();
+
+        // 交换姬名称
+        $confirm_exchange = 'confirm_exchange';
+        // 队列名称
+        $confirm_queue = 'confirm_queue';
+        // 路由键
+        $confirm_routing_key = 'akali';
+        // $confirm_routing_key = 'jinx';
+
+        // 获取消息
+        $msg = $request->params['msg'];
+        // 获取routing_key
+        // $confirm_routing_key  = $request->params['routing_key'];
+
+        // 声明交换姬
+        $channel->exchange_declare($confirm_exchange, 'direct', false, true, false);
+        // 声明队列
+        $channel->queue_declare($confirm_queue, false, true, false, false);
+        // 将交换姬和队列进行绑定，并且指定routing_key
+        $channel->queue_bind($confirm_queue, $confirm_exchange, $confirm_routing_key);
+
+        // 创建消息
+        $amqpMsg = new AMQPMessage($msg, ['delivery_mode' => AMQPMessage::DELIVERY_MODE_NON_PERSISTENT]);
+        // 开启发布确认
+        $channel->confirm_select();
+        // 成功到达交换姬时执行
+        $channel->set_ack_handler(function (AMQPMessage $msg) {
+            // 到不了交换姬的不知道怎么模拟
+            // echo '成功到达交换机: ' . $msg->body . PHP_EOL;
+            // mandatory为true的时候就是这种
+            echo '消息成功进入队列: ' . $msg->body . PHP_EOL;
+        });
+        // rabbitmq内部错误时触发
+        $channel->set_nack_handler(function (AMQPMessage $msg) {
+            echo 'rabbitmq内部错误: ' . $msg->body . PHP_EOL;
+        });
+        // 消息到达交换机,但是没有进入合适的队列,消息回退
+        /* $channel->set_return_listener(
+        function ($reply_code, $reply_text, $exchange, $routing_key, AMQPMessage $msg) {
+        echo '没有进入合适的队列，消息回退' . PHP_EOL;
+        }
+        ); */
+        //消息到达交换机,但是没有进入合适的队列,消息回退
+        $channel->set_return_listener(function (
+            $reply_code,
+            $reply_text,
+            $exchange,
+            $routing_key,
+            AMQPMessage $msg
+        ) use (
+            $channel,
+            $connection,
+            $amqpMsg,
+            $confirm_exchange,
+            $confirm_routing_key
+        ) {
+            // 打印消息
+            // $log_reply = "消息被交换机退回，入队失败 - 响应码: $reply_code 响应文本: $reply_text 交换机: $exchange 路由键: $routing_key 消息: $msg->body";
+            $log_reply = "消息: {$msg->body}，被交换机{$exchange}退回，退回原因是：{$reply_text}，路由Key：{$routing_key} \n";
+            echo $log_reply;
+            // 保存日志
+            \think\facade\Log::error($log_reply);
+            
+            // 重新发布
+            $channel->basic_publish($amqpMsg, $confirm_exchange, $confirm_routing_key, true);
+
+            // 保存到日志
+            $log_msg = "触发了消息退回，再次发布消息给路由键为{$routing_key}的队列: $msg->body \n";
+            echo $log_msg;
+            $ruiwen = \think\facade\Log::info($log_msg);
+            
+            // 关闭连接，这里需要关闭连接，是因为使用了消息阻塞，还没跑到关闭连接就被消息退回拦截了
+            $channel->close();
+            $connection->close();
+            exit;
+        });
+        
+        // 模拟消息退回
+
+        // 到不了交换姬的不知道怎么模拟，老师视频中可以设置消息到不了交换机就返回消息给生产者
+        // 连接参数是这个 spring.rabbitmq.publisher-confirm-type=correlated
+        // 以后看看php要怎么弄
+
+        // 绑定交换姬的routing_key是akali，而发布消息时的routing_key是jinx，这样消息就路由不到队列了
+        $confirm_routing_key = 'jinx';
+
+        // 发布消息
+        // 参数3：生产者发布消息时设置 mandatory=true,表示消息无法路由到队列时,会退回给生产者
+        // 老师：可以在消息传递过程中，达不到目的地时，将消息返回给生产者
+        // 必须要设置 mandatory=true 不然模拟不了消息退回
+        $channel->basic_publish($amqpMsg, $confirm_exchange, $confirm_routing_key, true);
+
+        // 阻塞，等待消息确认
+        $channel->wait_for_pending_acks_returns();
+
+        // 关闭连接
+        RabbitMqConnection::closeConnectionAndChannel($channel, $connection);
+
+        // 保存到日志
+        $log_msg = "发一条信息给发布确认高级的队列: " . $msg;
+        Log::info($log_msg);
+
+        // 返回
+        return success($log_msg);
+    }
+
+    // 发布确认 - 高级 备用交换机 alternate-exchange (有点像死信队列)
+    // 问题1: jinx的消息也能被akali消费？
+    public function confirm_backup(Request $request)
+    {
+        // 获取连接
+        $connection = RabbitMqConnection::getConnection();
+        // 获取消息通道
+        $channel = $connection->channel();
+
+        // 交换姬名称
+        $confirm_exchange = 'confirm_exchange';
+        // 队列名称
+        $confirm_queue = 'confirm_queue';
+        // 路由键
+        $confirm_routing_key = 'akali';
+        // $confirm_routing_key = 'jinx';
+
+        // 备用交换机
+        $backup_exchange = 'backup_exchange';
+        // 备用队列
+        $backup_queue = 'backup_queue';
+        // 警告队列
+        $warning_queue = 'warning_queue';
+
+        // 获取消息
+        $msg = $request->params['msg'];
+
+        // 设置交换机的备用交换机
+        $arguments = new AMQPTable(['alternate-exchange' => $backup_exchange]);
+        // 声明交换姬
+        $channel->exchange_declare($confirm_exchange, 'direct', false, true, false, $arguments);
+        // 声明队列
+        $channel->queue_declare($confirm_queue, false, true, false, false);
+        // 将交换姬和队列进行绑定，并且指定routing_key
+        $channel->queue_bind($confirm_queue, $confirm_exchange, $confirm_routing_key);
+
+
+        // 声明备用交换机 注意！：这里是同时发给备份消费者和警告消费者
+        $channel->exchange_declare($backup_exchange, 'fanout', false, true, false);
+
+        // 声明备份队列
+        $channel->queue_declare($backup_queue, false, true, false, false);
+        // 将备份交换机和备份队列进行绑定
+        $channel->queue_bind($backup_queue, $backup_exchange);
+        
+        // 声明警告队列
+        $channel->queue_declare($warning_queue, false, true, false, false);
+        // 将备份交换机和警告队列进行绑定
+        $channel->queue_bind($warning_queue, $backup_exchange);
+
+        // 创建消息
+        $amqpMsg = new AMQPMessage($msg, ['delivery_mode' => AMQPMessage::DELIVERY_MODE_NON_PERSISTENT]);
+        // 开启发布确认
+        $channel->confirm_select();
+        // 成功到达交换姬时执行
+        $channel->set_ack_handler(function (AMQPMessage $msg) {
+            // 到不了交换姬的不知道怎么模拟
+            // echo '成功到达交换机: ' . $msg->body . PHP_EOL;
+            // mandatory为true的时候就是这种
+            echo '消息成功进入队列: ' . $msg->body . PHP_EOL;
+        });
+        // rabbitmq内部错误时触发
+        $channel->set_nack_handler(function (AMQPMessage $msg) {
+            echo 'rabbitmq内部错误: ' . $msg->body . PHP_EOL;
+        });
+        // 消息到达交换机,但是没有进入合适的队列,消息回退
+        // 注意！如果设置了备用交换机 alternate-exchange ，那么优先选择备用交换机，而不是消息回退
+        /* $channel->set_return_listener(function (
+            $reply_code,
+            $reply_text,
+            $exchange,
+            $routing_key,
+            AMQPMessage $msg
+        ) use (
+            $channel,
+            $connection,
+            $amqpMsg,
+            $confirm_exchange,
+            $confirm_routing_key
+        ) {
+            // 打印消息
+            // $log_reply = "消息被交换机退回，入队失败 - 响应码: $reply_code 响应文本: $reply_text 交换机: $exchange 路由键: $routing_key 消息: $msg->body";
+            $log_reply = "消息: {$msg->body}，被交换机{$exchange}退回，退回原因是：{$reply_text}，路由Key：{$routing_key} \n";
+            echo $log_reply;
+            // 保存日志
+            \think\facade\Log::error($log_reply);
+            
+            // 重新发布 这里是要发给备份交换机的，既是别的服务器里面
+            // 老师视频好像是交换机类型是fanout
+            // 为了测试就发到本机的rabbitmq了
+            $channel->exchange_declare('backup_exchange', 'direct', false, true, false);
+            $channel->queue_declare('back_queue', false, true, false, false);
+            $channel->queue_bind('back_queue', 'backup_exchange', 'backup_routing_key');
+            // 备份交换机不会也挂了吧，mandatory就不填true了
+            $channel->basic_publish($amqpMsg, 'backup_exchange', 'backup_routing_key');
+            $channel->basic_publish($amqpMsg, $confirm_exchange, $confirm_routing_key);
+
+            // 保存到日志
+            $log_msg = "触发了消息退回，再次发布消息给路由键为{$routing_key}的队列: $msg->body \n";
+            echo $log_msg;
+            $ruiwen = \think\facade\Log::info($log_msg);
+            
+            // 关闭连接，这里需要关闭连接，是因为使用了消息阻塞，还没跑到关闭连接就被消息退回拦截了
+            $channel->close();
+            $connection->close();
+            exit;
+        }); */
+        
+        // 模拟消息退回
+
+        // 到不了交换姬的不知道怎么模拟，老师视频中可以设置消息到不了交换机就返回消息给生产者
+        // 连接参数是这个 spring.rabbitmq.publisher-confirm-type=correlated
+        // 以后看看php要怎么弄
+
+        // 绑定交换姬的routing_key是akali，而发布消息时的routing_key是jinx，这样消息就路由不到队列了
+        $confirm_routing_key = 'jinx';
+
+        // 发布消息
+        // 参数3：生产者发布消息时设置 mandatory=true,表示消息无法路由到队列时,会退回给生产者
+        // 老师：可以在消息传递过程中，达不到目的地时，将消息返回给生产者
+        // 必须要设置 mandatory=true 不然模拟不了消息退回
+        $channel->basic_publish($amqpMsg, $confirm_exchange, $confirm_routing_key, true);
+
+        // 阻塞，等待消息确认
+        $channel->wait_for_pending_acks_returns();
+
+        // 关闭连接
+        RabbitMqConnection::closeConnectionAndChannel($channel, $connection);
+
+        // 保存到日志
+        $log_msg = "发一条信息给发布确认高级的队列: " . $msg;
+        Log::info($log_msg);
+
+        // 返回
+        return success($log_msg);
     }
 
 }

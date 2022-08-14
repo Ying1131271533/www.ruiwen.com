@@ -40,11 +40,21 @@ class ConsumerConfirm extends Command
             $isAck = true;
             // $isAck = false;
             if ($isAck) {
-                // 参数1：是否批量处理 默认false
-                // $msg->ack();
+                // 消息拒答
                 // 参数1：是否把消息放回队列 默认false
                 // 参数2：是否批量处理 默认false
                 // $msg->nack();
+
+                // 参数1：发布标签
+                // 参数2：是否批量处理 默认false
+                // 参数3：是否把消息放回队列 默认false
+                // $msg->delivery_info['channel']->basic_nack($msg->delivery_info['delivery_tag']);
+                
+                // 消息确认
+                // 参数1：是否批量处理 默认false
+                // $msg->ack();
+                // 参数1：发布标签
+                // 参数2：是否批量处理 默认false
                 $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
             }
             // 判断获取到quit后退出
