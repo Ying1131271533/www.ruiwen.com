@@ -897,13 +897,14 @@ class RabbitmqTest
         // 获取连接中通道
         $channel = $connection->channel();
         
-        // 声明Federation交换机
+        // Federation交换机名称
         $fed_exchange = 'fed_exchange';
-        // 声明队列
+        // 声明队列名称
         $queue = 'mirror_hello';
         
         // 声明Federation交换机
         $channel->exchange_declare($fed_exchange, 'direct', false, false, false);
+        // 声明队列
         $channel->queue_declare($queue, false, true, false, true);
         // 接收消息参数
         $msg = $request->params['msg'];
