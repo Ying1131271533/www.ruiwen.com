@@ -147,4 +147,10 @@ Route::group('rabbitmq_test', function () {
     Route::post('confirm_high', 'RabbitmqTest/confirm_high');
     // 生产者 发布确认 高级 备用交换机
     Route::post('confirm_backup', 'RabbitmqTest/confirm_backup');
+    // 优先级队列
+    Route::post('priority_queue', 'RabbitmqTest/priority_queue');
+    // 惰性队列
+    Route::post('lazy_queue', 'RabbitmqTest/lazy_queue');
+    // 测试镜像集群
+    Route::post('mirror', 'RabbitmqTest/mirror');
 });

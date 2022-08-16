@@ -39,19 +39,23 @@ class ConfirmWarning extends Command
 
         echo "[*] Waiting for logs. To exit press CTRL+C \n";
         // 回调
-        $callback = function($msg){
-            echo "警告消费者: $msg->body \n"; 
+        $callback = function ($msg) {
+            $log = "警告消费者收到消息 交换机: {$msg->getExchange()} 路由键: {$msg->getRoutingKey()} 消息: {$msg->getBody()}";
+            echo $log.PHP_EOL;
             $msg->ack();
-            Log::info(' 警告消费者: ' . $msg->body);
+            Log::info($log);
         };
-        
+
         // 消费消息
         $channel->basic_consume($warning_queue, '', false, false, false, false, $callback);
 
         // 监听消息
-        while($channel->is_open()){
+        while ($channel->is_open()) {
             $channel->wait();
         }
+
+        // 关闭连接
+        RabbitMqConnection::closeConnectionAndChannel($channel, $connection);
     }
 
 }

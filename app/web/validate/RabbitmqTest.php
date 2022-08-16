@@ -45,6 +45,12 @@ class RabbitmqTest extends BaseValidate
         // 发布确认 - 高级
         'confirm_high'       => ['msg', 'routing_key'],
         // 发布确认 - 高级 备用交换机
-        'confirm_backup'       => ['msg'],
+        'confirm_backup'     => ['msg'],
+        // 优先队列
+        'priority_queue'     => ['msg'],
+        // 惰性队列
+        'lazy_queue'         => ['msg'],
+        // 测试镜像集群
+        'mirror'             => ['msg'],
     ];
 }

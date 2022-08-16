@@ -27,8 +27,36 @@ class ConfirmBackup extends Command
 
         // 备份交换姬名称
         $backup_exchange = 'backup_exchange';
-        // 备用队列
+        // 备份队列名称
         $backup_queue = 'backup_queue';
+
+        // 声明交换姬
+        $channel->exchange_declare($backup_exchange, 'fanout', false, true, false);
+        // 声明队列
+        $channel->queue_declare($backup_queue, false, true, false, false);
+        // 将交换姬和队列进行绑定
+        $channel->queue_bind($backup_queue, $backup_exchange);
+
+        echo "[*] Waiting for logs. To exit press CTRL+C \n";
+        // 回调
+        $callback = function ($msg) {
+            $log = "备用消费者收到消息 交换机: {$msg->getExchange()} 路由键: {$msg->getRoutingKey()} 消息: {$msg->getBody()}";
+            echo $log.PHP_EOL;
+            // dump($msg);
+            $msg->ack();
+            Log::info($log);
+        };
+
+        // 消费消息
+        $channel->basic_consume($backup_queue, '', false, false, false, false, $callback);
+
+        // 监听消息
+        while ($channel->is_open()) {
+            $channel->wait();
+        }
+
+        // 关闭连接
+        RabbitMqConnection::closeConnectionAndChannel($channel, $connection);
     }
 
 }

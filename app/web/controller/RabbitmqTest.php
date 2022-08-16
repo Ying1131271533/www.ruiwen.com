@@ -2,13 +2,10 @@
 
 namespace app\web\controller;
 
-use app\common\lib\classes\rabbitmq\RabbitMq;
 use app\common\lib\classes\rabbitmq\RabbitMqConnection;
-use app\common\lib\classes\rabbitmq\RabbitMqWork;
 use app\Request;
 use PhpAmqpLib\Message\AMQPMessage;
 use PhpAmqpLib\Wire\AMQPTable;
-use think\console\input\Argument;
 use think\facade\Log;
 
 class RabbitmqTest
@@ -16,7 +13,7 @@ class RabbitmqTest
     protected $config = array(
         'host'     => '192.168.0.184',
         // 'host'     => 'rabbitmq',
-        'vhost'    => '/akali',
+        'vhost'    => '/',
         'port'     => 5672,
         'login'    => 'akali',
         'password' => '123456',
@@ -27,21 +24,13 @@ class RabbitmqTest
 
     public function index()
     {
-        $conn = new \AMQPConnection($this->config);
+        $conn = new \AMQPConnection(config('app.rabbitmq'));
+        // halt($conn->getHost());
         if (!$conn->connect()) {
             die("Cannot connect to the broker!\n");
         }
         halt($conn->connect());
         return success('神织恋');
-    }
-
-    // 生产者
-    public function publisher_akali(Request $request)
-    {
-        $msg          = $request->params['msg'];
-        $RabbitMqWork = new RabbitMqWork();
-        $RabbitMqWork->send($msg);
-        return success("Send Message: " . $msg);
     }
 
     // 生产者 详细描述
@@ -72,7 +61,9 @@ class RabbitmqTest
         // exclusive一般都是false，因为工作中，我们一般希望是共用一个通道
         // 参数5:autoDelete:是否在消费完成后自动删除队列 true自动删除 false不自动删除
         // 退出连接，没有消费者监听时是否自动删除队列
-        $channel->queue_declare('hello', false, true, false, true);
+        $queue = 'hello';
+        // 测试镜像
+        $channel->queue_declare($queue, false, true, false, true);
         // 接收消息参数
         $msg = $request->params['msg'];
 
@@ -85,24 +76,12 @@ class RabbitmqTest
         // 发布消息
         // 参数1:amqp消息对象
         // 参数2:交换机名称 不填写会使用默认的交换机amq.default
-        // 参数3:队列名称，这不是路由吗？
+        // 参数3:没有声明交换机时，这里填队列名称，而不是路由
         // 参数4:传递消息额外设置
-        $channel->basic_publish($amqpMsg, '', 'hello');
+        $channel->basic_publish($amqpMsg, '', $queue);
 
         // 关闭连接
         RabbitMqConnection::closeConnectionAndChannel($channel, $connection);
-
-        return success("Send Message: " . $msg);
-    }
-
-    // 添加工作队列
-    public function work(Request $request)
-    {
-        $msg          = $request->params['msg'];
-        $RabbitMqWork = new RabbitMqWork();
-        for ($i = 0; $i < 20; $i++) {
-            $RabbitMqWork->addTask($i . ' - ' . $msg);
-        }
 
         return success("Send Message: " . $msg);
     }
@@ -132,16 +111,6 @@ class RabbitmqTest
     }
 
     // 广播
-    public function fanout(Request $request)
-    {
-        $RabbitMqWork = new RabbitMqWork(RabbitMq::FANOUT);
-        // 获取数据
-        $msg = $request->params['msg'];
-        $RabbitMqWork->sendQueue($msg);
-        return success("Send Message: " . $msg);
-    }
-
-    // 广播
     public function fanout_jinx(Request $request)
     {
         // 获取连接对象
@@ -164,17 +133,6 @@ class RabbitmqTest
         // 关闭连接
         RabbitMqConnection::closeConnectionAndChannel($connection, $channel);
         // 返回结果
-        return success("Send Message: " . $msg);
-    }
-
-    // 订阅模型 路由
-    public function direct(Request $request)
-    {
-        // 接受数据
-        $routing_key  = $request->params['routing_key'];
-        $msg          = $request->params['msg'];
-        $RabbitMqWork = new RabbitMqWork(RabbitMq::DIRECT);
-        $RabbitMqWork->sendDirect($routing_key, $msg);
         return success("Send Message: " . $msg);
     }
 
@@ -201,20 +159,7 @@ class RabbitmqTest
         return success("Send Message: " . $msg);
     }
 
-    // 订阅模型-Topic 动态路由
-    public function topic(Request $request)
-    {
-        $RabbitMqWork = new RabbitMqWork(RabbitMq::TOPIC);
-        // 接收参数
-        $route_key = $request->params['route_key'];
-        $msg       = $request->params['msg'];
-        // 发送消息
-        $RabbitMqWork->sendTopic($route_key, $msg);
-        // 返回结果
-        return success('Send Message: ' . $msg);
-    }
-
-    // 主题
+    // 主题 动态路由
     public function topic_jinx(Request $request)
     {
         // 获取连接对象
@@ -304,7 +249,7 @@ class RabbitmqTest
         // return success("Send Message: " . $msg);
         return success('耗时' . (msectime() - $time) . 'ms');
     }
-    
+
     // 死信队列 - 可以保证消息不会丢失
     public function dead(Request $request)
     {
@@ -328,6 +273,13 @@ class RabbitmqTest
         $dead_exchange = 'dead_exchange';
         // 死信routing_key
         $dead_routing_key = 'dead_routing_key';
+
+        /*********************  死信队列  *********************/
+
+        // 声明死信交换机和队列
+        $channel->exchange_declare($dead_exchange, 'direct', false, false, false);
+        $channel->queue_declare($dead_queue, false, true, false, false);
+        $channel->queue_bind($dead_queue, $dead_exchange, $dead_routing_key);
 
         /*********************  普通队列  *********************/
 
@@ -356,13 +308,6 @@ class RabbitmqTest
         $channel->queue_declare($normal_queue, false, true, false, false, false, $arguments);
         // 将队列名与交换机名进行绑定，并指定routing_key
         $channel->queue_bind($normal_queue, $normal_exchange, $routing_key);
-
-        /*********************  死信队列  *********************/
-
-        // 声明死信交换机和队列
-        $channel->exchange_declare($dead_exchange, 'direct', false, false, false);
-        $channel->queue_declare($dead_queue, false, true, false, false);
-        $channel->queue_bind($dead_queue, $dead_exchange, $dead_routing_key);
 
         /*********************  发送消息  *********************/
 
@@ -626,7 +571,7 @@ class RabbitmqTest
     }
 
     // 发布确认 - 高级 消息回退
-    // 问题1: jinx的消息也能被akali消费？
+    // 问题: jinx的消息也能被akali消费？
     public function confirm_high(Request $request)
     {
         // 获取连接
@@ -695,7 +640,7 @@ class RabbitmqTest
             echo $log_reply;
             // 保存日志
             \think\facade\Log::error($log_reply);
-            
+
             // 重新发布
             $channel->basic_publish($amqpMsg, $confirm_exchange, $confirm_routing_key, true);
 
@@ -703,13 +648,13 @@ class RabbitmqTest
             $log_msg = "触发了消息退回，再次发布消息给路由键为{$routing_key}的队列: $msg->body \n";
             echo $log_msg;
             $ruiwen = \think\facade\Log::info($log_msg);
-            
+
             // 关闭连接，这里需要关闭连接，是因为使用了消息阻塞，还没跑到关闭连接就被消息退回拦截了
             $channel->close();
             $connection->close();
             exit;
         });
-        
+
         // 模拟消息退回
 
         // 到不了交换姬的不知道怎么模拟，老师视频中可以设置消息到不了交换机就返回消息给生产者
@@ -740,7 +685,7 @@ class RabbitmqTest
     }
 
     // 发布确认 - 高级 备用交换机 alternate-exchange (有点像死信队列)
-    // 问题1: jinx的消息也能被akali消费？
+    // 问题: 到不了交换姬的消息回退不知道怎么模拟
     public function confirm_backup(Request $request)
     {
         // 获取连接
@@ -769,12 +714,11 @@ class RabbitmqTest
         // 设置交换机的备用交换机
         $arguments = new AMQPTable(['alternate-exchange' => $backup_exchange]);
         // 声明交换姬
-        $channel->exchange_declare($confirm_exchange, 'direct', false, true, false, $arguments);
+        $channel->exchange_declare($confirm_exchange, 'direct', false, true, false, false, false, $arguments);
         // 声明队列
         $channel->queue_declare($confirm_queue, false, true, false, false);
         // 将交换姬和队列进行绑定，并且指定routing_key
         $channel->queue_bind($confirm_queue, $confirm_exchange, $confirm_routing_key);
-
 
         // 声明备用交换机 注意！：这里是同时发给备份消费者和警告消费者
         $channel->exchange_declare($backup_exchange, 'fanout', false, true, false);
@@ -783,7 +727,7 @@ class RabbitmqTest
         $channel->queue_declare($backup_queue, false, true, false, false);
         // 将备份交换机和备份队列进行绑定
         $channel->queue_bind($backup_queue, $backup_exchange);
-        
+
         // 声明警告队列
         $channel->queue_declare($warning_queue, false, true, false, false);
         // 将备份交换机和警告队列进行绑定
@@ -793,11 +737,8 @@ class RabbitmqTest
         $amqpMsg = new AMQPMessage($msg, ['delivery_mode' => AMQPMessage::DELIVERY_MODE_NON_PERSISTENT]);
         // 开启发布确认
         $channel->confirm_select();
-        // 成功到达交换姬时执行
+        // 成功到达队列时执行，如果是成功进入了备用交换机的队列时，也会触发这里
         $channel->set_ack_handler(function (AMQPMessage $msg) {
-            // 到不了交换姬的不知道怎么模拟
-            // echo '成功到达交换机: ' . $msg->body . PHP_EOL;
-            // mandatory为true的时候就是这种
             echo '消息成功进入队列: ' . $msg->body . PHP_EOL;
         });
         // rabbitmq内部错误时触发
@@ -806,7 +747,7 @@ class RabbitmqTest
         });
         // 消息到达交换机,但是没有进入合适的队列,消息回退
         // 注意！如果设置了备用交换机 alternate-exchange ，那么优先选择备用交换机，而不是消息回退
-        /* $channel->set_return_listener(function (
+        $channel->set_return_listener(function (
             $reply_code,
             $reply_text,
             $exchange,
@@ -825,29 +766,28 @@ class RabbitmqTest
             echo $log_reply;
             // 保存日志
             \think\facade\Log::error($log_reply);
-            
+
             // 重新发布 这里是要发给备份交换机的，既是别的服务器里面
             // 老师视频好像是交换机类型是fanout
             // 为了测试就发到本机的rabbitmq了
-            $channel->exchange_declare('backup_exchange', 'direct', false, true, false);
-            $channel->queue_declare('back_queue', false, true, false, false);
-            $channel->queue_bind('back_queue', 'backup_exchange', 'backup_routing_key');
-            // 备份交换机不会也挂了吧，mandatory就不填true了
-            $channel->basic_publish($amqpMsg, 'backup_exchange', 'backup_routing_key');
+            // $channel->exchange_declare('backup_exchange', 'direct', false, true, false);
+            // $channel->queue_declare('back_queue', false, true, false, false);
+            // $channel->queue_bind('back_queue', 'backup_exchange', 'backup_routing_key');
+            // $channel->basic_publish($amqpMsg, 'backup_exchange', 'backup_routing_key');
             $channel->basic_publish($amqpMsg, $confirm_exchange, $confirm_routing_key);
 
             // 保存到日志
             $log_msg = "触发了消息退回，再次发布消息给路由键为{$routing_key}的队列: $msg->body \n";
             echo $log_msg;
-            $ruiwen = \think\facade\Log::info($log_msg);
-            
+            \think\facade\Log::info($log_msg);
+
             // 关闭连接，这里需要关闭连接，是因为使用了消息阻塞，还没跑到关闭连接就被消息退回拦截了
             $channel->close();
             $connection->close();
             exit;
-        }); */
-        
-        // 模拟消息退回
+        });
+
+        // 模拟消息回退
 
         // 到不了交换姬的不知道怎么模拟，老师视频中可以设置消息到不了交换机就返回消息给生产者
         // 连接参数是这个 spring.rabbitmq.publisher-confirm-type=correlated
@@ -857,7 +797,7 @@ class RabbitmqTest
         $confirm_routing_key = 'jinx';
 
         // 发布消息
-        // 参数3：生产者发布消息时设置 mandatory=true,表示消息无法路由到队列时,会退回给生产者
+        // 参数4：生产者发布消息时设置 mandatory=true,表示消息无法路由到队列时,会退回给生产者
         // 老师：可以在消息传递过程中，达不到目的地时，将消息返回给生产者
         // 必须要设置 mandatory=true 不然模拟不了消息退回
         $channel->basic_publish($amqpMsg, $confirm_exchange, $confirm_routing_key, true);
@@ -876,4 +816,107 @@ class RabbitmqTest
         return success($log_msg);
     }
 
+    // 优先队列
+    public function priority_queue(Request $request)
+    {
+        // 获取连接
+        $connection = RabbitMqConnection::getConnection();
+        // 获取信道
+        $channel = $connection->channel();
+
+        // 优先级交换机名称
+        $priority_queue = 'priority_exchange';
+        // 优先级队列名称
+        $priority_queue = 'priority_queue';
+
+        // 设置队列的优先级参数，优先级最大为10
+        $arguments = new AMQPTable(['x-max-priority' => 10]);
+        // 还可以这样？
+        // $arguments = new AMQPTable(['x-max-priority' => ['I', 100]]);
+        // 声明队列
+        $channel->queue_declare($priority_queue, false, true, false, false, false, $arguments);
+
+        // 获取数据
+        $msg = $request->params['msg'];
+
+        // 发布消息
+        for ($i = 1; $i <= 1000000; $i++) {
+
+            // 创建消息
+            $amqpMsg = new AMQPMessage($i);
+            // $amqpMsg = new AMQPMessage($msg, ['priority' => 10]);
+
+            // 如果i等于6的时候，就赋予优先级10，当然也可以是2，随意
+            if ($i == 6) {
+                $amqpMsg->setBody($i . ' - 优先级为8');
+                $amqpMsg->set('priority', 8);
+            }
+
+            if ($i == 8) {
+                $amqpMsg->setBody($i . ' - 优先级为10');
+                $amqpMsg->set('priority', 10);
+            }
+
+            // 发布
+            $channel->basic_publish($amqpMsg, '', $priority_queue);
+        }
+
+        // 关闭连接
+        RabbitMqConnection::closeConnectionAndChannel($channel, $connection);
+
+        // 返回
+        return success('优先级队列发布消息: ' . $msg);
+    }
+
+    // 惰性队列 - 老师这里没有演示
+    // 实现方式：
+    // 可以设置普通队列的最大长度为10000条，多出的消息就转发到死信队列里面
+    // 而这个死信队列设置的就是lazy模式
+    public function lazy_queue(Request $requst)
+    {
+        // 获取连接对象
+        $connection = RabbitMqConnection::getConnection();
+        // 获取通道
+        $channel = $connection->channel();
+
+        // 惰性队列名称
+        $lazy_queue = 'lazy_queue';
+
+        // 声明死信队列，设置为惰性队列
+        $arguments = new AMQPTable(['x-queue-mode' => 'lazy']);
+        $channel->queue_declare($lazy_queue, false, true, false, false, false, $arguments);
+
+    }
+
+    // 测试镜像集群和Federation
+    public function mirror(Request $request)
+    {
+        // 获取连接
+        $connection = RabbitMqConnection::getConnection(['host' => '192.168.159.128']);
+
+        // 获取连接中通道
+        $channel = $connection->channel();
+        
+        // 声明Federation交换机
+        $fed_exchange = 'fed_exchange';
+        // 声明队列
+        $queue = 'mirror_hello';
+        
+        // 声明Federation交换机
+        $channel->exchange_declare($fed_exchange, 'direct', false, false, false);
+        $channel->queue_declare($queue, false, true, false, true);
+        // 接收消息参数
+        $msg = $request->params['msg'];
+
+        // 生成消息
+        $amqpMsg = new AMQPMessage($msg);
+
+        // 发布消息
+        $channel->basic_publish($amqpMsg, '', $queue);
+
+        // 关闭连接
+        RabbitMqConnection::closeConnectionAndChannel($channel, $connection);
+
+        return success("Send Message: " . $msg);
+    }
 }

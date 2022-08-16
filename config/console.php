@@ -22,8 +22,6 @@ return [
         // 发布确认
         'publisher_confirm' => 'app\common\command\PublisherConfirm',
         'consumer_confirm'  => 'app\common\command\ConsumerConfirm',
-        // 发布确认 - 高级
-        'confirm_high'      => 'app\common\command\ConfirmHigh',
         // 死信 练习
         'normal'            => 'app\common\command\Normal',
         'dead'              => 'app\common\command\Dead',
@@ -31,11 +29,18 @@ return [
         'delay'             => 'app\common\command\Delay',
         // 延迟队列 - 插件
         'delayed'           => 'app\common\command\Delayed',
-        // 封装
-        'simple_queue'      => 'app\common\command\SimpleQueue',
-        'work_queue'        => 'app\common\command\WorkQueue',
-        'fanout_queue'      => 'app\common\command\FanoutQueue',
-        'direct_queue'      => 'app\common\command\DirectQueue',
-        'topic_queue'       => 'app\common\command\TopicQueue',
+        
+        // 发布确认 - 高级
+        'confirm_high'      => 'app\common\command\ConfirmHigh',
+        // 发布确认 - 高级 备份交换机
+        'confirm_backup'      => 'app\common\command\ConfirmBackup',
+        // 发布确认 - 高级 备份交换机 警告
+        'confirm_warning'      => 'app\common\command\ConfirmWarning',
+
+        // 优先级队列
+        'priority_queue'      => 'app\common\command\PriorityQueue',
+
+        // 测试镜像集群
+        'mirror'      => 'app\common\command\Mirror',
     ],
 ];
