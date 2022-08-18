@@ -153,4 +153,8 @@ Route::group('rabbitmq_test', function () {
     Route::post('lazy_queue', 'RabbitmqTest/lazy_queue');
     // 测试镜像集群
     Route::post('mirror', 'RabbitmqTest/mirror');
+    // 测试federation
+    Route::post('federation', 'RabbitmqTest/federation');
+    // 测试shovel
+    Route::post('shovel', 'RabbitmqTest/shovel');
 });

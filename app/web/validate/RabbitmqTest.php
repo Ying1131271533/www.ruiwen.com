@@ -52,5 +52,9 @@ class RabbitmqTest extends BaseValidate
         'lazy_queue'         => ['msg'],
         // 测试镜像集群
         'mirror'             => ['msg'],
+        // 测试federation
+        'federation'         => ['msg'],
+        // 测试shovel
+        'shovel'             => ['msg'],
     ];
 }

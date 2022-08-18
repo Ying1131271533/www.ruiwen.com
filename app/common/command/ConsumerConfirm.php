@@ -37,35 +37,26 @@ class ConsumerConfirm extends Command
             // echo "[x] 消费者-2：", $msg->body, "\n";
             // sleep(1);
             // sleep(5);
-            $isAck = true;
-            // $isAck = false;
-            if ($isAck) {
-                // 消息拒答
-                // 参数1：是否把消息放回队列 默认false
-                // 参数2：是否批量处理 默认false
-                // $msg->nack();
+            // 消息拒答
+            // 参数1：是否把消息放回队列 默认false
+            // 参数2：是否批量处理 默认false
+            // $msg->nack();
 
-                // 参数1：发布标签
-                // 参数2：是否批量处理 默认false
-                // 参数3：是否把消息放回队列 默认false
-                // $msg->delivery_info['channel']->basic_nack($msg->delivery_info['delivery_tag']);
-                
-                // 消息确认
-                // 参数1：是否批量处理 默认false
-                // $msg->ack();
-                // 参数1：发布标签
-                // 参数2：是否批量处理 默认false
-                $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
-            }
-            // 判断获取到quit后退出
-            if (trim($msg->body) == 'quit') {
-                $msg->getChannel()->basic_cancel($msg->getConsumerTag());
-            }
+            // 参数1：发布标签
+            // 参数2：是否批量处理 默认false
+            // 参数3：是否把消息放回队列 默认false
+            // $msg->delivery_info['channel']->basic_nack($msg->delivery_info['delivery_tag']);
+            
+            // 消息确认
+            // 参数1：是否批量处理 默认false
+            // $msg->ack();
+            // 参数1：发布标签
+            // 参数2：是否批量处理 默认false
+            $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
         };
 
         // 开启消费
         $channel->basic_consume('hello', '', false, false, false, false, $callback);
-        // $channel->basic_consume('hello', '', false, true, false, false, $callback);
 
         // 监听通道消息，这里没有的话，消费完消息就会自动退出
         while (count($channel->callbacks)) {

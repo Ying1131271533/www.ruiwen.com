@@ -42,5 +42,9 @@ return [
 
         // 测试镜像集群
         'mirror'      => 'app\common\command\Mirror',
+        // 测试federation
+        'federation'      => 'app\common\command\Federation',
+        // 测试shovel
+        'shovel'      => 'app\common\command\Shovel',
     ],
 ];

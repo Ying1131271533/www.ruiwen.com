@@ -215,7 +215,7 @@ class RabbitmqTest
             }
         );
 
-        // 开启消息发布确认，选择为 confirm 模式（此模式不可以和事务模式 兼容）
+        // 开启消息发布确认，选择为 confirm 模式（此模式不可以和事务模式兼容）
         $channel->confirm_select();
 
         // 获取当前毫秒时间
@@ -888,36 +888,120 @@ class RabbitmqTest
 
     }
 
-    // 测试镜像集群和Federation
+    // 测试镜像集群和使用事务
+    // 使用事务机制会大幅降低RabbitMQ的性能，一般建议使用消息确认
     public function mirror(Request $request)
+    {
+        // 获取连接 集群
+        $connection = RabbitMqConnection::getConnection(['host' => '192.168.159.128']);
+
+        // 获取连接中通道
+        $channel = $connection->channel();
+
+        // 镜像队列名称
+        $queue = 'mirror_hello';
+
+        // 声明队列
+        $channel->queue_declare($queue, false, true, false, false);
+
+        // 接收消息参数
+        $msg = $request->params['msg'];
+        // 生成消息
+        $amqpMsg = new AMQPMessage($msg);
+
+        try {
+            // 开启事务
+            // 开启事务会降低性能，因为消息期间多了几次通信
+            $channel->tx_select();
+
+            // 发布消息
+            $channel->basic_publish($amqpMsg, '', $queue);
+
+            // 提交事务
+            $channel->tx_commit();
+        } catch (\Throwable $th) {
+            // 回滚事务
+            // 回滚之后，消费者那边不会收到消息
+            $channel->tx_rollback();
+            return success("Send Message: 程序错误，触发回滚事务");
+        } finally {
+            // 关闭连接
+            RabbitMqConnection::closeConnectionAndChannel($channel, $connection);
+        }
+
+        // 返回
+        return success("Send Message: " . $msg);
+    }
+
+    // 测试Federation
+    // 发一条消息，存了两条？难道是不能在集群里面搞联邦Federation吗
+    public function federation(Request $request)
     {
         // 获取连接
         $connection = RabbitMqConnection::getConnection(['host' => '192.168.159.128']);
 
         // 获取连接中通道
         $channel = $connection->channel();
-        
+
         // Federation交换机名称
         $fed_exchange = 'fed_exchange';
-        // 声明队列名称
-        $queue = 'mirror_hello';
-        
+        // Federation队列名称
+        $queue = 'mq2_queue';
+        // 路由键
+        $routing_key = 'mq2_routing_key';
+
         // 声明Federation交换机
-        $channel->exchange_declare($fed_exchange, 'direct', false, false, false);
+        $channel->exchange_declare($fed_exchange, 'direct', false, true, false);
         // 声明队列
-        $channel->queue_declare($queue, false, true, false, true);
+        $channel->queue_declare($queue, false, true, false, false);
+        // 将交换机和队列进行绑定，并且指定路由键
+        $channel->queue_bind($queue, $fed_exchange, $routing_key);
         // 接收消息参数
         $msg = $request->params['msg'];
-
         // 生成消息
         $amqpMsg = new AMQPMessage($msg);
-
         // 发布消息
-        $channel->basic_publish($amqpMsg, '', $queue);
+        $channel->basic_publish($amqpMsg, $fed_exchange, $routing_key);
 
         // 关闭连接
         RabbitMqConnection::closeConnectionAndChannel($channel, $connection);
+        // 返回
+        return success("Send Message: " . $msg);
+    }
+    
+    // 测试Shovel
+    public function shovel(Request $request)
+    {
+        // 获取连接
+        $connection = RabbitMqConnection::getConnection(['host' => '192.168.159.128']);
 
+        // 获取连接中通道
+        $channel = $connection->channel();
+
+        // shovel交换机名称
+        $shovel_exchange = 'shovel_exchange';
+        // shovel队列名称
+        $queue = 'Q1';
+        // 路由键
+        $routing_key = 'shovel_routing_key';
+
+        // 声明shovel交换机
+        $channel->exchange_declare($shovel_exchange, 'direct', false, true, false);
+        // 声明队列
+        $channel->queue_declare($queue, false, true, false, false);
+        // 将交换机和队列进行绑定，并且指定路由键
+        $channel->queue_bind($queue, $shovel_exchange, $routing_key);
+
+        // 接收消息参数
+        $msg = $request->params['msg'];
+        // 生成消息
+        $amqpMsg = new AMQPMessage($msg);
+        // 发布消息
+        $channel->basic_publish($amqpMsg, $shovel_exchange, $routing_key);
+
+        // 关闭连接
+        RabbitMqConnection::closeConnectionAndChannel($channel, $connection);
+        // 返回
         return success("Send Message: " . $msg);
     }
 }
