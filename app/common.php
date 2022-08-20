@@ -264,7 +264,7 @@ function get_random_number($number = 6): string
 }
 
 // 时间戳转为多少分钟前 几个小时前 几天前
-function postTime($time = null)
+function post_time($time = null)
 {
     $text = '';
     $time = $time === null || $time > time() ? time() : intval($time);
