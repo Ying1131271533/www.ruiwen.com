@@ -9,6 +9,7 @@ class User extends BaseValidate
     // 验证规则
     protected $rule = [
         'id|用户id' => 'require',
+        'phone|手机' => 'require|mobile',
     ];
 
     // 验证消息

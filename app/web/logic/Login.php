@@ -3,7 +3,7 @@ namespace app\web\logic;
 
 use app\common\model\User as ModelUser;
 use app\lib\exception\Fail;
-// use app\web\logic\WechatApplet;
+// use app\web\logic\WechatApplet; // 这里使用了下面的工厂模式，所以不要了
 use app\lib\login\ClassAttr;
 
 class Login extends Token

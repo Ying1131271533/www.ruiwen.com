@@ -8,7 +8,7 @@ class ClassAttr
     public function __construct()
     {
         $this->classStats = [
-            // 帐号登录
+            // 帐号登录 这个UP没做
             'login' => 'app\lib\login\loginAccount',
             // 微信
             'wx' => 'app\lib\login\WechatApplet',

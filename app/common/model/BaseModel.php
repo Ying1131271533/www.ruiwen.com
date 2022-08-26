@@ -8,7 +8,11 @@ use think\model;
 
 abstract class BaseModel extends model
 {
-    // use SoftDelete; // 软删除
+    // 软删除
+    // use SoftDelete;
+    // protected $deleteTime = 'delete_time';
+    // 开启自动写入时间戳字段，自动写入create_time和update_time两个字段的值
+    // protected $autoWriteTimestamp = true;
 
     // 隐藏字段
     protected $hidden = [
