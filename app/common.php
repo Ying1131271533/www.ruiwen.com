@@ -40,7 +40,7 @@ function success($data = [], int $status = 20000, int $code = 200, string $msg =
         $resultData = [
             'status' => $status,
             'msg'    => $data,
-            'data'   => [],
+            // 'data'   => [],
         ];
     } else {
         $resultData = [
