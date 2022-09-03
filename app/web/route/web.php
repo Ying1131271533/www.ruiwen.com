@@ -119,7 +119,7 @@ Route::group('comment', function () {
 });
 
 /**
- * rabbit_test 
+ * rabbit_test
  */
 Route::group('rabbitmq_test', function () {
     Route::get('index', 'RabbitmqTest/index');
@@ -157,4 +157,11 @@ Route::group('rabbitmq_test', function () {
     Route::post('federation', 'RabbitmqTest/federation');
     // 测试shovel
     Route::post('shovel', 'RabbitmqTest/shovel');
+});
+
+/**
+ * elastic_searech
+ */
+Route::group('elastic_search', function () {
+    Route::get('index', 'ElasticSearch/index');
 });

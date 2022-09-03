@@ -720,7 +720,7 @@ class RabbitmqTest
         // 将交换姬和队列进行绑定，并且指定routing_key
         $channel->queue_bind($confirm_queue, $confirm_exchange, $confirm_routing_key);
 
-        // 声明备用交换机 注意！：这里是同时发给备份消费者和警告消费者
+        // 声明备用交换机 注意！：这里是同时发布给备份消费者和警告消费者
         $channel->exchange_declare($backup_exchange, 'fanout', false, true, false);
 
         // 声明备份队列
