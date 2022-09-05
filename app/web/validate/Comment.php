@@ -8,9 +8,9 @@ class Comment extends BaseValidate
 {
     // 验证规则
     protected $rule = [
-        'id'         => 'require|number|gt:0',
-        'user_id'    => 'require|number|gt:0',
-        'article_id' => 'require|number|gt:0',
+        'id'            => 'require|alphaDash',
+        'user_id'    => 'require|alphaDash',
+        'article_id' => 'require|alphaDash',
         'content'    => 'require',
         'nickname'   => 'require',
         'status'     => 'in:1,2',

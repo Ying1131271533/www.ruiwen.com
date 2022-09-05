@@ -8,10 +8,10 @@ class Mongo extends BaseValidate
 {
     // 验证规则
     protected $rule = [
-        'id'        => 'require|number|gt:0',
-        'name|用户名'  => 'require|chsDash',
-        'age|年龄'    => 'require|number',
-        'gender|性别' => 'require',
+        'id'            => 'require|alphaDash',
+        'name|用户名'      => 'require|chsDash',
+        'age|年龄'        => 'require|number',
+        'gender|性别'     => 'require',
         'profession|职业' => 'require',
     ];
 

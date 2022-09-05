@@ -24,8 +24,8 @@ class Comment
         // $this->manager = new Manager("mongodb://192.168.0.184:27017,192.168.0.184:27018,192.168.0.184:27019");
         // 路由节点连接有效，就不知道关闭了27017会不会跟上面一样
         // $this->manager = new Manager("mongodb://192.168.0.184:27017,192.168.0.184:27117");
-        $this->buck    = new BulkWrite(['ordered' => true]);
-        $this->wirte   = new WriteConcern(WriteConcern::MAJORITY, 1000);
+        $this->buck  = new BulkWrite(['ordered' => true]);
+        $this->wirte = new WriteConcern(WriteConcern::MAJORITY, 1000);
     }
 
     // 运行mongo命令
@@ -43,7 +43,7 @@ class Comment
      * @param  int      $size       分页条数
      * @return array                评论数据
      */
-    public function getCommentListByParentId(int $paren_id, int $page, int $size)
+    public function getCommentListByParentId($paren_id, int $page, int $size)
     {
         // 找到评论
         $comment = MongoComment::find($paren_id);
@@ -60,7 +60,7 @@ class Comment
     }
 
     // cmd命令找评论
-    public function findCommentById(int $id)
+    public function findCommentById($id)
     {
         $query  = new Query(['id' => $id]);
         $result = $this->manager->executeQuery('www_ruiwen_com.comment', $query);
@@ -69,7 +69,7 @@ class Comment
             $data[] = $value;
         }
 
-        if(empty($data)){
+        if (empty($data)) {
             throw new Miss();
         }
 
@@ -78,11 +78,16 @@ class Comment
 
     public function saveComment($request)
     {
+        // 创建objectid对象
+        $oid = new \MongoDB\BSON\ObjectId();
+        $id  = sprintf("%s", $oid);
+
         // 组装数据
         $data = [
-            'id'          => $request->param('id/d'),
-            'user_id'     => $request->param('user_id/d'),
-            'article_id'  => $request->param('article_id/d'),
+            '_id'         => $oid,
+            'id'          => $id,
+            'user_id'     => $request->param('user_id/s'),
+            'article_id'  => $request->param('article_id/s'),
             'content'     => $request->param('content/s'),
             'nickname'    => $request->param('nickname/s'),
             'likenum'     => 0,
@@ -114,7 +119,7 @@ class Comment
     {
         // 组装数据
         $data = [
-            'id'       => $request->param('id/d'),
+            'id'       => $request->param('id/s'),
             'content'  => $request->param('content/s'),
             'nickname' => $request->param('nickname/s'),
         ];
@@ -132,7 +137,7 @@ class Comment
         }
     }
 
-    public function deleteCommentById(int $id)
+    public function deleteCommentById($id)
     {
         $comment = MongoComment::find($id);
         if (!$comment) {

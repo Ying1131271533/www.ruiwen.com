@@ -23,16 +23,20 @@ class Mongo
     public function read(Request $request)
     {
         $id   = $request->params['id'];
-        $id   = (int) $request->params['id'];
         $user = LogicMongo::findUserById($id);
         return success($user);
     }
 
     public function save(Request $request)
     {
+        // 创建objectid对象
+        $oid = new \MongoDB\BSON\ObjectId();
+        $id  = sprintf("%s", $oid);
+
         // 组装数据
         $data = [
-            'id'     => $request->param('id/d'),
+            '_id'    => $oid,
+            'id'     => $id,
             'name'   => $request->param('name/s'),
             'age'    => $request->param('age/d'),
             'gender' => $request->param('gender/s'),
@@ -40,7 +44,6 @@ class Mongo
 
         $infoData = [
             'profession' => $request->param('profession/s'),
-            // 'user_id'    => $data['id'],
         ];
 
         $result = User::where('id', $data['id'])->find();
@@ -65,9 +68,14 @@ class Mongo
     // 还是用不了事务
     public function save_jinx(Request $request)
     {
+        // 创建objectid对象
+        $oid = new \MongoDB\BSON\ObjectId();
+        $id  = sprintf("%s", $oid);
+
         // 组装数据
         $data = [
-            'id'     => $request->param('id/d'),
+            '_id'    => $oid,
+            'id'     => $id,
             'name'   => $request->param('name/s'),
             'age'    => $request->param('age/d'),
             'gender' => $request->param('gender/s'),
@@ -75,13 +83,7 @@ class Mongo
 
         $infoData = [
             'profession' => $request->param('profession/s'),
-            'user_id'    => $data['id'],
         ];
-
-        $result = User::where('id', $data['id'])->find();
-        if ($result) {
-            throw new Fail('用户id已存在');
-        }
 
         User::startTrans();
         try {
@@ -89,7 +91,7 @@ class Mongo
             if (!$user) {
                 throw new \Exception('用户创建失败');
             }
-            
+
             $info = $user->info()->save($infoData);
             if ($info) {
                 throw new \Exception('用户信息创建失败');
@@ -107,12 +109,12 @@ class Mongo
     {
         // 组装数据
         $data = [
-            'id'     => $request->param('id/d'),
+            'id'     => $request->param('id/s'),
             'name'   => $request->param('name/s'),
             // 'age'    => $request->param('age/d'),
             'gender' => $request->param('gender/s'),
         ];
-        
+
         $user = User::where('id', $data['id'])->find();
         if (!$user) {
             throw new Miss();

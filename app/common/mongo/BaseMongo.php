@@ -6,7 +6,7 @@ use think\model;
 abstract class BaseMongo extends model
 {
     protected $connection = 'mongo';
-    
+
     public static function getPageData(int $page, int $size, string $order = 'id')
     {
         return self::order($order, 'desc')->paginate($size, false, ['page' => $page]);
