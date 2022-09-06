@@ -8,7 +8,7 @@ class Comment extends BaseValidate
 {
     // 验证规则
     protected $rule = [
-        'id'            => 'require|alphaDash',
+        'id'            => 'require|alphaDash|unique:user',
         'user_id'    => 'require|alphaDash',
         'article_id' => 'require|alphaDash',
         'content'    => 'require',
@@ -27,7 +27,7 @@ class Comment extends BaseValidate
     // 验证场景
     protected $scene = [
         'read'             => ['id'],
-        'save'             => ['id', 'user_id', 'article_id', 'content', 'nickname', 'status', 'parent_id'],
+        'save'             => ['user_id', 'article_id', 'content', 'nickname', 'status', 'parent_id'],
         'update'           => ['id', 'content', 'nickname'],
         'delete'           => ['id'],
         'getParentComment' => ['id', 'page', 'size'],

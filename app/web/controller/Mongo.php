@@ -14,8 +14,12 @@ class Mongo
 {
     public function index(Request $request)
     {
-        // $user = User::with('info')->order('_id', 'desc')->select();
-        $user = User::getPageData($request->page, $request->size);
+        $user = User::with('info')
+        ->page($request->page, $request->size)
+        ->order('_id', 'desc')
+        ->select();
+        // $user = Info::select();
+        // $user = User::getPageData($request->page, $request->size);
 
         return success($user);
     }
@@ -46,17 +50,11 @@ class Mongo
             'profession' => $request->param('profession/s'),
         ];
 
-        $result = User::where('id', $data['id'])->find();
-        if ($result) {
-            throw new Fail('用户id已存在');
-        }
-
         $user = User::create($data);
         if (!$user) {
             throw new \Exception('用户创建失败');
         }
-
-        // $info = Info::create($infoData);
+        
         $info = $user->info()->save($infoData);
         if (!$info) {
             throw new \Exception('用户信息创建失败');
@@ -132,14 +130,15 @@ class Mongo
 
     public function delete(Request $request)
     {
-        $id   = $request->param('id/d');
-        $user = User::where('id', $id)->find();
+        $id   = $request->param('id/s');
+        $user = User::find($id);
         if (!$user) {
             throw new Miss();
         }
 
         $result = $user->delete();
         Info::where('user_id', $id)->delete();
+        // 下面这种使用不了
         // $result = $user->together(['info'])->delete();
         if (!$result) {
             throw new Fail();
