@@ -13,33 +13,26 @@ class ElasticSearch
     public function __construct()
     {
         // $this->https = config('elasticsearch.https');
-        $this->client = ClientBuilder::create()->setHosts(config('elasticsearch.http'))->build();
+        $this->client = ClientBuilder::create()->setHosts(config('app.elasticsearch.http'))->build();
         // 密钥保护
         // $this->client = ClientBuilder::create()->setApiKey('id', 'api_key')->build();
     }
 
-    // 列表
-    public function index()
+    // 查询所有索引
+    public function index_list()
     {
-        // 设置查询的条件
-        $params = [
-            'index' => 'user',
-            'id'    => 'id',
-            'body'  => ['testField' => 'name'],
-        ];
-        // return json($params);
-        $results = $this->client->search($params); // es搜索
+        $results = $this->client->indices();
         return success($results);
     }
 
     // 索引 创建
-    public function save(Request $request)
+    public function index_save(Request $request)
     {
         // 接收参数
-        $params = $request->param();
+        $params = $request->params;
         return success($params);
-        
-        $results = $this->client->search($params); // es搜索
+        // 创建索引(表)
+        $results = $this->client->index($params);
         return success($results);
     }
 }

@@ -163,8 +163,9 @@ Route::group('rabbitmq_test', function () {
  * elastic_searech
  */
 Route::group('elastic_search', function () {
+    Route::post('save_index', 'ElasticSearch/save_index');
     Route::get('', 'ElasticSearch/index');
-    Route::get(':id', 'ElasticSearch/index');
+    Route::get(':id', 'ElasticSearch/read');
     Route::post('', 'ElasticSearch/save');
     Route::put('', 'ElasticSearch/update');
     Route::delete(':id', 'ElasticSearch/delete');
