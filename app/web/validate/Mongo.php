@@ -2,6 +2,7 @@
 
 namespace app\web\validate;
 
+use app\common\mongo\User;
 use app\common\validate\BaseValidate;
 
 class Mongo extends BaseValidate
@@ -9,7 +10,7 @@ class Mongo extends BaseValidate
     // 验证规则
     protected $rule = [
         'id'            => 'require|alphaDash',
-        'name|用户名'      => 'require|chsDash',
+        'name|用户名'      => 'require|chsDash|uniqueName',
         'age|年龄'        => 'require|number',
         'gender|性别'     => 'require',
         'profession|职业' => 'require',
@@ -23,8 +24,15 @@ class Mongo extends BaseValidate
     // 验证场景
     protected $scene = [
         'read'   => ['id'],
-        'save'   => ['id', 'name', 'age', 'gender', 'profession'],
+        'save'   => ['name', 'age', 'gender', 'profession'],
         'update' => ['id', 'name', 'age', 'gender'],
         'delete' => ['id'],
     ];
+
+    // 用户名是否唯一
+    protected function uniqueName($value, $rule, $data = [])
+    {
+        $name = User::where('name', $value)->find();
+        return empty($name) ? true : '用户名已存在';
+    }
 }

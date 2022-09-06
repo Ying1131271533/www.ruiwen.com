@@ -163,5 +163,9 @@ Route::group('rabbitmq_test', function () {
  * elastic_searech
  */
 Route::group('elastic_search', function () {
-    Route::get('index', 'ElasticSearch/index');
+    Route::get('', 'ElasticSearch/index');
+    Route::get(':id', 'ElasticSearch/index');
+    Route::post('', 'ElasticSearch/save');
+    Route::put('', 'ElasticSearch/update');
+    Route::delete(':id', 'ElasticSearch/delete');
 });

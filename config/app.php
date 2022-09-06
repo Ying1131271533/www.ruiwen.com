@@ -74,4 +74,13 @@ return [
         'vhost'    => '/',
         // 'vhost'    => '/akali',
     ],
+
+    // elasticsearch连接配置
+    'elasticsearch'    => [
+        'http' => ['http://127.0.0.1:9200'],
+        // 如果采用了HTTP认证
+        // 'http' => ['user:pass@http://127.0.0.1:9200'],
+        // SSL
+        // 'https' => ['user:pass@https://127.0.0.1:9200'],
+    ],
 ];
