@@ -1,4 +1,4 @@
-// indices/put-mapping.asciidoc:149
+// indices/put-mapping.asciidoc:144
 
 [source, php]
 ----

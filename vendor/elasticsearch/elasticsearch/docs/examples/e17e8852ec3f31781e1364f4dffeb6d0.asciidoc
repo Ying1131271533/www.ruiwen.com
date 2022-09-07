@@ -1,4 +1,4 @@
-// query-dsl/query-string-query.asciidoc:281
+// query-dsl/query-string-query.asciidoc:271
 
 [source, php]
 ----

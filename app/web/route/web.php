@@ -163,9 +163,14 @@ Route::group('rabbitmq_test', function () {
  * elastic_searech
  */
 Route::group('elastic_search', function () {
-    Route::post('save_index', 'ElasticSearch/save_index');
-    Route::get('', 'ElasticSearch/index');
+    // 索引
+    Route::post('index_save', 'ElasticSearch/index_save');
+    Route::get('index_list', 'ElasticSearch/index_list');
+    Route::get('index_read/:index', 'ElasticSearch/index_read');
+    Route::delete('index_delete/:index', 'ElasticSearch/index_delete');
+    // 数据
     Route::get(':id', 'ElasticSearch/read');
+    Route::get('', 'ElasticSearch/index');
     Route::post('', 'ElasticSearch/save');
     Route::put('', 'ElasticSearch/update');
     Route::delete(':id', 'ElasticSearch/delete');
