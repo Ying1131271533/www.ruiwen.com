@@ -199,6 +199,33 @@ class ElasticSearch
         return success($result);
     }
 
+    // 数据 保存
+    public function update(Request $request)
+    {
+        // 接收参数
+        $params = $request->params;
+
+        // 组装数据
+        $data = [
+            'index' => 'user',
+            'id'    => 1001, // 这里的id相当于主键，所以body就不要添加id字段
+            'body'  => [
+                'username' => '神织恋',
+                'age'      => 17,
+                'sex'      => '女',
+            ],
+        ];
+
+        // 保存
+        try {
+            $result = $this->client->update($data);
+        } catch (\Throwable $th) {
+            throw new Fail($th->getMessage());
+        }
+
+        return success($result);
+    }
+
     // 数据 读取
     public function delete(int $id)
     {
