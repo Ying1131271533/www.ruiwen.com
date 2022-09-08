@@ -199,7 +199,7 @@ class ElasticSearch
         return success($result);
     }
 
-    // 数据 保存
+    // 数据 更新
     public function update(Request $request)
     {
         // 接收参数
@@ -208,16 +208,19 @@ class ElasticSearch
         // 组装数据
         $data = [
             'index' => 'user',
-            'id'    => 1001, // 这里的id相当于主键，所以body就不要添加id字段
+            'id'    => $params['id'],
             'body'  => [
-                'username' => '神织恋',
-                'age'      => 17,
-                'sex'      => '女',
+                'doc' => [ // 必须带上这个，表示是文档操作
+                    'username' => $params['username'],
+                    'age'      => $params['age'],
+                    'sex'      => $params['sex'],
+                ],
             ],
         ];
 
-        // 保存
+        // 更新
         try {
+            // 这个好像是局部更新
             $result = $this->client->update($data);
         } catch (\Throwable $th) {
             throw new Fail($th->getMessage());
@@ -226,7 +229,7 @@ class ElasticSearch
         return success($result);
     }
 
-    // 数据 读取
+    // 数据 删除
     public function delete(int $id)
     {
         // 组装数据
@@ -245,9 +248,256 @@ class ElasticSearch
         return success($result);
     }
 
-    // 数据 列表
-    public function index(Request $request)
+    // 数据 批量保存
+    public function bulk_save(Request $request)
     {
+        // 处理批量数据
+        $params = [];
+        for ($i = 1; $i < 10; $i++) {
+            $params['body'][] = [
+                'index' => [
+                    '_index' => 'user',
+                    '_id'    => $i,
+                ],
+            ];
+            $params['body'][] = [
+                'username' => '人物' . $i,
+                'age'      => 20 + $i,
+                'sex'      => $i % 2 ? '男' : '女',
+            ];
+        }
 
+        // 批量保存
+        try {
+            $result = $this->client->bulk($params);
+        } catch (\Throwable $th) {
+            throw new Fail($th->getMessage());
+        }
+
+        return success($result);
+    }
+
+    // 数据 批量更新
+    public function bulk_update(Request $request)
+    {
+        $params = [];
+        for ($i = 1; $i < 10; $i++) {
+            $params['body'][] = [
+                'update' => [
+                    '_index' => 'user',
+                    '_id'    => $i,
+                ],
+            ];
+            $params['body'][] = [
+                'doc' => [
+                    'username' => '角色' . $i,
+                ],
+            ];
+        }
+
+        // 批量更新
+        try {
+            $result = $this->client->bulk($params);
+        } catch (\Throwable $th) {
+            throw new Fail($th->getMessage());
+        }
+        return success($result);
+    }
+
+    // 数据 批量删除
+    public function bulk_delete(Request $request)
+    {
+        // 处理批量数据
+        $params = [];
+        for ($i = 1; $i < 10; $i++) {
+            $params['body'][] = [
+                'delete' => [
+                    '_index' => 'user',
+                    '_id'    => $i,
+                ],
+            ];
+        }
+
+        // 批量删除
+        try {
+            $result = $this->client->bulk($params);
+        } catch (\Throwable $th) {
+            throw new Fail($th->getMessage());
+        }
+        return success($result);
+    }
+
+    // 查询
+    public function search(Request $request)
+    {
+        // 全部 排序 字段排除
+        /* $params = [
+        'index' => 'user',
+        'body' => [
+        '_source' => ['username', 'age'],
+        'sort' => [
+        'age' => 'desc'
+        ]
+        ]
+        ]; */
+
+        // 分页数据
+        $page = $request->page;
+        $size = $request->size;
+
+        // 条件 分页
+        /* $params = [
+        'index' => 'user',
+        'body'  => [
+        'query' => [
+        'match' => [
+        'sex' => '女',
+        ],
+        ],
+        ],
+        // (当前页码 - 1) * 每页条数
+        'from'  => ($page - 1) * $size,
+        'size'  => $size,
+        ]; */
+
+        // 并且
+        // 数组形式不能使用
+        $params = [
+            'index' => 'user',
+            'body'  => [
+                'query' => [
+                    'bool' => [
+                        'must' => [
+                            'match' => [
+                                'age' => 25,
+                            ],
+                            'match' => [
+                                'sex' => "男",
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ];
+        // 并且
+        $params = [
+            'index' => 'user',
+            'body'  => '{
+                "query": {
+                    "bool": {
+                        "must": [
+                            {
+                                "match": { "age": 25 }
+                            },
+                            {
+                                "match": { "sex": "男" }
+                            }
+                        ]
+                    }
+                }
+            }',
+        ];
+        // 或者
+        $params = [
+            'index' => 'user',
+            'body'  => '{
+                "query": {
+                    "bool": {
+                        "should": [
+                            {
+                                "match": { "username": "神织恋" }
+                            },
+                            {
+                                "match": { "age": 25 }
+                            }
+                        ]
+                    }
+                }
+            }',
+        ];
+        // 范围
+        $params = [
+            'index' => 'user',
+            'body'  => [
+                'query' => [
+                    'bool' => [
+                        'filter' => [
+                            'range' => [
+                                'age' => [
+                                    'gt' => 25
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ];
+        // 范围
+        $params = [
+            'index' => 'user',
+            'body'  => [
+                'query' => [
+                    'bool' => [
+                        'should' => [
+                            
+                            'match' => [
+                                'age' => 25
+                            ],
+                            'match' => [
+                                'username' => '角色1'
+                            ],
+                        ]
+                    ]
+                ]
+            ]
+        ];
+        
+
+        // 查询
+        try {
+            $result = $this->client->search($params);
+        } catch (\Throwable $th) {
+            throw new Fail($th->getMessage());
+        }
+
+        // 返回结果
+        return success($result);
+    }
+
+    // 查询 分页
+    public function search_group(Request $request)
+    {
+        // 组装数据
+        $params = [
+            'index' => 'user',
+        ];
+        $params['body'] = [
+            'query'     => [
+                'match' => [
+                    'sex' => '男',
+                ],
+            ],
+            'from'      => 0,
+            'size'      => 2,
+            'sort'      => [
+                'age' => 'desc',
+            ],
+            'highlight' => [
+                'fields' => [
+                    'username' => [],
+                    // 'username' => new \stdClass()
+                ],
+            ],
+        ];
+
+        // 查询
+        try {
+            $result = $this->client->search($params);
+        } catch (\Throwable $th) {
+            throw new Fail($th->getMessage());
+        }
+
+        // 返回结果
+        return success($result);
     }
 }

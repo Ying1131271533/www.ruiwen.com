@@ -8,11 +8,15 @@ class ElasticSearch extends BaseValidate
 {
     // 验证规则
     protected $rule = [
-        'id'       => 'require|number',
-        'index|索引' => 'require|alpha',
+        'index|索引'     => 'require|alpha',
+        // 数据
+        'id'           => 'require|number',
+        'username|用户名' => 'require',
+        'age|年龄'       => 'require|number',
+        'sex|性别'       => 'require|chs',
         // 分页
-        'page|页码'  => 'require|number|gt:0',
-        'size|条数'  => 'require|number|gt:0',
+        'page|页码'      => 'require|number|gt:0',
+        'size|条数'      => 'require|number|gt:0',
     ];
 
     // 验证消息
@@ -26,10 +30,11 @@ class ElasticSearch extends BaseValidate
         'index_read'   => ['index'],
         'index_delete' => ['index'],
         // 分页
-        // 'index' => ['id', 'page', 'size'],
         'read'         => ['id'],
         // 'save'         => ['id'],
-        // 'update'       => ['id'],
+        'update'       => ['id', 'username', 'age', 'sex'],
         'delete'       => ['id'],
+        // 搜索
+        'search'   => ['index', 'page', 'size'],
     ];
 }

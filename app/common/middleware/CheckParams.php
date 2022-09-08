@@ -19,8 +19,8 @@ class CheckParams
         // 验证参数，参数过滤
         
         // 页码，条数赋值
-        $request->page = $request->param('page') ? $request->param('page') : config('app.page');
-        $request->size = $request->param('size') ? $request->param('size') : config('app.size');
+        $request->page = $request->param('?page') ? $request->param('page') : config('app.page');
+        $request->size = $request->param('?size') ? $request->param('size') : config('app.size');
         // if ($request->action() == 'index') { }
 
         $this->check_param($request);
