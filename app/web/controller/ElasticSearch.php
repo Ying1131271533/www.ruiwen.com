@@ -66,10 +66,12 @@ class ElasticSearch
                             'index' => true,
                         ],
                         'age'  => [
-                            'type' => 'integer',
+                            'type'  => 'integer',
+                            'index' => true,
                         ],
                         'sex'  => [
-                            'type' => 'keyword',
+                            'type'  => 'keyword',
+                            'index' => true,
                         ],
                     ],
                 ],
@@ -331,164 +333,254 @@ class ElasticSearch
     public function search(Request $request)
     {
         // 全部 排序 字段排除
-        /* $params = [
-        'index' => 'user',
-        'body' => [
-        '_source' => ['username', 'age'],
-        'sort' => [
-        'age' => 'desc'
-        ]
-        ]
-        ]; */
+        $params = [
+            'index' => 'user',
+            'body'  => [
+                '_source' => ['username', 'age'],
+                'sort'    => [
+                    'age' => 'asc',
+                ],
+            ],
+        ];
 
         // 分页数据
         $page = $request->page;
         $size = $request->size;
 
         // 条件 分页
-        /* $params = [
-        'index' => 'user',
-        'body'  => [
-        'query' => [
-        'match' => [
-        'sex' => '女',
-        ],
-        ],
-        ],
-        // (当前页码 - 1) * 每页条数
-        'from'  => ($page - 1) * $size,
-        'size'  => $size,
-        ]; */
+        // $params = [
+        //     'index' => 'user',
+        //     'body'  => [
+        //         'query' => [
+        //             'match' => [
+        //                 'sex' => '女',
+        //             ],
+        //         ],
+        //     ],
+        //     // (当前页码 - 1) * 每页条数
+        //     'from'  => ($page - 1) * $size,
+        //     'size'  => $size,
+        // ];
 
-        // 并且
-        // 数组形式不能使用
-        $params = [
-            'index' => 'user',
-            'body'  => [
-                'query' => [
-                    'bool' => [
-                        'must' => [
-                            'match' => [
-                                'age' => 25,
-                            ],
-                            'match' => [
-                                'sex' => "男",
-                            ],
-                        ],
-                    ],
-                ],
-            ],
-        ];
-        // 并且
-        $params = [
-            'index' => 'user',
-            'body'  => '{
-                "query": {
-                    "bool": {
-                        "must": [
-                            {
-                                "match": { "age": 25 }
-                            },
-                            {
-                                "match": { "sex": "男" }
-                            }
-                        ]
-                    }
-                }
-            }',
-        ];
+        // 并且 数组形式
+        // $params = [
+        //     'index' => 'user',
+        //     'body'  => [
+        //         'query' => [
+        //             'bool' => [
+        //                 'must' => [
+        //                     [
+        //                         'match' => [
+        //                             'age' => 26
+        //                         ]
+        //                     ],
+        //                     // 等于下面的must_ont
+        //                     // [
+        //                     //     'match' => [
+        //                     //         'sex' => "男"
+        //                     //     ]
+        //                     // ],
+        //                 ],
+        //                 'must_not' => [
+        //                     [
+        //                         'match' => [
+        //                             'sex' => '女'
+        //                         ]
+        //                     ]
+        //                 ]
+        //             ],
+        //         ],
+        //     ],
+        // ];
+
+        // 并且 json形式
+        // $params = [
+        //     'index' => 'user',
+        //     'body'  => '{
+        //         "query": {
+        //             "bool": {
+        //                 "must": [
+        //                     {
+        //                         "match": { "age": 25 }
+        //                     },
+        //                     {
+        //                         "match": { "sex": "男" }
+        //                     }
+        //                 ]
+        //             }
+        //         }
+        //     }',
+        // ];
+
         // 或者
-        $params = [
-            'index' => 'user',
-            'body'  => '{
-                "query": {
-                    "bool": {
-                        "should": [
-                            {
-                                "match": { "username": "神织恋" }
-                            },
-                            {
-                                "match": { "age": 25 }
-                            }
-                        ]
-                    }
-                }
-            }',
-        ];
+        // $params = [
+        //     'index' => 'user',
+        //     'body'  => [
+        //         'query' => [
+        //             'bool' => [
+        //                 'should' => [
+        //                     [
+        //                         'match' => [
+        //                             'username' => '神织恋',
+        //                         ],
+        //                     ],
+        //                     [
+        //                         'match' => [
+        //                             'age' => 25
+        //                         ]
+        //                     ],
+        //                 ],
+        //             ],
+        //         ],
+        //     ]
+        // ];
+
         // 范围
-        $params = [
-            'index' => 'user',
-            'body'  => [
-                'query' => [
-                    'bool' => [
-                        'filter' => [
-                            'range' => [
-                                'age' => [
-                                    'gt' => 25
-                                ]
-                            ]
-                        ]
-                    ]
-                ]
-            ]
-        ];
-        // 范围
-        $params = [
-            'index' => 'user',
-            'body'  => [
-                'query' => [
-                    'bool' => [
-                        'should' => [
-                            
-                            'match' => [
-                                'age' => 25
-                            ],
-                            'match' => [
-                                'username' => '角色1'
-                            ],
-                        ]
-                    ]
-                ]
-            ]
-        ];
-        
+        // $params = [
+        //     'index' => 'user',
+        //     'body'  => [
+        //         'query' => [
+        //             'bool' => [
+        //                 'filter' => [
+        //                     [
+        //                         'range' => [
+        //                             'age' => [
+        //                                 'gte' => 25,
+        //                             ]
+        //                         ]
+        //                     ],
+        //                     [
+        //                         'range' => [
+        //                             'age' => [
+        //                                 'lte' => 28
+        //                             ]
+        //                         ]
+        //                     ]
+        //                 ],
+        //             ],
+        //         ],
+        //     ],
+        // ];
 
-        // 查询
-        try {
-            $result = $this->client->search($params);
-        } catch (\Throwable $th) {
-            throw new Fail($th->getMessage());
-        }
+        // 模糊查询
+        // $params = [
+        //     'index' => 'user',
+        //     'body'  => [
+        //         'query' => [
+        //             // 模糊
+        //             'fuzzy' => [
+        //                 // 英文
+        //                 // 'username' => [
+        //                 //     'value'     => 'jin',
+        //                 //     // 有效的偏移距离为 0, 1, 2 默认自动auto
+        //                 //     // 0 只能匹配到 jin
+        //                 //     // 1 可以匹配到 jinx
+        //                 //     // 2 可以匹配到 role-6jinx-ying
+        //                 //     // auto 可以匹配到 jinx 不过会随着value不同而不同
+        //                 //     'fuzziness' => 'auto'
+        //                 // ],
+        //                 // 中文
+        //                 // 'username' => [
+        //                 //     'value'     => '神',
+        //                 //     // 有效的偏移距离为 0, 1, 2 默认自动auto
+        //                 //     // 0 可以匹配到 神织恋 神织知更
+        //                 //     // 1 可以匹配到 所有包含中文的数据
+        //                 //     // 2 可以匹配到 所有包含中文的数据
+        //                 //     // auto 可以匹配到 神织恋 神织知更
+        //                 //     'fuzziness' => 0
+        //                 // ],
+        //                 // 中文 2个
+        //                 // 'username' => [
+        //                 //     'value'     => '神织',
+        //                 //     // 有效的偏移距离为 0, 1, 2 默认自动auto
+        //                 //     // 0 无匹配
+        //                 //     // 1 可以匹配到 神织恋 神织知更
+        //                 //     // 2 可以匹配到 所有包含中文的数据
+        //                 //     // auto 无匹配
+        //                 //     'fuzziness' => 2
+        //                 // ],
+        //                 // 中文 3个
+        //                 'username' => [
+        //                     'value'     => '神织恋',
+        //                     // 有效的偏移距离为 0, 1, 2 默认自动auto
+        //                     // 0 无匹配
+        //                     // 1 无匹配
+        //                     // 2 可以匹配到 神织恋 神织知更
+        //                     // auto 无匹配
+        //                     'fuzziness' => 2
+        //                 ],
+        //             ],
+        //             // 查询支持开箱即用的模糊匹配
+        //             // 'match' => [
+        //             //     'username' => [
+        //             //         'query'     => 'jinx',
+        //             //         'fuzziness' => 'auto',
+        //             //         'operator'  => 'and',
+        //             //     ],
+        //             // ],
+        //             // 多个模糊
+        //             // "multi_match" => [
+        //             //     "fields" =>  [ "text", "title" ],
+        //             //     "query" =>     "SURPRIZE ME!",
+        //             //     "fuzziness" => "AUTO"
+        //             // ]
+        //         ],
+        //     ],
+        // ];
 
-        // 返回结果
-        return success($result);
-    }
+        // 高亮
+        // $params = [
+        //     'index' => 'user',
+        //     'body'  => [
+        //         'query'     => [
+        //             'fuzzy' => [
+        //                 'username' => [
+        //                     'value'     => '神织恋',
+        //                     // 有效的偏移距离为 0, 1, 2 默认自动auto
+        //                     // 0 无匹配
+        //                     // 1 无匹配
+        //                     // 2 可以匹配到 神织恋 神织知更
+        //                     // auto 无匹配
+        //                     'fuzziness' => 2,
+        //                 ],
+        //             ],
+        //         ],
+        //         'highlight' => [
+        //             'pre_tags'  => ['<font color="red">'],
+        //             'post_tags' => ['</font>'],
+        //             'fields'    => [
+        //                 'username' => (object) [],
+        //             ],
 
-    // 查询 分页
-    public function search_group(Request $request)
-    {
-        // 组装数据
-        $params = [
-            'index' => 'user',
-        ];
-        $params['body'] = [
-            'query'     => [
-                'match' => [
-                    'sex' => '男',
-                ],
-            ],
-            'from'      => 0,
-            'size'      => 2,
-            'sort'      => [
-                'age' => 'desc',
-            ],
-            'highlight' => [
-                'fields' => [
-                    'username' => [],
-                    // 'username' => new \stdClass()
-                ],
-            ],
-        ];
+        //         ],
+        //     ],
+        // ];
+
+        // 聚合查询
+        // $params = [
+        //     'index' => 'user',
+        //     'body'  => [
+        //         'aggs' => [
+        //             // 统计相同数据有几个进行分组 好像不能使用中文数据进行统计
+        //             'age_group' => [
+        //                 'terms' => [
+        //                     'field' => 'age'
+        //                 ]
+        //             ],
+        //             // 平均值名称
+        //             // 'age_avg' => [
+        //             //     'avg' => [
+        //             //         'field' => 'age',
+        //             //     ]
+        //             // ],
+        //             // 'age_max' => [
+        //             //     'max' => [
+        //             //         'field' => 'age',
+        //             //     ]
+        //             // ]
+        //         ],
+        //     ],
+        // ];
 
         // 查询
         try {
