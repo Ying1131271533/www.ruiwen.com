@@ -71,7 +71,7 @@ return [
             // 数据库密码
             'password'    => '',
             // 数据库连接端口
-            'hostport'    => '37017',
+            'hostport'    => '27017',
             // 数据库连接参数
             'params'      => [],
             // 数据库编码默认采用utf8
@@ -81,7 +81,8 @@ return [
             // 数据库类型
             'type'        => 'mongo',
             // 服务器地址
-            'hostname'    => '192.168.0.184',
+            // 'hostname'    => '192.168.0.184',
+            'hostname'    => '127.0.0.1',
             // 数据库名
             'database'    => 'www_ruiwen_com',
             // 数据库用户名

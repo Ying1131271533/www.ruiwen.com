@@ -23,7 +23,7 @@ class ElasticSearch
     public function index_save(Request $request)
     {
         // 接收参数
-        // $params = $request->params;
+        $params = $request->params;
 
         // 普通创建（不指定类型，ES会自动匹配类型）
         // $data = [
@@ -54,8 +54,15 @@ class ElasticSearch
 
         // 数据设置
         $params = [
-            'index' => 'user',
+            'index' => $params['index'],
             'body'  => [
+                // 我们将分配3个主分片和一份副本
+                // 'number_of_shards' => 3 需要开启单点集群
+                // 'number_of_replicas' => 2 需要开启多个节点的集群
+                // 'settings'=>[
+                //     'number_of_shards' => 3, // 主分片数
+                //     'number_of_replicas' => 1 // 主分片的副本数
+                // ],
                 'mappings' => [ // 映射
                     '_source'    => [ // 存储原始文档
                         'enabled' => 'true',
@@ -74,7 +81,7 @@ class ElasticSearch
                             'index' => true,
                         ],
                     ],
-                ],
+                ]
             ],
         ];
 
@@ -328,7 +335,7 @@ class ElasticSearch
         }
         return success($result);
     }
-
+    
     // 查询
     public function search(Request $request)
     {
@@ -468,6 +475,7 @@ class ElasticSearch
         //     'body'  => [
         //         'query' => [
         //             // 模糊
+        //             // 中文和英文的分词方式不一样
         //             'fuzzy' => [
         //                 // 英文
         //                 // 'username' => [
