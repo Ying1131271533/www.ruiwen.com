@@ -216,7 +216,7 @@ class ElasticSearchDemo
 
         // 处理批量数据
         $data = [];
-        for ($i = 1; $i < 10; $i++) {
+        for ($i = 0; $i <= 10; $i++) {
             $data['body'][] = [
                 'index' => [
                     '_index' => 'product',
@@ -246,7 +246,7 @@ class ElasticSearchDemo
     public function bulk_update(Request $request)
     {
         $params = [];
-        for ($i = 1; $i < 10; $i++) {
+        for ($i = 1; $i <= 10; $i++) {
             $params['body'][] = [
                 'update' => [
                     '_index' => 'user',
