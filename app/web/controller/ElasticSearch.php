@@ -57,7 +57,7 @@ class ElasticSearch
             'index' => $params['index'],
             'body'  => [
                 // 我们将分配3个主分片和一份副本
-                // 'number_of_shards' => 3 需要开启单点集群
+                // 'number_of_shards' => 3 需要开启单点集群才能起效，不然还是1
                 // 'number_of_replicas' => 2 需要开启多个节点的集群
                 // 'settings'=>[
                 //     'number_of_shards' => 3, // 主分片数
@@ -65,7 +65,7 @@ class ElasticSearch
                 // ],
                 'mappings' => [ // 映射
                     '_source'    => [ // 存储原始文档
-                        'enabled' => 'true',
+                        'enabled' => true, // 默认储存
                     ],
                     'properties' => [
                         'name' => [

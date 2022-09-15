@@ -30,9 +30,6 @@ class ElasticSearchDemo
                     'number_of_replicas' => 1, // 主分片的副本数
                 ],
                 'mappings' => [ // 映射
-                    // '_source'    => [ // 存储原始文档
-                    //     'enabled' => 'true',
-                    // ],
                     'properties' => [
                         'title'    => [
                             'type' => 'text',
@@ -116,7 +113,7 @@ class ElasticSearchDemo
             'price'    => $request->param('price/f'),
             'images'   => $request->param('images/s'),
         ];
-        
+
         // 组装数据
         $data = [
             'index' => 'product',
@@ -208,25 +205,36 @@ class ElasticSearchDemo
     // 数据 批量保存
     public function bulk_save(Request $request)
     {
+        // 接收参数
+        $params = [
+            'id'       => $request->param('id/d'),
+            'title'    => $request->param('title/s'),
+            'category' => $request->param('category/s'),
+            'price'    => $request->param('price/f'),
+            'images'   => $request->param('images/s'),
+        ];
+
         // 处理批量数据
-        $params = [];
+        $data = [];
         for ($i = 1; $i < 10; $i++) {
-            $params['body'][] = [
+            $data['body'][] = [
                 'index' => [
-                    '_index' => 'user',
+                    '_index' => 'product',
                     '_id'    => $i,
                 ],
             ];
-            $params['body'][] = [
-                'username' => '人物' . $i,
-                'age'      => 20 + $i,
-                'sex'      => $i % 2 ? '男' : '女',
+            $data['body'][] = [
+                'id'       => $i,
+                'title'    => "[$i]" . $params['title'],
+                'category' => $params['category'],
+                'price'    => $params['price'] + $i,
+                'images'   => $params['images'],
             ];
         }
 
         // 批量保存
         try {
-            $result = $this->client->bulk($params);
+            $result = $this->client->bulk($data);
         } catch (\Throwable $th) {
             throw new Fail($th->getMessage());
         }
@@ -287,20 +295,22 @@ class ElasticSearchDemo
     // 查询
     public function search(Request $request)
     {
+        // 分页数据
+        $page = $request->page;
+        $size = $request->size;
         // 全部 排序 字段排除
         $params = [
             'index' => 'product',
             'body'  => [
                 // '_source' => ['title', 'category'],
-                'sort'    => [
+                'sort' => [
                     'id' => 'asc',
                 ],
             ],
+            // (当前页码 - 1) * 每页条数
+            'from'  => ($page - 1) * $size,
+            'size'  => $size,
         ];
-
-        // 分页数据
-        $page = $request->page;
-        $size = $request->size;
 
         // 条件 分页
         // $params = [
@@ -316,8 +326,6 @@ class ElasticSearchDemo
         //     'from'  => ($page - 1) * $size,
         //     'size'  => $size,
         // ];
-
-        
 
         // 查询
         try {
