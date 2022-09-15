@@ -171,8 +171,9 @@ class ElasticSearch
         // 组装数据
         $data = [
             'index' => 'user',
-            'id'    => 1001, // 这里的id相当于主键，所以body就不要添加id字段
+            'id'    => 1001, // 这里的id相当于主键，所以body可以不添加id字段
             'body'  => [
+                'id' => 1001,
                 'username' => '神织恋',
                 'age'      => 17,
                 'sex'      => '女',

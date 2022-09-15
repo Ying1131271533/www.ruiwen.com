@@ -179,3 +179,23 @@ Route::group('elastic_search', function () {
     Route::post('bulk_delete', 'ElasticSearch/bulk_delete');
     Route::post('search', 'ElasticSearch/search');
 });
+
+/**
+ * elastic_search_demo
+ */
+Route::group('elastic_search_demo', function () {
+    // 索引
+    Route::post('index_save', 'ElasticSearchDemo/index_save');
+    Route::get('index_read/:index', 'ElasticSearchDemo/index_read');
+    Route::delete('index_delete/:index', 'ElasticSearchDemo/index_delete');
+    // 数据
+    Route::get(':id', 'ElasticSearchDemo/read');
+    Route::get('', 'ElasticSearchDemo/index');
+    Route::post('', 'ElasticSearchDemo/save');
+    Route::put('', 'ElasticSearchDemo/update');
+    Route::delete(':id', 'ElasticSearchDemo/delete');
+    Route::post('bulk_save', 'ElasticSearchDemo/bulk_save');
+    Route::post('bulk_update', 'ElasticSearchDemo/bulk_update');
+    Route::post('bulk_delete', 'ElasticSearchDemo/bulk_delete');
+    Route::post('search', 'ElasticSearchDemo/search');
+});

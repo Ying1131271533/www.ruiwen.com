@@ -77,7 +77,8 @@ return [
 
     // elasticsearch连接配置
     'elasticsearch'    => [
-        'http' => ['http://127.0.0.1:9200'],
+        // 'http' => ['http://127.0.0.1:9200'],
+        'http' => ['http://127.0.0.1:1001'],
         // 如果采用了HTTP认证
         // 'http' => ['user:pass@http://127.0.0.1:9200'],
         // SSL

@@ -13,7 +13,6 @@ declare (strict_types = 1);
 namespace think;
 
 use ArrayAccess;
-use think\facade\Lang;
 use think\file\UploadedFile;
 use think\route\Rule;
 
@@ -1228,7 +1227,7 @@ class Request implements ArrayAccess
             7 => 'file write error',
         ];
 
-        $msg = Lang::get($fileUploadErrors[$error]);
+        $msg = $fileUploadErrors[$error];
         throw new Exception($msg, $error);
     }
 
@@ -1936,7 +1935,7 @@ class Request implements ArrayAccess
 
         return $token;
     }
-
+    
     /**
      * 检查请求令牌
      * @access public
@@ -2151,23 +2150,19 @@ class Request implements ArrayAccess
     }
 
     // ArrayAccess
-    #[\ReturnTypeWillChange]
     public function offsetExists($name): bool
     {
         return $this->has($name);
     }
 
-    #[\ReturnTypeWillChange]
     public function offsetGet($name)
     {
         return $this->param($name);
     }
 
-    #[\ReturnTypeWillChange]
     public function offsetSet($name, $value)
     {}
 
-    #[\ReturnTypeWillChange]
     public function offsetUnset($name)
     {}
 
