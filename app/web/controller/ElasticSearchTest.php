@@ -6,7 +6,7 @@ use app\lib\exception\Fail;
 use app\Request;
 use Elasticsearch\ClientBuilder;
 
-class ElasticSearchDemo
+class ElasticSearchTest
 {
     protected $client;
 
@@ -36,6 +36,7 @@ class ElasticSearchDemo
                         ],
                         'category' => [
                             'type' => 'keyword',
+                            'fielddata' => true,
                         ],
                         'price'    => [
                             'type' => 'double',
@@ -216,7 +217,7 @@ class ElasticSearchDemo
 
         // 处理批量数据
         $data = [];
-        for ($i = 0; $i <= 10; $i++) {
+        for ($i = 1; $i <= 10; $i++) {
             $data['body'][] = [
                 'index' => [
                     '_index' => 'product',
@@ -249,7 +250,7 @@ class ElasticSearchDemo
         for ($i = 1; $i <= 10; $i++) {
             $params['body'][] = [
                 'update' => [
-                    '_index' => 'user',
+                    '_index' => 'product',
                     '_id'    => $i,
                 ],
             ];
@@ -274,10 +275,10 @@ class ElasticSearchDemo
     {
         // 处理批量数据
         $params = [];
-        for ($i = 1; $i < 10; $i++) {
+        for ($i = 1; $i <= 10; $i++) {
             $params['body'][] = [
                 'delete' => [
-                    '_index' => 'user',
+                    '_index' => 'product',
                     '_id'    => $i,
                 ],
             ];
@@ -298,34 +299,28 @@ class ElasticSearchDemo
         // 分页数据
         $page = $request->page;
         $size = $request->size;
-        // 全部 排序 字段排除
+        // 全部
+        // $params = [
+        //     'index' => 'product',
+        //     // (当前页码 - 1) * 每页条数
+        //     'from'  => ($page - 1) * $size,
+        //     'size'  => $size,
+        // ];
+
+        // 条件 分页
         $params = [
             'index' => 'product',
             'body'  => [
-                // '_source' => ['title', 'category'],
-                'sort' => [
-                    'id' => 'asc',
+                'query' => [
+                    'match' => [
+                        'title' => '苹果',
+                    ],
                 ],
             ],
             // (当前页码 - 1) * 每页条数
             'from'  => ($page - 1) * $size,
             'size'  => $size,
         ];
-
-        // 条件 分页
-        // $params = [
-        //     'index' => 'product',
-        //     'body'  => [
-        //         'query' => [
-        //             'match' => [
-        //                 'sex' => '女',
-        //             ],
-        //         ],
-        //     ],
-        //     // (当前页码 - 1) * 每页条数
-        //     'from'  => ($page - 1) * $size,
-        //     'size'  => $size,
-        // ];
 
         // 查询
         try {

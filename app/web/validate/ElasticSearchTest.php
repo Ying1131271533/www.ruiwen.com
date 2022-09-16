@@ -4,7 +4,7 @@ namespace app\web\validate;
 
 use app\common\validate\BaseValidate;
 
-class ElasticSearchDemo extends BaseValidate
+class ElasticSearchTest extends BaseValidate
 {
     // 验证规则
     protected $rule = [
@@ -22,7 +22,7 @@ class ElasticSearchDemo extends BaseValidate
 
     // 验证消息
     protected $message = [
-        'index.require' => '索引不能为空',
+        'index.require' => '用户名不能为空',
     ];
 
     // 验证场景
@@ -36,8 +36,6 @@ class ElasticSearchDemo extends BaseValidate
         'save'         => ['id', 'title', 'category', 'price', 'images'],
         'update'       => ['id', 'title', 'category', 'price', 'images'],
         'delete'       => ['id'],
-        // 批量
-        'bulk_save'    => ['id', 'title', 'category', 'price', 'images'],
         // 搜索
         'search'       => ['page', 'size'],
     ];

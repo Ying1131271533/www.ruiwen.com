@@ -9,7 +9,11 @@ class Mongo
     // 查找用户
     public static function findUserById($id)
     {
-        $user = User::with('info')->field('id, name, age')->where('id', $id)->find();
+        $user = User::with('info')
+            ->withCache(cache_time('one_day'))
+            ->field('id, name, age')->where('id', $id)
+            ->cache(cache_time())
+            ->find();
         if (!$user) {
             throw new Miss('找不到此用户');
         }

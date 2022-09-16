@@ -181,21 +181,21 @@ Route::group('elastic_search', function () {
 });
 
 /**
- * elastic_search_demo
+ * elastic_search_test
  */
-Route::group('elastic_search_demo', function () {
+Route::group('elastic_search_test', function () {
     // 索引
-    Route::post('index_save', 'ElasticSearchDemo/index_save');
-    Route::get('index_read/:index', 'ElasticSearchDemo/index_read');
-    Route::delete('index_delete/:index', 'ElasticSearchDemo/index_delete');
+    Route::post('index_save', 'ElasticSearchTest/index_save');
+    Route::get('index_read/:index', 'ElasticSearchTest/index_read');
+    Route::delete('index_delete/:index', 'ElasticSearchTest/index_delete');
     // 数据
-    Route::get(':id', 'ElasticSearchDemo/read');
-    Route::get('', 'ElasticSearchDemo/index');
-    Route::post('', 'ElasticSearchDemo/save');
-    Route::put('', 'ElasticSearchDemo/update');
-    Route::delete(':id', 'ElasticSearchDemo/delete');
-    Route::post('bulk_save', 'ElasticSearchDemo/bulk_save');
-    Route::post('bulk_update', 'ElasticSearchDemo/bulk_update');
-    Route::post('bulk_delete', 'ElasticSearchDemo/bulk_delete');
-    Route::post('search', 'ElasticSearchDemo/search');
+    Route::get(':id', 'ElasticSearchTest/read');
+    Route::get('', 'ElasticSearchTest/index');
+    Route::post('', 'ElasticSearchTest/save');
+    Route::put('', 'ElasticSearchTest/update');
+    Route::delete(':id', 'ElasticSearchTest/delete');
+    Route::post('bulk_save', 'ElasticSearchTest/bulk_save');
+    Route::post('bulk_update', 'ElasticSearchTest/bulk_update');
+    Route::post('bulk_delete', 'ElasticSearchTest/bulk_delete');
+    Route::post('search', 'ElasticSearchTest/search');
 });

@@ -57,15 +57,17 @@ class ElasticSearch
             'index' => $params['index'],
             'body'  => [
                 // 我们将分配3个主分片和一份副本
-                // 'number_of_shards' => 3 需要开启单点集群才能起效，不然还是1
-                // 'number_of_replicas' => 2 需要开启多个节点的集群
+                // number_of_shards 需要开启单点集群
+                // number_of_replicas 需要开启多个节点的集群，如果在做大批量导入，考虑通过设置 index.number_of_replicas: 0 关闭副本。
+                // refresh_interval 如果搜索结果不需要近实时的准确度，考虑把每个索引的 index.refresh_interval 改到 30s。
                 // 'settings'=>[
-                //     'number_of_shards' => 3, // 主分片数
+                //     'number_of_shards' => 3, // 主分片数，创建后，则无法修改数量
                 //     'number_of_replicas' => 1 // 主分片的副本数
+                //     'refresh_interval' => 30 // 主分片的副本数
                 // ],
                 'mappings' => [ // 映射
                     '_source'    => [ // 存储原始文档
-                        'enabled' => true, // 默认储存
+                        'enabled' => 'true',
                     ],
                     'properties' => [
                         'name' => [
