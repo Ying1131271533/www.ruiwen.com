@@ -79,9 +79,23 @@ return [
     'elasticsearch'    => [
         'http' => ['http://127.0.0.1:9200'],
         // 'http' => ['http://127.0.0.1:1001'],
+
+        // 神织知更
+        // 'useranme' => 'elastic',
+        // 'password' => 'Uw8zFqIGfRV_oUY_P8hM',
         // 如果采用了HTTP认证
-        // 'http' => ['user:pass@http://127.0.0.1:9200'],
+        // 'http' => ['elastic:Uw8zFqIGfRV_oUY_P8hM@http://127.0.0.1:9200'],
         // SSL
-        // 'https' => ['user:pass@https://127.0.0.1:9200'],
+        // 'https' => ['elastic:Uw8zFqIGfRV_oUY_P8hM@https://127.0.0.1:9200'],
+
+        // 集群
+        // 'useranme' => 'elastic',
+        // 'password' => 'vXUPn2JxHsf1Yu6itIW9',
+        'https' => ['elastic:vXUPn2JxHsf1Yu6itIW9@https://192.168.85.128:9200'],
+
+
+        // 威速易
+        // 'useranme' => 'elastic',
+        // 'password' => 'vXUPn2JxHsf1Yu6itIW9',
     ],
 ];

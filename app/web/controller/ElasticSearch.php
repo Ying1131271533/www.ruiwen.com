@@ -15,6 +15,7 @@ class ElasticSearch
     {
         // $this->https = config('elasticsearch.https');
         $this->client = ClientBuilder::create()->setHosts(config('app.elasticsearch.http'))->build();
+        // $this->client = ClientBuilder::create()->setHosts(config('app.elasticsearch.https'))->build();
         // 密钥保护
         // $this->client = ClientBuilder::create()->setApiKey('id', 'api_key')->build();
     }
