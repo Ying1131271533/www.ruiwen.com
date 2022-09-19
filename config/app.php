@@ -88,7 +88,7 @@ return [
         // SSL
         // 'https' => ['elastic:Uw8zFqIGfRV_oUY_P8hM@https://127.0.0.1:9200'],
 
-        // 集群
+        // 虚拟机
         // 'useranme' => 'elastic',
         // 'password' => 'vXUPn2JxHsf1Yu6itIW9',
         'https' => ['elastic:vXUPn2JxHsf1Yu6itIW9@https://192.168.85.128:9200'],
@@ -96,6 +96,11 @@ return [
 
         // 威速易
         // 'useranme' => 'elastic',
-        // 'password' => 'vXUPn2JxHsf1Yu6itIW9',
+        // 'password' => 'l6chmFR-ZtVDGZwZLag5',
+
+        // 虚拟机
+        // 'useranme' => 'elastic',
+        // 'password' => 'uuI=hIKha5IVrYmi1DAs',
+        // 'https' => ['elastic:uuI=hIKha5IVrYmi1DAs@https://192.168.85.128:9200'],
     ],
 ];
