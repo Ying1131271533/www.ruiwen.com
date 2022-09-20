@@ -118,7 +118,7 @@ class ElasticSearchTest
         // 组装数据
         $data = [
             'index' => 'product',
-            'id'    => $params['id'], // 这里的id相当于主键，所以body可以不添加id字段
+            'id'    => $params['id'], 'id'    => 1001, // 唯一性标识，如果不填就会自动生成
             'body'  => $params,
         ];
 
@@ -299,9 +299,10 @@ class ElasticSearchTest
         // 分页数据
         $page = $request->page;
         $size = $request->size;
-        // 全部
+        // 全部 限制字段
         // $params = [
         //     'index' => 'product',
+        //     '_source' => ['title', 'price'],
         //     // (当前页码 - 1) * 每页条数
         //     'from'  => ($page - 1) * $size,
         //     'size'  => $size,
@@ -313,7 +314,7 @@ class ElasticSearchTest
             'body'  => [
                 'query' => [
                     'match' => [
-                        'title' => '苹果',
+                        'title' => $request->param('title'),
                     ],
                 ],
             ],

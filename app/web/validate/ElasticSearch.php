@@ -10,7 +10,7 @@ class ElasticSearch extends BaseValidate
     protected $rule = [
         'index|索引'     => 'require|alpha',
         // 数据
-        'id'           => 'require|number',
+        'id'           => 'require',
         'username|用户名' => 'require',
         'age|年龄'       => 'require|number',
         'sex|性别'       => 'require|chs',
