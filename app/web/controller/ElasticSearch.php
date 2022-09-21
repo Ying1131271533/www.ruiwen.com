@@ -4,7 +4,7 @@ namespace app\web\controller;
 
 use app\lib\exception\Fail;
 use app\Request;
-use Elasticsearch\ClientBuilder;
+use Elastic\Elasticsearch\ClientBuilder;
 
 class ElasticSearch
 {
@@ -14,10 +14,13 @@ class ElasticSearch
     public function __construct()
     {
         // $this->https = config('elasticsearch.https');
-        $this->client = ClientBuilder::create()->setHosts(config('app.elasticsearch.http'))->build();
+        // $this->client = ClientBuilder::create()->setHosts(config('app.elasticsearch.http'))->build();
         // $this->client = ClientBuilder::create()->setHosts(config('app.elasticsearch.https'))->build();
-        // 密钥保护
-        // $this->client = ClientBuilder::create()->setApiKey('id', 'api_key')->build();
+        $this->client = ClientBuilder::create()
+            ->setHosts(['https://localhost:9200'])
+            ->setBasicAuthentication('elastic', 'password copied during ES start')
+            ->setCABundle('D:/Server/ElasticSearch/config/certs/http_ca.crt')
+            ->build();
     }
 
     // 索引 创建
@@ -431,56 +434,56 @@ class ElasticSearch
 
         // 或者
         /* $params = [
-            'index' => 'user',
-            'body'  => [
-                'query' => [
-                    'bool' => [
-                        'should' => [
-                            [
-                                'match' => [
-                                    'username' => '神织恋',
-                                ],
-                            ],
-                            [
-                                'match' => [
-                                    'age' => 25,
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-            ],
+        'index' => 'user',
+        'body'  => [
+        'query' => [
+        'bool' => [
+        'should' => [
+        [
+        'match' => [
+        'username' => '神织恋',
+        ],
+        ],
+        [
+        'match' => [
+        'age' => 25,
+        ],
+        ],
+        ],
+        ],
+        ],
+        ],
         ]; */
 
         // 权重 权重默认系数为2.2
         /* $params = [
-            'index' => 'user',
-            'body'  => [
-                'query' => [
-                    'bool' => [
-                        'should' => [
-                            [
-                                // 评分 4.58098
-                                'match' => [
-                                    'username' => [
-                                        // 权重系数改设置为 2.2 * 1
-                                        'query' => '阿卡丽', 'boost' => 1
-                                    ],
-                                ],
-                            ],
-                            [
-                                // 原评分 2.5073106 变成 5.0146213
-                                'match' => [
-                                    'username' => [
-                                        // 权重系数改设置为 2.2 * 2
-                                        'query' => '锐雯', 'boost' => 2 // 权重系数改设置为2
-                                    ],
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-            ],
+        'index' => 'user',
+        'body'  => [
+        'query' => [
+        'bool' => [
+        'should' => [
+        [
+        // 评分 4.58098
+        'match' => [
+        'username' => [
+        // 权重系数改设置为 2.2 * 1
+        'query' => '阿卡丽', 'boost' => 1
+        ],
+        ],
+        ],
+        [
+        // 原评分 2.5073106 变成 5.0146213
+        'match' => [
+        'username' => [
+        // 权重系数改设置为 2.2 * 2
+        'query' => '锐雯', 'boost' => 2 // 权重系数改设置为2
+        ],
+        ],
+        ],
+        ],
+        ],
+        ],
+        ],
         ]; */
 
         // 范围
@@ -662,8 +665,9 @@ class ElasticSearch
         } catch (\Throwable $th) {
             throw new Fail($th->getMessage());
         }
-
+        // echo $result->asString();
+        // dump($result->asArray());
         // 返回结果
-        return success($result);
+        return success($result->asArray());
     }
 }
