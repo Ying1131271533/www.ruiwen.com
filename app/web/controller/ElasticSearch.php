@@ -13,25 +13,21 @@ class ElasticSearch
 
     public function __construct()
     {
-        // $this->https = config('elasticsearch.https');
-        // $this->client = ClientBuilder::create()->setHosts(config('app.elasticsearch.http'))->build();
-        // $this->client = ClientBuilder::create()->setHosts(config('app.elasticsearch.https'))->build();
+        $config = config('app.elasticsearch');
+        // $this->client = ClientBuilder::create()->setHosts([$config['https']])->build();
         $this->client = ClientBuilder::create()
-            ->setHosts(['https://localhost:9200'])
-            ->setBasicAuthentication('elastic', 'password copied during ES start')
-            ->setCABundle('D:/Server/ElasticSearch/config/certs/http_ca.crt')
+            ->setHosts($config['https'])
+            ->setBasicAuthentication($config['username'], $config['password'])
+            ->setCABundle($config['http_ca'])
             ->build();
     }
 
     // 索引 创建
     public function index_save(Request $request)
     {
-        // 接收参数
-        $params = $request->params;
-
         // 普通创建（不指定类型，ES会自动匹配类型）
         // $data = [
-        //     'index' => $data['index']
+        //     'index' => $request->param['index']
         // ];
 
         // 连同设置，字段类型一起创建
@@ -58,7 +54,7 @@ class ElasticSearch
 
         // 数据设置
         $params = [
-            'index' => $params['index'],
+            'index' => $request->param('index'),
             'body'  => [
                 // 我们将分配3个主分片和一份副本
                 // number_of_shards 需要开启单点集群
@@ -658,14 +654,12 @@ class ElasticSearch
         // 只显示聚合统计结果，不显示数据
         'size'  => 0,
         ]; */
-
         // 查询
         try {
             $result = $this->client->search($params);
         } catch (\Throwable $th) {
             throw new Fail($th->getMessage());
         }
-        // echo $result->asString();
         // dump($result->asArray());
         // 返回结果
         return success($result->asArray());
