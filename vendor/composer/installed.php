@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '59aea7d622de83e119ecc282c441e3269d82c613',
+        'reference' => 'b056c54ac591be48613abd21e64c1ffafa0eba4d',
         'name' => 'topthink/think',
         'dev' => true,
     ),
@@ -145,6 +145,18 @@
             'reference' => 'e8aba06c4e1c467612f2d99304f672f2660e8492',
             'dev_requirement' => false,
         ),
+        'php-http/async-client-implementation' => array(
+            'dev_requirement' => false,
+            'provided' => array(
+                0 => '1.0',
+            ),
+        ),
+        'php-http/client-implementation' => array(
+            'dev_requirement' => false,
+            'provided' => array(
+                0 => '1.0',
+            ),
+        ),
         'php-http/discovery' => array(
             'pretty_version' => '1.14.2',
             'version' => '1.14.2.0',
@@ -152,6 +164,15 @@
             'install_path' => __DIR__ . '/../php-http/discovery',
             'aliases' => array(),
             'reference' => 'c8d48852fbc052454af42f6de27635ddd916b959',
+            'dev_requirement' => false,
+        ),
+        'php-http/guzzle7-adapter' => array(
+            'pretty_version' => '1.0.0',
+            'version' => '1.0.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../php-http/guzzle7-adapter',
+            'aliases' => array(),
+            'reference' => 'fb075a71dbfa4847cf0c2938c4e5a9c478ef8b01',
             'dev_requirement' => false,
         ),
         'php-http/httplug' => array(
@@ -340,7 +361,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '59aea7d622de83e119ecc282c441e3269d82c613',
+            'reference' => 'b056c54ac591be48613abd21e64c1ffafa0eba4d',
             'dev_requirement' => false,
         ),
         'topthink/think-helper' => array(

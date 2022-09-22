@@ -8,19 +8,11 @@ use Elastic\Elasticsearch\ClientBuilder;
 
 class ElasticSearch
 {
-    // protected $https;
     protected $client;
 
     public function __construct()
     {
-        // $this->https = config('elasticsearch.https');
         $this->client = ClientBuilder::create()->setHosts(config('app.elasticsearch.http'))->build();
-        // $this->client = ClientBuilder::create()->setHosts(config('app.elasticsearch.https'))->build();
-        // $this->client = ClientBuilder::create()
-        //     ->setHosts(['https://localhost:9200'])
-        //     ->setBasicAuthentication('elastic', 'password copied during ES start')
-        //     ->setCABundle('path/to/http_ca.crt')
-        //     ->build();
     }
 
     // 索引 创建
@@ -70,7 +62,7 @@ class ElasticSearch
                 //     'refresh_interval' => 30 // 主分片的副本数
                 // ],
                 'mappings' => [ // 映射
-                    '_source'    => [ // 存储原始文档
+                    '_source'    => [ // 存储原始文档，小数据可以用
                         'enabled' => 'true',
                     ],
                     'properties' => [
@@ -91,6 +83,9 @@ class ElasticSearch
             ],
         ];
 
+        $index = $this->client->indices()->exists($params);
+        if(!$index) return fail('索引已存在');
+
         // 保存
         try {
             $result = $this->client->index($params);
@@ -107,11 +102,8 @@ class ElasticSearch
         $index  = $request->params['index'];
         $params = [
             'index'  => [$index],
-            'client' => [
-                'ignore' => [404, 400],
-            ],
         ];
-
+        
         try {
             $alias    = $this->client->indices()->getAlias($params);
             $mapping  = $this->client->indices()->getMapping($params);
@@ -128,14 +120,35 @@ class ElasticSearch
         return success($result);
     }
 
+    // 修改 索引
+    public function index_update(Request $request)
+    {
+        $index  = $request->params['index'];
+        $params = [
+            'index' => $index,
+            'body' => [
+                'settings' => [
+                    'number_of_shards' => 3,
+                    'number_of_replicas' => 1
+                ]
+            ]
+        ];
+
+        try {
+            // $result = $this->client->indices()->putAlias($params);
+            // $result = $this->client->indices()->putMapping($params);
+            $result = $this->client->indices()->putSettings($params);
+        } catch (\Throwable $th) {
+            throw new Fail($th->getMessage());
+        }
+        return success($result);
+    }
+
     // 查询所有索引
     public function index_list()
     {
         $params = [
-            'index'  => ['user', 'shopping'],
-            'client' => [
-                'ignore' => [404, 400],
-            ],
+            'index'  => ['user', 'goods'],
         ];
 
         try {

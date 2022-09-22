@@ -4,7 +4,7 @@ namespace app\web\controller;
 
 use app\lib\exception\Fail;
 use app\Request;
-use Elasticsearch\ClientBuilder;
+use Elastic\Elasticsearch\ClientBuilder;
 
 class ElasticSearchTest
 {
@@ -84,6 +84,30 @@ class ElasticSearchTest
             'mapping'  => $mapping,
             'alias'    => $alias,
         ];
+        return success($result);
+    }
+    
+    // 修改 索引
+    public function index_update(Request $request)
+    {
+        $index  = $request->params['index'];
+        $params = [
+            'index' => $index,
+            'body' => [
+                'settings' => [
+                    'number_of_shards' => 3,
+                    'number_of_replicas' => 1
+                ]
+            ]
+        ];
+
+        try {
+            // $result = $this->client->indices()->putAlias($params);
+            // $result = $this->client->indices()->putMapping($params);
+            $result = $this->client->indices()->putSettings($params);
+        } catch (\Throwable $th) {
+            throw new Fail($th->getMessage());
+        }
         return success($result);
     }
 
