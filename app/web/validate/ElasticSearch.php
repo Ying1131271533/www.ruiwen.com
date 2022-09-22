@@ -28,6 +28,7 @@ class ElasticSearch extends BaseValidate
     protected $scene = [
         'index_save'   => ['index'],
         'index_read'   => ['index'],
+        'index_update'   => ['index'],
         'index_delete' => ['index'],
         // 分页
         'read'         => ['id'],

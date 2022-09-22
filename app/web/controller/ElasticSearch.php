@@ -4,98 +4,76 @@ namespace app\web\controller;
 
 use app\lib\exception\Fail;
 use app\Request;
-use Elasticsearch\ClientBuilder;
+use Elastic\Elasticsearch\ClientBuilder;
 
 class ElasticSearch
 {
-    // protected $https;
     protected $client;
+    protected $AsyncClient;
 
     public function __construct()
     {
-        // $this->https = config('elasticsearch.https');
-        $this->client = ClientBuilder::create()->setHosts(config('app.elasticsearch.http'))->build();
-        // $this->client = ClientBuilder::create()->setHosts(config('app.elasticsearch.https'))->build();
-        // 密钥保护
-        // $this->client = ClientBuilder::create()->setApiKey('id', 'api_key')->build();
+        $config       = config('app.elasticsearch');
+        // $this->client = ClientBuilder::create()->setHosts(config('app.elasticsearch.http'))->build();
+        // 同步客户端
+        $this->client = ClientBuilder::create()
+            ->setHosts($config['https'])
+            ->setBasicAuthentication($config['username'], $config['password'])
+            ->setCABundle($config['http_ca'])
+            ->build();
+
+        // 异步客户端，需要安装php-http/guzzle7-adapter
+        // $this->client->setAsync(true);
+
+        // 异步客户端，在需要用到的方法里面启用(需要安装php-http/guzzle7-adapter)
+        // $this->client->setAsync(true);
+        // 初始化禁用
+        // $this->client->setAsync(false);
     }
 
     // 索引 创建
     public function index_save(Request $request)
     {
-        // 接收参数
-        $params = $request->params;
-
-        // 普通创建（不指定类型，ES会自动匹配类型）
-        // $data = [
-        //     'index' => $data['index']
-        // ];
-
-        // 连同设置，字段类型一起创建
-        /* $data = [
-        'index' => 'user',
-        'body'  => [
-        'settings' => [
-        'number_of_shards'   => 3, // 分片数
-        'number_of_replicas' => 1, // 副本数
-        ],
-        // 定义字段类型
-        'mappings' => [
-        '_source'    => [
-        'enabled' => true,
-        ],
-        'properties' => [
-        'name' => [
-        'type' => 'keyword',
-        ]
-        ],
-        ],
-        ],
-        ]; */
-
         // 数据设置
         $params = [
-            'index' => $params['index'],
+            'index' => $request->params['index'],
             'body'  => [
-                // 我们将分配3个主分片和一份副本
-                // number_of_shards 需要开启单点集群
-                // number_of_replicas 需要开启多个节点的集群，如果在做大批量导入，考虑通过设置 index.number_of_replicas: 0 关闭副本。
-                // refresh_interval 如果搜索结果不需要近实时的准确度，考虑把每个索引的 index.refresh_interval 改到 30s。
-                // 'settings'=>[
-                //     'number_of_shards' => 3, // 主分片数，创建后，则无法修改数量
-                //     'number_of_replicas' => 1 // 主分片的副本数
-                //     'refresh_interval' => 30 // 主分片的副本数
-                // ],
+                'settings' => [
+                    'number_of_shards'   => 3, // 启动集群才有效，不然还是1
+                    'number_of_replicas' => 1,
+                ],
                 'mappings' => [ // 映射
-                    '_source'    => [ // 存储原始文档
+                    '_source'    => [ // 存储原始文档，小数据可以用
                         'enabled' => 'true',
                     ],
                     'properties' => [
                         'name' => [
-                            'type'  => 'text',
-                            'index' => true,
+                            'type'            => 'text',
+                            "analyzer"        => "ik_max_word",
+                            "search_analyzer" => "ik_max_word",
                         ],
-                        'age'  => [
-                            'type'  => 'integer',
-                            'index' => true,
-                        ],
-                        'sex'  => [
-                            'type'  => 'keyword',
-                            'index' => true,
+                        'desc' => [
+                            'type'            => 'text',
+                            "analyzer"        => "ik_max_word",
+                            "search_analyzer" => "ik_max_word",
                         ],
                     ],
                 ],
             ],
         ];
 
+        // 是否已经存在
+        $index = $this->client->indices()->exists(['index' => $request->params['index']]);
+        if ($index->getStatusCode() == 200) return fail('索引已经存在');
+
         // 保存
         try {
-            $result = $this->client->index($params);
+            $result = $this->client->indices()->create($params);
         } catch (\Throwable $th) {
             throw new Fail($th->getMessage());
         }
 
-        return success($result);
+        return success($result->asArray());
     }
 
     // 查询 索引
@@ -104,9 +82,7 @@ class ElasticSearch
         $index  = $request->params['index'];
         $params = [
             'index'  => [$index],
-            'client' => [
-                'ignore' => [404, 400],
-            ],
+            // 'index' => $index,
         ];
 
         try {
@@ -116,6 +92,8 @@ class ElasticSearch
         } catch (\Throwable $th) {
             throw new Fail($th->getMessage());
         }
+        $response = $this->client->indices()->getSettings($params);
+        halt($response);
 
         $result = [
             'settings' => $settings,
@@ -125,14 +103,35 @@ class ElasticSearch
         return success($result);
     }
 
+    // 修改 索引
+    public function index_update(Request $request)
+    {
+        $index  = $request->params['index'];
+        $params = [
+            'index' => $index,
+            'body'  => [
+                'settings' => [
+                    'number_of_shards'   => 3,
+                    'number_of_replicas' => 1,
+                ],
+            ],
+        ];
+
+        try {
+            // $result = $this->client->indices()->putAlias($params);
+            // $result = $this->client->indices()->putMapping($params);
+            $result = $this->client->indices()->putSettings($params);
+        } catch (\Throwable $th) {
+            throw new Fail($th->getMessage());
+        }
+        return success($result);
+    }
+
     // 查询所有索引
     public function index_list()
     {
         $params = [
-            'index'  => ['user', 'shopping'],
-            'client' => [
-                'ignore' => [404, 400],
-            ],
+            'index'  => ['user', 'goods'],
         ];
 
         try {
@@ -162,7 +161,7 @@ class ElasticSearch
         } catch (\Throwable $th) {
             throw new Fail($th->getMessage());
         }
-        return success($result);
+        return success($result->asArray());
     }
 
     // 数据 保存
@@ -196,7 +195,7 @@ class ElasticSearch
             throw new Fail($th->getMessage());
         }
 
-        return success($result);
+        return success($result->asArray());
     }
 
     // 数据 读取
@@ -215,7 +214,7 @@ class ElasticSearch
             throw new Fail($th->getMessage());
         }
 
-        return success($result);
+        return success($result->asArray());
     }
 
     // 数据 更新
@@ -245,7 +244,7 @@ class ElasticSearch
             throw new Fail($th->getMessage());
         }
 
-        return success($result);
+        return success($result->asArray());
     }
 
     // 数据 删除
@@ -264,7 +263,7 @@ class ElasticSearch
             throw new Fail($th->getMessage());
         }
 
-        return success($result);
+        return success($result->asArray());
     }
 
     // 数据 批量保存
@@ -293,7 +292,7 @@ class ElasticSearch
             throw new Fail($th->getMessage());
         }
 
-        return success($result);
+        return success($result->asArray());
     }
 
     // 数据 批量更新
@@ -320,7 +319,7 @@ class ElasticSearch
         } catch (\Throwable $th) {
             throw new Fail($th->getMessage());
         }
-        return success($result);
+        return success($result->asArray());
     }
 
     // 数据 批量删除
@@ -343,7 +342,7 @@ class ElasticSearch
         } catch (\Throwable $th) {
             throw new Fail($th->getMessage());
         }
-        return success($result);
+        return success($result->asArray());
     }
 
     // 查询
@@ -363,7 +362,6 @@ class ElasticSearch
         // 分页数据
         $page = $request->page;
         $size = $request->size;
-
         // 条件 分页
         /* $params = [
         'index' => 'user',
@@ -443,13 +441,44 @@ class ElasticSearch
         ],
         [
         'match' => [
-        'age' => 25
-        ]
+        'age' => 25,
         ],
         ],
         ],
         ],
-        ]
+        ],
+        ],
+        ]; */
+
+        // 权重 权重默认系数为2.2
+        /* $params = [
+        'index' => 'user',
+        'body'  => [
+        'query' => [
+        'bool' => [
+        'should' => [
+        [
+        // 评分 4.58098
+        'match' => [
+        'username' => [
+        // 权重系数改设置为 2.2 * 1
+        'query' => '阿卡丽', 'boost' => 1
+        ],
+        ],
+        ],
+        [
+        // 原评分 2.5073106 变成 5.0146213
+        'match' => [
+        'username' => [
+        // 权重系数改设置为 2.2 * 2
+        'query' => '锐雯', 'boost' => 2 // 权重系数改设置为2
+        ],
+        ],
+        ],
+        ],
+        ],
+        ],
+        ],
         ]; */
 
         // 范围
@@ -568,6 +597,7 @@ class ElasticSearch
         'post_tags' => ['</font>'],
         'fields'    => [
         'username' => (object) [],
+        'username' => new \stdClass(),
         ],
 
         ],
@@ -575,56 +605,55 @@ class ElasticSearch
         ]; */
 
         // 聚合查询
-        $params = [
-            'index' => 'user',
-            'body'  => [
-                // 聚合
-                'aggs' => [
-                    // 统计相同年龄的有几个，以此进行分组 不能使用中文进行统计
-                    // 'age_group' => [ // 规则名称，随意
-                    //     'terms' => [ // 聚合类型
-                    //         'field' => 'age', // 字段
-                    //     ],
-                    //     // 年龄分组后再聚合求和
-                    //     'aggs' => [
-                    //         'age_sum'   => [
-                    //             'sum' => [
-                    //                 'field' => 'age',
-                    //             ],
-                    //         ],
-                    //     ]
-                    // ],
-                    // 平均值
-                    // 'age_avg' => [
-                    //     'avg' => [
-                    //         'field' => 'age',
-                    //     ]
-                    // ],
-                    // 最大年龄
-                    // 'age_max' => [
-                    //     'max' => [
-                    //         'field' => 'age',
-                    //     ]
-                    // ],
-                    // 前3名，就是限制分页的条数
-                    'top3' => [
-                        'top_hits' => [
-                            'sort' => [
-                                [
-                                    'age' => [
-                                        'order' => 'desc'
-                                    ]
-                                ]
-                            ],
-                            'size' => 3,
-                        ]
-                    ],
-                ],
-            ],
-            // 只显示聚合统计结果，不显示数据
-            'size'  => 0,
-        ];
-
+        /* $params = [
+        'index' => 'user',
+        'body'  => [
+        // 聚合
+        'aggs' => [
+        // 统计相同年龄的有几个，以此进行分组 不能使用中文进行统计
+        // 'age_group' => [ // 规则名称，随意
+        //     'terms' => [ // 聚合类型
+        //         'field' => 'age', // 字段
+        //     ],
+        //     // 年龄分组后再聚合求和
+        //     'aggs' => [
+        //         'age_sum'   => [
+        //             'sum' => [
+        //                 'field' => 'age',
+        //             ],
+        //         ],
+        //     ]
+        // ],
+        // 平均值
+        // 'age_avg' => [
+        //     'avg' => [
+        //         'field' => 'age',
+        //     ]
+        // ],
+        // 最大年龄
+        // 'age_max' => [
+        //     'max' => [
+        //         'field' => 'age',
+        //     ]
+        // ],
+        // 前3名，就是限制分页的条数
+        'top3' => [
+        'top_hits' => [
+        'sort' => [
+        [
+        'age' => [
+        'order' => 'desc'
+        ]
+        ]
+        ],
+        'size' => 3,
+        ]
+        ],
+        ],
+        ],
+        // 只显示聚合统计结果，不显示数据
+        'size'  => 0,
+        ]; */
         // 查询
         try {
             $result = $this->client->search($params);
@@ -632,7 +661,16 @@ class ElasticSearch
             throw new Fail($th->getMessage());
         }
 
+        // dump($result->asArray());
+
+        // 获取数组的数据
+        // $data = array_column($result['hits']['hits'],'_source');
+        // $arr['page'] = $page;//当前页
+        // $arr['total'] = $result['hits']['total']['value'];//总条数
+        // $arr['last_page'] = ceil($result['hits']['total']['value']/$size);//总页数
+        // $arr['data'] = $data;
+
         // 返回结果
-        return success($result);
+        return success($result->asArray());
     }
 }

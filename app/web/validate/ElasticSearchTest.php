@@ -30,6 +30,7 @@ class ElasticSearchTest extends BaseValidate
         // 索引
         'index_save'   => ['index'],
         'index_read'   => ['index'],
+        'index_update'   => ['index'],
         'index_delete' => ['index'],
         // 数据
         'read'         => ['id'],

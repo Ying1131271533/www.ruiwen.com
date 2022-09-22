@@ -77,28 +77,33 @@ return [
 
     // elasticsearch连接配置
     'elasticsearch'    => [
+
         'http' => ['http://127.0.0.1:9200'],
-        // 'http' => ['http://127.0.0.1:1001'],
 
         // 神织知更
-        // 'useranme' => 'elastic',
+        // 'https' => ['https://127.0.0.1:9200'],
+        // 'username' => 'elastic',
         // 'password' => 'Uw8zFqIGfRV_oUY_P8hM',
-        // 如果采用了HTTP认证
-        // 'http' => ['elastic:Uw8zFqIGfRV_oUY_P8hM@http://127.0.0.1:9200'],
-        // SSL
-        // 'https' => ['elastic:Uw8zFqIGfRV_oUY_P8hM@https://127.0.0.1:9200'],
+        // 'http_ca' => 'D:/Web/www.ruiwen.com/config/cents/http_ca.crt',
+        // 'http_ca' => 'D:/Server/ElasticSearch/config/certs/http_ca.crt',
 
 <<<<<<< HEAD
         // 集群
 =======
         // 虚拟机
+<<<<<<< HEAD
 >>>>>>> 16a8992a94109c92b6690e655bf8fd4eb37e5981
         // 'useranme' => 'elastic',
+=======
+        // 'https' => ['https://192.168.85.128:9200'],
+        // 'username' => 'elastic',
+>>>>>>> 4d36d5e6d07836f61b309d8a67dba6f917e4a65c
         // 'password' => 'vXUPn2JxHsf1Yu6itIW9',
-        'https' => ['elastic:vXUPn2JxHsf1Yu6itIW9@https://192.168.85.128:9200'],
+        // 'http_ca' => 'D:/Web/www.ruiwen.com/config/cents/es-api-ca.crt',
 
 
         // 威速易
+<<<<<<< HEAD
         // 'useranme' => 'elastic',
 <<<<<<< HEAD
         // 'password' => 'vXUPn2JxHsf1Yu6itIW9',
@@ -110,5 +115,17 @@ return [
         // 'password' => 'uuI=hIKha5IVrYmi1DAs',
         // 'https' => ['elastic:uuI=hIKha5IVrYmi1DAs@https://192.168.85.128:9200'],
 >>>>>>> 16a8992a94109c92b6690e655bf8fd4eb37e5981
+=======
+        'https' => ['https://127.0.0.1:9200'],
+        'username' => 'elastic',
+        'password' => 'l6chmFR-ZtVDGZwZLag5',
+        'http_ca' => 'D:/Web/www.ruiwen.com/config/cents/http_ca.crt',
+
+        // 虚拟机
+        // 'https' => ['https://192.168.159.128:9200'],
+        // 'username' => 'elastic',
+        // 'password' => 'EHe*RHWYv*TMNV*FGyhO',
+        // 'http_ca' => 'D:/Web/www.ruiwen.com/config/cents/es-api-ca.crt',
+>>>>>>> 4d36d5e6d07836f61b309d8a67dba6f917e4a65c
     ],
 ];
