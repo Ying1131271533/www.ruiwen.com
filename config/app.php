@@ -81,51 +81,28 @@ return [
         'http' => ['http://127.0.0.1:9200'],
 
         // 神织知更
-        // 'https' => ['https://127.0.0.1:9200'],
-        // 'username' => 'elastic',
-        // 'password' => 'Uw8zFqIGfRV_oUY_P8hM',
-        // 'http_ca' => 'D:/Web/www.ruiwen.com/config/cents/http_ca.crt',
-        // 'http_ca' => 'D:/Server/ElasticSearch/config/certs/http_ca.crt',
+        'https' => ['https://127.0.0.1:9200'],
+        'username' => 'elastic',
+        'password' => 'Uw8zFqIGfRV_oUY_P8hM',
+        'http_ca' => 'D:/Server/ElasticSearch/config/certs/http_ca.crt',
 
-<<<<<<< HEAD
-        // 集群
-=======
-        // 虚拟机
-<<<<<<< HEAD
->>>>>>> 16a8992a94109c92b6690e655bf8fd4eb37e5981
-        // 'useranme' => 'elastic',
-=======
+        // // 虚拟机
         // 'https' => ['https://192.168.85.128:9200'],
         // 'username' => 'elastic',
->>>>>>> 4d36d5e6d07836f61b309d8a67dba6f917e4a65c
-        // 'password' => 'vXUPn2JxHsf1Yu6itIW9',
-        // 'http_ca' => 'D:/Web/www.ruiwen.com/config/cents/es-api-ca.crt',
+        // 'password' => 'XyX=ION5joUhx6IpFmBc',
+        // 'http_ca' => 'D:/Web/www.ruiwen.com/config/cents/es-api-ca-akali.crt',
 
 
         // 威速易
-<<<<<<< HEAD
+        // 'https' => ['https://127.0.0.1:9200'],
         // 'useranme' => 'elastic',
-<<<<<<< HEAD
-        // 'password' => 'vXUPn2JxHsf1Yu6itIW9',
-=======
         // 'password' => 'l6chmFR-ZtVDGZwZLag5',
-
-        // 虚拟机
-        // 'useranme' => 'elastic',
-        // 'password' => 'uuI=hIKha5IVrYmi1DAs',
-        // 'https' => ['elastic:uuI=hIKha5IVrYmi1DAs@https://192.168.85.128:9200'],
->>>>>>> 16a8992a94109c92b6690e655bf8fd4eb37e5981
-=======
-        'https' => ['https://127.0.0.1:9200'],
-        'username' => 'elastic',
-        'password' => 'l6chmFR-ZtVDGZwZLag5',
-        'http_ca' => 'D:/Web/www.ruiwen.com/config/cents/http_ca.crt',
+        // 'http_ca' => 'D:/Server/ElasticSearch/config/certs/http_ca.crt',
 
         // 虚拟机
         // 'https' => ['https://192.168.159.128:9200'],
         // 'username' => 'elastic',
         // 'password' => 'EHe*RHWYv*TMNV*FGyhO',
-        // 'http_ca' => 'D:/Web/www.ruiwen.com/config/cents/es-api-ca.crt',
->>>>>>> 4d36d5e6d07836f61b309d8a67dba6f917e4a65c
+        // 'http_ca' => 'D:/Web/www.ruiwen.com/config/cents/es-api-ca-wse.crt',
     ],
 ];

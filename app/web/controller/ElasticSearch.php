@@ -13,7 +13,7 @@ class ElasticSearch
 
     public function __construct()
     {
-        $config       = config('app.elasticsearch');
+        $config = config('app.elasticsearch');
         // $this->client = ClientBuilder::create()->setHosts(config('app.elasticsearch.http'))->build();
         // 同步客户端
         $this->client = ClientBuilder::create()
@@ -43,19 +43,20 @@ class ElasticSearch
                     'number_of_replicas' => 1,
                 ],
                 'mappings' => [ // 映射
-                    '_source'    => [ // 存储原始文档，小数据可以用
+                    '_source'    => [ // 存储原始文档，小数据可以用，搜索更快
                         'enabled' => 'true',
                     ],
                     'properties' => [
+                        'id'   => [
+                            'type' => 'integer',
+                        ],
                         'name' => [
-                            'type'            => 'text',
-                            "analyzer"        => "ik_max_word",
-                            "search_analyzer" => "ik_max_word",
+                            'type'     => 'text',
+                            "analyzer" => "ik_max_word",
                         ],
                         'desc' => [
-                            'type'            => 'text',
-                            "analyzer"        => "ik_max_word",
-                            "search_analyzer" => "ik_max_word",
+                            'type'     => 'text',
+                            "analyzer" => "ik_max_word",
                         ],
                     ],
                 ],
@@ -64,7 +65,9 @@ class ElasticSearch
 
         // 是否已经存在
         $index = $this->client->indices()->exists(['index' => $request->params['index']]);
-        if ($index->getStatusCode() == 200) return fail('索引已经存在');
+        if ($index->getStatusCode() == 200) {
+            return fail('索引已经存在');
+        }
 
         // 保存
         try {
@@ -80,10 +83,7 @@ class ElasticSearch
     public function index_read(Request $request)
     {
         $index  = $request->params['index'];
-        $params = [
-            'index'  => [$index],
-            // 'index' => $index,
-        ];
+        $params = ['index' => $index];
 
         try {
             $alias    = $this->client->indices()->getAlias($params);
@@ -92,8 +92,9 @@ class ElasticSearch
         } catch (\Throwable $th) {
             throw new Fail($th->getMessage());
         }
-        $response = $this->client->indices()->getSettings($params);
-        halt($response);
+
+        $settings = $this->client->indices()->getSettings($params);
+        halt($settings);
 
         $result = [
             'settings' => $settings,
@@ -131,7 +132,7 @@ class ElasticSearch
     public function index_list()
     {
         $params = [
-            'index'  => ['user', 'goods'],
+            'index' => ['user', 'goods'],
         ];
 
         try {
@@ -656,6 +657,8 @@ class ElasticSearch
         ]; */
         // 查询
         try {
+            // 查询所有
+            // $result = $this->client->search();
             $result = $this->client->search($params);
         } catch (\Throwable $th) {
             throw new Fail($th->getMessage());
