@@ -108,6 +108,7 @@ class ElasticSearch
             $alias    = $this->client->indices()->getAlias($params);
             $mapping  = $this->client->indices()->getMapping($params);
             $settings = $this->client->indices()->getSettings($params);
+            $response = $this->client->indices()->get($params);
         } catch (\Throwable $th) {
             throw new Fail($th->getMessage());
         }

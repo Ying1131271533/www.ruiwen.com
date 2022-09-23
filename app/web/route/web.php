@@ -167,7 +167,7 @@ Route::group('elastic_search', function () {
     Route::post('index_save', 'ElasticSearch/index_save');
     Route::get('index_list', 'ElasticSearch/index_list');
     Route::get('index_read/:index', 'ElasticSearch/index_read');
-    Route::put('index_update/:index', 'ElasticSearch/index_update');
+    Route::put('index_update', 'ElasticSearch/index_update');
     Route::delete('index_delete/:index', 'ElasticSearch/index_delete');
     // 数据
     Route::get('read/:id', 'ElasticSearch/read');
@@ -188,7 +188,7 @@ Route::group('elastic_search_test', function () {
     // 索引
     Route::post('index_save', 'ElasticSearchTest/index_save');
     Route::get('index_read/:index', 'ElasticSearchTest/index_read');
-    Route::put('index_update/:index', 'ElasticSearch/index_update');
+    Route::put('index_update', 'ElasticSearch/index_update');
     Route::delete('index_delete/:index', 'ElasticSearchTest/index_delete');
     // 数据
     Route::get(':id', 'ElasticSearchTest/read');

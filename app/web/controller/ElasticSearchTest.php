@@ -26,7 +26,7 @@ class ElasticSearchTest
             'index' => $params['index'],
             'body'  => [
                 'settings' => [
-                    'number_of_shards'   => 3, // 主分片数
+                    'number_of_shards'   => 3, // 主分片数 启动单点或者集群才有效，不然还是1
                     'number_of_replicas' => 1, // 主分片的副本数
                 ],
                 'mappings' => [ // 映射
@@ -75,6 +75,7 @@ class ElasticSearchTest
             $alias    = $this->client->indices()->getAlias($params);
             $mapping  = $this->client->indices()->getMapping($params);
             $settings = $this->client->indices()->getSettings($params);
+            $response = $this->client->indices()->get($params);
         } catch (\Throwable $th) {
             throw new Fail($th->getMessage());
         }
@@ -87,7 +88,7 @@ class ElasticSearchTest
         return success($result);
     }
     
-    // 修改 索引
+    // 修改 索引 不能更新还行
     public function index_update(Request $request)
     {
         $index  = $request->params['index'];

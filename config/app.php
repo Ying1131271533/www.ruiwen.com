@@ -81,10 +81,10 @@ return [
         'http' => ['http://127.0.0.1:9200'],
 
         // 神织知更
-        'https' => ['https://127.0.0.1:9200'],
-        'username' => 'elastic',
-        'password' => 'Uw8zFqIGfRV_oUY_P8hM',
-        'http_ca' => 'D:/Server/ElasticSearch/config/certs/http_ca.crt',
+        // 'https' => ['https://127.0.0.1:9200'],
+        // 'username' => 'elastic',
+        // 'password' => 'Uw8zFqIGfRV_oUY_P8hM',
+        // 'http_ca' => 'D:/Server/ElasticSearch/config/certs/http_ca.crt',
 
         // // 虚拟机
         // 'https' => ['https://192.168.85.128:9200'],
@@ -94,10 +94,10 @@ return [
 
 
         // 威速易
-        // 'https' => ['https://127.0.0.1:9200'],
-        // 'useranme' => 'elastic',
-        // 'password' => 'l6chmFR-ZtVDGZwZLag5',
-        // 'http_ca' => 'D:/Server/ElasticSearch/config/certs/http_ca.crt',
+        'https' => ['https://127.0.0.1:9200'],
+        'username' => 'elastic',
+        'password' => 'l6chmFR-ZtVDGZwZLag5',
+        'http_ca' => 'D:/Server/ElasticSearch/config/certs/http_ca.crt',
 
         // 虚拟机
         // 'https' => ['https://192.168.159.128:9200'],

@@ -34,12 +34,14 @@ class ElasticSearch
     // 索引 创建
     public function index_save(Request $request)
     {
+        $index = $request->params['index'];
         // 数据设置
         $params = [
-            'index' => $request->params['index'],
+            'index' => $index,
             'body'  => [
                 'settings' => [
-                    'number_of_shards'   => 3, // 启动集群才有效，不然还是1
+                    // 启动单点或者集群才有效，不然还是1，等等！es8.x的php客户端有效？
+                    'number_of_shards'   => 3,
                     'number_of_replicas' => 1,
                 ],
                 'mappings' => [ // 映射
@@ -47,14 +49,14 @@ class ElasticSearch
                         'enabled' => 'true',
                     ],
                     'properties' => [
-                        'id'   => [
+                        'id'    => [
                             'type' => 'integer',
                         ],
-                        'name' => [
+                        'title' => [
                             'type'     => 'text',
                             "analyzer" => "ik_max_word",
                         ],
-                        'desc' => [
+                        'desc'  => [
                             'type'     => 'text',
                             "analyzer" => "ik_max_word",
                         ],
@@ -64,9 +66,9 @@ class ElasticSearch
         ];
 
         // 是否已经存在
-        $index = $this->client->indices()->exists(['index' => $request->params['index']]);
-        if ($index->getStatusCode() == 200) {
-            return fail('索引已经存在');
+        $index_exists = $this->client->indices()->exists(['index' => $index])->asBool();
+        if ($index_exists) {
+            return fail('索引 ' . $index . ' 已经存在');
         }
 
         // 保存
@@ -76,7 +78,7 @@ class ElasticSearch
             throw new Fail($th->getMessage());
         }
 
-        return success($result->asArray());
+        return success($result);
     }
 
     // 查询 索引
@@ -85,26 +87,28 @@ class ElasticSearch
         $index  = $request->params['index'];
         $params = ['index' => $index];
 
-        try {
-            $alias    = $this->client->indices()->getAlias($params);
-            $mapping  = $this->client->indices()->getMapping($params);
-            $settings = $this->client->indices()->getSettings($params);
-        } catch (\Throwable $th) {
-            throw new Fail($th->getMessage());
+        // 索引是否存在
+        $index_exists = $this->client->indices()->exists(['index' => $index]);
+        if (!$index_exists->asBool()) {
+            return fail('索引 ' . $index . ' 不存在');
         }
 
-        $settings = $this->client->indices()->getSettings($params);
-        halt($settings);
+        // 获取所有配置参数
+        $result = $this->client->indices()->get($params)->asArray();
+        // 获取单项配置参数
+        // $alias    = $this->client->indices()->getAlias($params)->asArray();
+        // $mapping  = $this->client->indices()->getMapping($params)->asArray();
+        // $settings = $this->client->indices()->getSettings($params)->asArray();
+        // $result = [
+        //     'settings' => $settings,
+        //     'mapping'  => $mapping,
+        //     'alias'    => $alias,
+        // ];
 
-        $result = [
-            'settings' => $settings,
-            'mapping'  => $mapping,
-            'alias'    => $alias,
-        ];
         return success($result);
     }
 
-    // 修改 索引
+    // 修改 索引 不能更新还行
     public function index_update(Request $request)
     {
         $index  = $request->params['index'];
@@ -112,11 +116,17 @@ class ElasticSearch
             'index' => $index,
             'body'  => [
                 'settings' => [
-                    'number_of_shards'   => 3,
+                    'number_of_shards'   => 1,
                     'number_of_replicas' => 1,
                 ],
             ],
         ];
+
+        // 索引是否存在
+        $index_exists = $this->client->indices()->exists(['index' => $index]);
+        if (!$index_exists->asBool()) {
+            return fail('索引 ' . $index . ' 不存在');
+        }
 
         try {
             // $result = $this->client->indices()->putAlias($params);
@@ -135,19 +145,24 @@ class ElasticSearch
             'index' => ['user', 'goods'],
         ];
 
-        try {
-            $alias    = $this->client->indices()->getAlias($params);
-            $mapping  = $this->client->indices()->getMapping($params);
-            $settings = $this->client->indices()->getSettings($params);
-        } catch (\Throwable $th) {
-            throw new Fail($th->getMessage());
+        // 索引是否存在
+        $index_exists = $this->client->indices()->exists($params);
+        if (!$index_exists->asBool()) {
+            return success('索引不存在');
         }
 
-        $result = [
-            'settings' => $settings,
-            'mapping'  => $mapping,
-            'alias'    => $alias,
-        ];
+        // 所有配置参数
+        $result = $this->client->indices()->get($params)->asArray();
+        // 单项配置参数
+        // $alias    = $this->client->indices()->getAlias($params)->asArray();
+        // $mapping  = $this->client->indices()->getMapping($params)->asArray();
+        // $settings = $this->client->indices()->getSettings($params)->asArray();
+        // $result = [
+        //     'settings' => $settings,
+        //     'mapping'  => $mapping,
+        //     'alias'    => $alias,
+        // ];
+
         return success($result);
     }
 
@@ -157,6 +172,13 @@ class ElasticSearch
         $params = [
             'index' => $request->params['index'],
         ];
+
+        // 索引是否存在
+        $index_exists = $this->client->indices()->exists($params);
+        if (!$index_exists->asBool()) {
+            return success('索引不存在');
+        }
+
         try {
             $result = $this->client->indices()->delete($params);
         } catch (\Throwable $th) {
@@ -178,12 +200,6 @@ class ElasticSearch
 
         // 组装数据
         $data = [
-            'index' => 'product',
-            'id'    => $params['id'], 'id' => 1001, // 唯一性标识，如果不填就会自动生成
-            'body'  => $params,
-        ];
-        // 组装数据
-        $data = [
             'index' => 'user',
             'id'    => $params['id'], // 唯一性标识，如果不填就会自动生成
             'body'  => $params,
@@ -191,12 +207,12 @@ class ElasticSearch
 
         // 保存
         try {
-            $result = $this->client->index($data);
+            $result = $this->client->index($data)->asArray();
         } catch (\Throwable $th) {
             throw new Fail($th->getMessage());
         }
 
-        return success($result->asArray());
+        return success($result);
     }
 
     // 数据 读取
@@ -205,17 +221,17 @@ class ElasticSearch
         // 组装数据
         $params = [
             'index' => 'user',
-            'id'    => $id, // 这里查的是唯一标识_id，不是数据里面的那个id
+            'id'    => $id, // 这里查查询的是唯一标识_id，不是数据里面的那个id
         ];
 
         // 保存
         try {
-            $result = $this->client->get($params);
+            $result = $this->client->get($params)->asArray();
         } catch (\Throwable $th) {
-            throw new Fail($th->getMessage());
+            throw new Fail('数据不存在');
         }
 
-        return success($result->asArray());
+        return success($result);
     }
 
     // 数据 更新
@@ -240,12 +256,12 @@ class ElasticSearch
         // 更新
         try {
             // 这个好像是局部更新
-            $result = $this->client->update($data);
+            $result = $this->client->update($data)->asArray();
         } catch (\Throwable $th) {
             throw new Fail($th->getMessage());
         }
 
-        return success($result->asArray());
+        return success($result);
     }
 
     // 数据 删除
@@ -259,12 +275,12 @@ class ElasticSearch
 
         // 删除
         try {
-            $result = $this->client->delete($params);
+            $result = $this->client->delete($params)->asArray();
         } catch (\Throwable $th) {
             throw new Fail($th->getMessage());
         }
 
-        return success($result->asArray());
+        return success($result);
     }
 
     // 数据 批量保存
@@ -272,7 +288,7 @@ class ElasticSearch
     {
         // 处理批量数据
         $params = [];
-        for ($i = 1; $i < 10; $i++) {
+        for ($i = 1; $i <= 10; $i++) {
             $params['body'][] = [
                 'index' => [
                     '_index' => 'user',
@@ -288,19 +304,19 @@ class ElasticSearch
 
         // 批量保存
         try {
-            $result = $this->client->bulk($params);
+            $result = $this->client->bulk($params)->asArray();
         } catch (\Throwable $th) {
             throw new Fail($th->getMessage());
         }
 
-        return success($result->asArray());
+        return success($result);
     }
 
     // 数据 批量更新
     public function bulk_update(Request $request)
     {
         $params = [];
-        for ($i = 1; $i < 10; $i++) {
+        for ($i = 1; $i <= 10; $i++) {
             $params['body'][] = [
                 'update' => [
                     '_index' => 'user',
@@ -309,18 +325,19 @@ class ElasticSearch
             ];
             $params['body'][] = [
                 'doc' => [
-                    'username' => '角色' . $i,
+                    'username' => '人物' . $i,
                 ],
             ];
         }
 
         // 批量更新
         try {
-            $result = $this->client->bulk($params);
+            $result = $this->client->bulk($params)->asArray();
+            // $result = $this->client->bulk($params)->asBool();
         } catch (\Throwable $th) {
             throw new Fail($th->getMessage());
         }
-        return success($result->asArray());
+        return success($result);
     }
 
     // 数据 批量删除
@@ -328,7 +345,7 @@ class ElasticSearch
     {
         // 处理批量数据
         $params = [];
-        for ($i = 1; $i < 10; $i++) {
+        for ($i = 1; $i <= 10; $i++) {
             $params['body'][] = [
                 'delete' => [
                     '_index' => 'user',
@@ -339,11 +356,12 @@ class ElasticSearch
 
         // 批量删除
         try {
-            $result = $this->client->bulk($params);
+            // $result = $this->client->bulk($params)->asBool();
+            $result = $this->client->bulk($params)->asArray();
         } catch (\Throwable $th) {
             throw new Fail($th->getMessage());
         }
-        return success($result->asArray());
+        return success($result);
     }
 
     // 查询
@@ -442,7 +460,7 @@ class ElasticSearch
         ],
         [
         'match' => [
-        'age' => 25,
+        'age' => 19,
         ],
         ],
         ],
@@ -664,7 +682,7 @@ class ElasticSearch
             throw new Fail($th->getMessage());
         }
 
-        // dump($result->asArray());
+        // dump($result);
 
         // 获取数组的数据
         // $data = array_column($result['hits']['hits'],'_source');
