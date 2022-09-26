@@ -28,14 +28,16 @@ class ElasticSearch extends BaseValidate
     protected $scene = [
         'index_save'   => ['index'],
         'index_read'   => ['index'],
-        'index_update'   => ['index'],
+        'index_update' => ['index'],
         'index_delete' => ['index'],
         // 分页
         'read'         => ['id'],
-        // 'save'         => ['id'],
+        'save'         => ['id', 'username', 'age', 'sex'],
         'update'       => ['id', 'username', 'age', 'sex'],
         'delete'       => ['id'],
         // 搜索
-        'search'   => ['index', 'page', 'size'],
+        'search'       => ['index', 'page', 'size'],
+        // 8.x的异步客户端
+        'async_client' => ['username', 'age', 'sex'],
     ];
 }

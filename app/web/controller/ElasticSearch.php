@@ -5,6 +5,8 @@ namespace app\web\controller;
 use app\lib\exception\Fail;
 use app\Request;
 use Elastic\Elasticsearch\ClientBuilder;
+use Http\Client\Exception\TransferException;
+use Psr\Http\Message\ResponseInterface;
 
 class ElasticSearch
 {
@@ -21,14 +23,6 @@ class ElasticSearch
             ->setBasicAuthentication($config['username'], $config['password'])
             ->setCABundle($config['http_ca'])
             ->build();
-
-        // 异步客户端，需要安装php-http/guzzle7-adapter
-        // $this->client->setAsync(true);
-
-        // 异步客户端，在需要用到的方法里面启用(需要安装php-http/guzzle7-adapter)
-        // $this->client->setAsync(true);
-        // 初始化禁用
-        // $this->client->setAsync(false);
     }
 
     // 索引 创建
@@ -197,6 +191,10 @@ class ElasticSearch
             'age'      => $request->param('age/d'),
             'sex'      => $request->param('sex/s'),
         ];
+
+        // 创建objectid对象
+        // $oid = new \MongoDB\BSON\ObjectId();
+        // $id  = sprintf("%s", $oid);
 
         // 组装数据
         $data = [
@@ -675,7 +673,7 @@ class ElasticSearch
         ]; */
         // 查询
         try {
-            // 查询所有
+            // 不放参数就是查询所有索引的数据
             // $result = $this->client->search();
             $result = $this->client->search($params);
         } catch (\Throwable $th) {
@@ -693,5 +691,47 @@ class ElasticSearch
 
         // 返回结果
         return success($result->asArray());
+    }
+
+    // 异步客户端 好吧，不会用，报错了
+    public function async_client(Request $request)
+    {
+        // 接收参数
+        $params = [
+            'id'       => $request->param('id/d'),
+            'username' => $request->param('username/s'),
+            'age'      => $request->param('age/d'),
+            'sex'      => $request->param('sex/s'),
+        ];
+
+        // 组装数据
+        $data = [
+            'index' => 'user',
+            'id'    => $params['id'], // 唯一性标识，如果不填就会自动生成
+            'body'  => $params,
+        ];
+        
+        // 异步客户端，在需要用到的方法里面启用(需要安装php-http/guzzle7-adapter)
+        $this->client->setAsync(true);
+        // 禁用
+        // $this->client->setAsync(false);
+        
+        // 保存
+        $response = $this->client->index($data);
+        $response->then(
+            // The success callback
+            function (ResponseInterface $response) {
+                // $response is Elastic\Elasticsearch\Response\Elasticsearch
+                // return success($response->asArray());
+                dump('创建数据线程：'.$response->asArray());
+            },
+            // The failure callback
+            function (\Exception $exception) {
+                // throw $exception;
+                throw new Fail($exception);
+            }
+        );
+        $response = $response->wait();
+        return success('主线程');
     }
 }

@@ -179,6 +179,8 @@ Route::group('elastic_search', function () {
     Route::post('bulk_update', 'ElasticSearch/bulk_update');
     Route::post('bulk_delete', 'ElasticSearch/bulk_delete');
     Route::post('search', 'ElasticSearch/search');
+    // 8.x的异步客户端
+    Route::post('async_client', 'ElasticSearch/async_client');
 });
 
 /**
