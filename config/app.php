@@ -78,15 +78,16 @@ return [
     // elasticsearch连接配置
     'elasticsearch'    => [
 
-        'http' => ['http://127.0.0.1:9200'],
 
         // 神织知更
+        // 'http' => ['http://127.0.0.1:9200'],
         // 'https' => ['https://127.0.0.1:9200'],
         // 'username' => 'elastic',
         // 'password' => 'Uw8zFqIGfRV_oUY_P8hM',
         // 'http_ca' => 'D:/Server/ElasticSearch/config/certs/http_ca.crt',
 
         // // 虚拟机
+        // 'http' => ['http://192.168.159.128:9200'],
         // 'https' => ['https://192.168.85.128:9200'],
         // 'username' => 'elastic',
         // 'password' => 'XyX=ION5joUhx6IpFmBc',
@@ -94,15 +95,24 @@ return [
 
 
         // 威速易
-        'https' => ['https://127.0.0.1:9200'],
-        'username' => 'elastic',
-        'password' => 'l6chmFR-ZtVDGZwZLag5',
-        'http_ca' => 'D:/Server/ElasticSearch/config/certs/http_ca.crt',
+        // 'http' => ['http://127.0.0.1:9200'],
+        // 'https' => ['https://127.0.0.1:9200'],
+        // 'username' => 'elastic',
+        // 'password' => 'l6chmFR-ZtVDGZwZLag5',
+        // 'http_ca' => 'D:/Server/ElasticSearch/config/certs/http_ca.crt',
 
         // 虚拟机
+        // 'http' => ['http://192.168.159.128:9200'],
         // 'https' => ['https://192.168.159.128:9200'],
         // 'username' => 'elastic',
         // 'password' => 'EHe*RHWYv*TMNV*FGyhO',
         // 'http_ca' => 'D:/Web/www.ruiwen.com/config/cents/es-api-ca-wse.crt',
+
+        // docker
+        'http' => ['http://192.168.159.128:9210'],
+        'https' => ['https://192.168.159.128:9210'],
+        'username' => 'elastic',
+        'password' => 'UzgSm1kavMdTGQdIkX5h',
+        'http_ca' => 'D:/Web/www.ruiwen.com/config/cents/es-api-ca-wse-docker.crt',
     ],
 ];

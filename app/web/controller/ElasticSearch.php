@@ -19,10 +19,14 @@ class ElasticSearch
         // $this->client = ClientBuilder::create()->setHosts(config('app.elasticsearch.http'))->build();
         // 同步客户端
         $this->client = ClientBuilder::create()
-            ->setHosts($config['https'])
+            ->setHosts($config['http'])
             ->setBasicAuthentication($config['username'], $config['password'])
-            ->setCABundle($config['http_ca'])
             ->build();
+        // $this->client = ClientBuilder::create()
+        //     ->setHosts($config['https'])
+        //     ->setBasicAuthentication($config['username'], $config['password'])
+        //     ->setCABundle($config['http_ca'])
+        //     ->build();
     }
 
     // 索引 创建
