@@ -7,6 +7,7 @@ use app\Request;
 
 class Login
 {
+    // 登录
     public function index(Request $request)
     {
         $admin  = $request->admin;

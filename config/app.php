@@ -57,7 +57,7 @@ return [
     'memcache'         => [
         'host'     => 'memcache',
         'password' => '',
-        'port'     => 1121,
+        'port'     => 11211,
     ],
 
     // rabbitmq连接配置
