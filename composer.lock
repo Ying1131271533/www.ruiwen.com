@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5d04896e72ed173dec0b0306692b7ad1",
+    "content-hash": "1bcbc7e905ca46b7b64d47a97dec16e6",
     "packages": [
         {
             "name": "elastic/transport",
@@ -65,7 +65,7 @@
         },
         {
             "name": "elasticsearch/elasticsearch",
-            "version": "v8.4.2",
+            "version": "v8.4.1",
             "source": {
                 "type": "git",
                 "url": "git@github.com:elastic/elasticsearch-php.git",
