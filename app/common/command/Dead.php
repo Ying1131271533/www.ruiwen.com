@@ -44,10 +44,6 @@ class Dead extends Command
             echo "死信消费者: $msg->body \n";
             // 确认消息已被消费，从生产队列中移除
             $msg->ack();
-            // 第三种死信情况 消息拒答
-            // 参数1：是否把消息放回队列 默认false
-            // 参数2：是否批量处理 默认false
-            // $msg->nack(true);
         };
 
         // 设置消费成功后才能继续进行下一个消费

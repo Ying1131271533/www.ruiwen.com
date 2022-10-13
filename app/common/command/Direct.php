@@ -1,6 +1,6 @@
 <?php
 
-// RabbitMQ 广播 练习
+// RabbitMQ 直连 练习
 namespace app\common\command;
 
 use app\common\lib\classes\rabbitmq\RabbitMqConnection;

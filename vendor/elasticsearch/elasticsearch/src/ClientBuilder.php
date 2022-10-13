@@ -399,7 +399,7 @@ class ClientBuilder
         $client = new Client($transport, $transport->getLogger());
         // Enable or disable the x-elastic-client-meta header
         $client->setElasticMetaHeader($this->elasticMetaHeader);
-
+        
         return $client;
     }
 
