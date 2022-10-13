@@ -12,6 +12,8 @@
 // [ 应用入口文件 ]
 namespace think;
 
+// phpinfo();exit;
+
 require __DIR__ . '/../vendor/autoload.php';
 
 /* 自定义常量 */
