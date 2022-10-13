@@ -87,7 +87,7 @@ class RabbitmqTest
     }
 
     // 工作队列
-    public function work_jinx(Request $request)
+    public function work(Request $request)
     {
         // 获取连接
         $connection = RabbitMqConnection::getConnection();
@@ -111,7 +111,7 @@ class RabbitmqTest
     }
 
     // 广播
-    public function fanout_jinx(Request $request)
+    public function fanout(Request $request)
     {
         // 获取连接对象
         $connection = RabbitMqConnection::getConnection();
@@ -137,21 +137,35 @@ class RabbitmqTest
     }
 
     // 直连
-    public function direct_jinx(Request $request)
+    public function direct(Request $request)
     {
         // 获取连接
         $connection = RabbitMqConnection::getConnection();
         // 获取连接通道
         $channel = $connection->channel();
+
+        // 普通交换机名称
+        $exchange = 'logs_direct';
+        // 普通队列名称
+        $queue = 'logs_queue';
+        // 接收路由键
+        $routing_key = $request->params['routing_key'];
+
         // 通过通道声明交换机
         // 参数1：交换机名称
         // 参数2：direct 路由模式
-        $channel->exchange_declare('logs_direct', 'direct', false, true, true);
+        $channel->exchange_declare($exchange, 'direct', false, true, true);
+        // 声明队列
+        $channel->queue_declare($queue, false, true, false, false);
+        // 将队列名与交换机名进行绑定，并指定routing_key
+        $channel->queue_bind($queue, $exchange, $routing_key);
+
         // 接收数据
-        $routing_key = $request->params['routing_key'];
-        $msg         = $request->params['msg'];
+        $msg = $request->params['msg'];
         // 获取消息对象
-        $amqpMsg = new AMQPMessage($msg);
+        // 参数1：消息
+        // 参数2：持久化
+        $amqpMsg = new AMQPMessage($msg, ['delivery_mode' => AMQPMessage::DELIVERY_MODE_NON_PERSISTENT]);
         // 发送消息
         $channel->basic_publish($amqpMsg, 'logs_direct', $routing_key);
         // 关闭连接
@@ -160,7 +174,7 @@ class RabbitmqTest
     }
 
     // 主题 动态路由
-    public function topic_jinx(Request $request)
+    public function topic(Request $request)
     {
         // 获取连接对象
         $connection = RabbitMqConnection::getConnection();
