@@ -50,7 +50,7 @@ return [
             // 密码.
             'password' => config('app.redis.password'),
             // 端口
-            'port' => config('app.redis.port'),
+            'port'     => config('app.redis.port'),
             // 缓存有效期 0表示永久缓存
             'expire'   => cache_time('one_month'),
         ],
