@@ -3,7 +3,7 @@
 // RabbitMQ 消费者 练习
 // 注册 在config下的console.php配置文件添加 'consumer' => 'app\command\Consumer'
 // 使用 进入项目 www.ruiwen.com/ 然后 php think consumer
-namespace app\common\command;
+namespace app\common\command\rabbtimq;
 
 use app\common\lib\classes\rabbitmq\RabbitMqConnection;
 use think\console\Command;

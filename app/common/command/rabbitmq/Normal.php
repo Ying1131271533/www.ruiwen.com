@@ -1,7 +1,7 @@
 <?php
 
 // 死信队列练习 - 普通消费者
-namespace app\common\command;
+namespace app\common\command\rabbtimq;
 
 use app\common\lib\classes\rabbitmq\RabbitMqConnection;
 use PhpAmqpLib\Wire\AMQPTable;

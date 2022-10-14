@@ -1,7 +1,7 @@
 <?php
 
 // 延迟队列 - 延迟插件
-namespace app\common\command;
+namespace app\common\command\rabbtimq;
 
 use app\common\lib\classes\rabbitmq\RabbitMqConnection;
 use PhpAmqpLib\Wire\AMQPTable;

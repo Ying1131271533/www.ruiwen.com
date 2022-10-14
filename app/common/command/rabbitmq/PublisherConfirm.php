@@ -1,7 +1,7 @@
 <?php
 
 // RabbitMQ 广播 练习
-namespace app\common\command;
+namespace app\common\command\rabbtimq;
 
 use app\common\lib\classes\rabbitmq\RabbitMqConnection;
 use PhpAmqpLib\Message\AMQPMessage;

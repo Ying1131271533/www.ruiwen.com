@@ -1,7 +1,7 @@
 <?php
 
 // 惰性队列 - 老师这里没有演示
-namespace app\common\command;
+namespace app\common\command\rabbtimq;
 
 use app\common\lib\classes\rabbitmq\RabbitMqConnection;
 use PhpAmqpLib\Wire\AMQPTable;

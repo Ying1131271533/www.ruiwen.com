@@ -1,7 +1,7 @@
 <?php
 
 // 发布确认 - 高级
-namespace app\common\command;
+namespace app\common\command\rabbtimq;
 
 use app\common\lib\classes\rabbitmq\RabbitMqConnection;
 use PhpAmqpLib\Wire\AMQPTable;

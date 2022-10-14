@@ -1,7 +1,7 @@
 <?php
 
 // RabbitMQ 主题模式
-namespace app\common\command;
+namespace app\common\command\rabbtimq;
 
 use app\common\lib\classes\rabbitmq\RabbitMqConnection;
 use think\console\Command;
