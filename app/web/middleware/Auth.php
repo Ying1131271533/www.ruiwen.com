@@ -1,7 +1,7 @@
 <?php
 namespace app\web\middleware;
 
-use app\lib\exception\Unauthorized;
+use app\common\lib\exception\Unauthorized;
 use app\web\logic\Token as TokenLogic;
 
 /**

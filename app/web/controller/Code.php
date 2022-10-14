@@ -2,9 +2,9 @@
 
 namespace app\web\controller;
 
-use app\lib\exception\Error;
-use app\lib\exception\Fail;
-use app\lib\exception\Success;
+use app\common\lib\exception\Error;
+use app\common\lib\exception\Fail;
+use app\common\lib\exception\Success;
 use phpmailer\PHPMailer;
 use think\cache\driver\Redis;
 

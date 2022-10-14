@@ -1,7 +1,7 @@
 <?php
 namespace app\common;
 
-use app\lib\exception\BaseException;
+use app\common\lib\exception\BaseException;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\ModelNotFoundException;
 use think\exception\Handle;

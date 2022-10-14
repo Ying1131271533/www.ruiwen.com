@@ -4,9 +4,9 @@ namespace app\web\controller;
 use app\common\mongo\Comment;
 use app\common\mongo\Info;
 use app\common\mongo\User;
-use app\lib\exception\Fail;
-use app\lib\exception\Miss;
-use app\lib\exception\Params;
+use app\common\lib\exception\Fail;
+use app\common\lib\exception\Miss;
+use app\common\lib\exception\Params;
 use app\Request;
 use app\web\logic\Mongo as LogicMongo;
 

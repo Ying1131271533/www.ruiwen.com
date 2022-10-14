@@ -2,8 +2,8 @@
 namespace app\web\controller;
 
 use app\common\model\ProductCategory;
-use app\lib\exception\Error;
-use app\lib\exception\Fail;
+use app\common\lib\exception\Error;
+use app\common\lib\exception\Fail;
 use app\Request;
 use think\cache\driver\Memcache;
 use think\facade\Cache;

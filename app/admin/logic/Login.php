@@ -1,7 +1,7 @@
 <?php
 namespace app\admin\logic;
 
-use app\lib\exception\Error;
+use app\common\lib\exception\Error;
 use app\common\model\User;
 use think\facade\Cache;
 

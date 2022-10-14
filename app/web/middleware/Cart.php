@@ -2,7 +2,7 @@
 namespace app\web\middleware;
 
 use app\common\model\ProductSpecs;
-use app\lib\exception\Miss;
+use app\common\lib\exception\Miss;
 
 /**
  * @description:  オラ!オラ!オラ!オラ!⎛⎝≥⏝⏝≤⎛⎝

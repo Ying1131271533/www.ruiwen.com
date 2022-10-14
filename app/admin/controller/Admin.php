@@ -1,9 +1,9 @@
 <?php
 namespace app\admin\controller;
 
-use app\lib\exception\Fail;
-use app\lib\exception\Forbidden;
-use app\lib\exception\Miss;
+use app\common\lib\exception\Fail;
+use app\common\lib\exception\Forbidden;
+use app\common\lib\exception\Miss;
 use app\common\model\Admin as A;
 use lib\Crypt;
 use app\Request;

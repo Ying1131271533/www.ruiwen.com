@@ -2,7 +2,7 @@
 namespace app\admin\middleware;
 
 use app\common\model\Admin;
-use app\lib\exception\Miss;
+use app\common\lib\exception\Miss;
 
 /**
  * 管理员登录中间件

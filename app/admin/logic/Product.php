@@ -2,8 +2,8 @@
 namespace app\admin\logic;
 
 use app\common\model\Product as ProductModel;
-use app\lib\exception\Fail;
-use app\lib\exception\Miss;
+use app\common\lib\exception\Fail;
+use app\common\lib\exception\Miss;
 
 class Product
 {

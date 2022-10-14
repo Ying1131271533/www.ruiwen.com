@@ -2,9 +2,9 @@
 declare (strict_types = 1);
 namespace app\admin\logic;
 
-use app\lib\exception\Forbidden;
-use app\lib\exception\Token as TokenException;
-use app\lib\exception\Unauthorized;
+use app\common\lib\exception\Forbidden;
+use app\common\lib\exception\Token as TokenException;
+use app\common\lib\exception\Unauthorized;
 use think\facade\Cache;
 
 class Token

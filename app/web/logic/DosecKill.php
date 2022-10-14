@@ -2,8 +2,8 @@
 namespace app\web\logic;
 
 use app\common\lib\classes\rabbitmq\RabbitMqConnection;
-use app\lib\exception\Fail;
-use app\lib\exception\Miss;
+use app\common\lib\exception\Fail;
+use app\common\lib\exception\Miss;
 use lib\RedisLock;
 use lib\RedisPool;
 

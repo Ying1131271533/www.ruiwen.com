@@ -115,4 +115,9 @@ return [
         'password' => 'UzgSm1kavMdTGQdIkX5h',
         'http_ca' => 'D:/Web/www.ruiwen.com/config/cents/es-api-ca-wse-docker.crt',
     ],
+    // swoole连接配置
+    'swoole'    => [
+        'host'     => '127.0.0.1',
+        'port'     => 9501,
+    ],
 ];

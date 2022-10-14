@@ -1,5 +1,5 @@
 <?php
-namespace app\lib\exception;
+namespace app\common\lib\exception;
 
 class Akali extends BaseException
 {

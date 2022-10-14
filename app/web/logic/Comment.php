@@ -2,8 +2,8 @@
 namespace app\web\logic;
 
 use app\common\mongo\Comment as MongoComment;
-use app\lib\exception\Fail;
-use app\lib\exception\Miss;
+use app\common\lib\exception\Fail;
+use app\common\lib\exception\Miss;
 use MongoDB\Driver\BulkWrite;
 use MongoDB\Driver\Manager;
 use MongoDB\Driver\Query;

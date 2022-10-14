@@ -1,6 +1,6 @@
 <?php
 
-namespace app\lib\login;
+namespace app\common\lib\login;
 
 // 登录工厂
 class ClassAttr
@@ -9,9 +9,9 @@ class ClassAttr
     {
         $this->classStats = [
             // 帐号登录 这个UP没做
-            'login' => 'app\lib\login\loginAccount',
+            'login' => 'app\common\lib\login\loginAccount',
             // 微信
-            'wx' => 'app\lib\login\WechatApplet',
+            'wx' => 'app\common\lib\login\WechatApplet',
         ];
     }
 

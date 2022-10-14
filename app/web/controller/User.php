@@ -2,7 +2,7 @@
 namespace app\web\controller;
 
 use app\common\model\User as ModelUser;
-use app\lib\exception\Fail;
+use app\common\lib\exception\Fail;
 use app\Request;
 
 class User

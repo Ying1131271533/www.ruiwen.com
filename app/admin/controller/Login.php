@@ -1,7 +1,7 @@
 <?php
 namespace app\admin\controller;
 
-use app\lib\exception\Success;
+use app\common\lib\exception\Success;
 use app\admin\logic\Login as LoginLogic;
 use app\Request;
 

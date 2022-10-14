@@ -1,8 +1,8 @@
 <?php
 namespace app\web\logic;
 
-use app\lib\exception\Error;
-use app\lib\exception\Token as ExceptionToken;
+use app\common\lib\exception\Error;
+use app\common\lib\exception\Token as ExceptionToken;
 use think\facade\Cache;
 
 class Token

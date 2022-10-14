@@ -1,7 +1,7 @@
 <?php
 namespace app\common\controller;
 
-use app\lib\exception\Fail;
+use app\common\lib\exception\Fail;
 use app\Request;
 use think\facade\Filesystem;
 

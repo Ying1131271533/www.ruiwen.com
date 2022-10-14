@@ -3,7 +3,7 @@ namespace app\admin\controller;
 
 use app\admin\logic\ProductSpecsName as PSNLogic;
 use app\common\model\ProductSpecsName as PSNModel;
-use app\lib\exception\Fail;
+use app\common\lib\exception\Fail;
 use app\Request;
 
 class ProductSpecsName

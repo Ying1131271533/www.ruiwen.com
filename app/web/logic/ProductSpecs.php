@@ -4,7 +4,7 @@ namespace app\web\logic;
 use app\common\model\ProductSpecs as ModelProductSpecs;
 use app\common\model\ProductSpecsName;
 use app\common\model\ProductSpecsValue;
-use app\lib\exception\Miss;
+use app\common\lib\exception\Miss;
 
 class ProductSpecs
 {

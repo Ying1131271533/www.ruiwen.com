@@ -1,7 +1,7 @@
 <?php
 namespace app\common\middleware;
 
-use app\lib\exception\Fail;
+use app\common\lib\exception\Fail;
 
 /**
  * 表单验证

@@ -3,7 +3,7 @@ namespace app\web\logic;
 
 use app\common\model\Product;
 use app\common\model\ProductSpecs;
-use app\lib\exception\Miss;
+use app\common\lib\exception\Miss;
 use Error;
 use think\facade\Cache;
 

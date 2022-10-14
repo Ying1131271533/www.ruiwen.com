@@ -3,7 +3,7 @@ namespace app\admin\controller;
 
 use app\admin\logic\ProductSpecsValue as PSVLogic;
 use app\common\model\ProductSpecsValue as PSVModel;
-use app\lib\exception\Fail;
+use app\common\lib\exception\Fail;
 use app\Request;
 
 class ProductSpecsValue

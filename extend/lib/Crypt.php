@@ -1,7 +1,7 @@
 <?php
 namespace lib;
 
-use app\lib\exception\Fail;
+use app\common\lib\exception\Fail;
 use phpseclib\Crypt\RSA;
 use think\facade\Cache;
 

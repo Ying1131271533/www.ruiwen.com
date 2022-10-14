@@ -2,8 +2,8 @@
 declare (strict_types = 1);
 namespace app\common\controller;
 
-use app\lib\exception\Fail;
-use app\lib\exception\Success;
+use app\common\lib\exception\Fail;
+use app\common\lib\exception\Success;
 use lib\Crypt as C;
 
 

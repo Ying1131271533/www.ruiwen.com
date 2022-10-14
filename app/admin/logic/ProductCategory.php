@@ -2,7 +2,7 @@
 namespace app\admin\logic;
 
 use app\common\model\ProductCategory as PCModel;
-use app\lib\exception\Fail;
+use app\common\lib\exception\Fail;
 
 class ProductCategory
 {

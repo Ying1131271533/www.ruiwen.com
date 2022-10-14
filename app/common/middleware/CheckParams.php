@@ -1,7 +1,7 @@
 <?php
 namespace app\common\middleware;
 
-use app\lib\exception\Params;
+use app\common\lib\exception\Params;
 
 /**
  * 验证参数，参数过滤

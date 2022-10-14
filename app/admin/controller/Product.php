@@ -3,8 +3,8 @@ namespace app\admin\controller;
 
 use app\admin\logic\Product as LogicProduct;
 use app\common\model\Product as ProductModel;
-use app\lib\exception\Fail;
-use app\lib\exception\Miss;
+use app\common\lib\exception\Fail;
+use app\common\lib\exception\Miss;
 use app\Request;
 use app\web\logic\ProductSpecs;
 

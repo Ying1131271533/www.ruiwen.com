@@ -1,10 +1,10 @@
 <?php
-namespace app\lib\login;
+namespace app\common\lib\login;
 
-use app\lib\exception\Error;
-use app\lib\exception\Fail;
-use app\lib\exception\Success;
-use app\lib\exception\Wechat;
+use app\common\lib\exception\Error;
+use app\common\lib\exception\Fail;
+use app\common\lib\exception\Success;
+use app\common\lib\exception\Wechat;
 
 class WechatApplet
 {

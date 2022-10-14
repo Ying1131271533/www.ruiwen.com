@@ -2,7 +2,7 @@
 
 namespace app\web\controller;
 
-use app\lib\exception\Fail;
+use app\common\lib\exception\Fail;
 use app\lib\SentinelWork;
 use app\Request;
 use app\web\logic\DosecKill;

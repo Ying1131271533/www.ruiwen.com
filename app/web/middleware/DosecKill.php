@@ -4,7 +4,7 @@ namespace app\web\middleware;
 
 use app\common\model\Product;
 use app\common\model\User;
-use app\lib\exception\Miss;
+use app\common\lib\exception\Miss;
 use think\exception\ValidateException;
 
 /**

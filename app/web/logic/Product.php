@@ -2,7 +2,7 @@
 namespace app\web\logic;
 
 use app\common\model\Product as ModelProduct;
-use app\lib\exception\Miss;
+use app\common\lib\exception\Miss;
 
 class Product
 {

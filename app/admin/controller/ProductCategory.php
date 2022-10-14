@@ -3,7 +3,7 @@ namespace app\admin\controller;
 
 use app\admin\logic\ProductCategory as PCLogic;
 use app\common\model\ProductCategory as PC;
-use app\lib\exception\Fail;
+use app\common\lib\exception\Fail;
 use app\Request;
 
 class ProductCategory

@@ -3,7 +3,7 @@
 namespace app\web\middleware;
 
 use app\common\validate\IdMusetBePositiveInt;
-use app\lib\exception\Params;
+use app\common\lib\exception\Params;
 use think\exception\ValidateException;
 
 /**

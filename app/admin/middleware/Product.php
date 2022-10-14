@@ -4,9 +4,9 @@ namespace app\admin\middleware;
 
 use app\common\model\ProductCategory;
 use app\common\model\ProductSpecsValue;
-use app\lib\exception\Fail;
-use app\lib\exception\Miss;
-use app\lib\exception\Params;
+use app\common\lib\exception\Fail;
+use app\common\lib\exception\Miss;
+use app\common\lib\exception\Params;
 
 /**
  * 商品中间件
