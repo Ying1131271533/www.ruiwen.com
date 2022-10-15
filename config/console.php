@@ -62,5 +62,7 @@ return [
 
         'web_socket'        => 'app\common\command\swoole\WebSocket',
 
+        'task'        => 'app\common\command\swoole\Task',
+
     ],
 ];
