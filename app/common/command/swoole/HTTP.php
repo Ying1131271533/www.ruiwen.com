@@ -22,6 +22,7 @@ class HTTP extends Command
         $http = new \Swoole\Http\Server('0.0.0.0', config('app.swoole.port_tcp'));
 
         // 用于设置运行时的各项参数
+        // 需要先开启这里的程序，再去浏览器打开static里的akali.html
         $http->set([
             // 静态文件
             'enable_static_handler'  => true,

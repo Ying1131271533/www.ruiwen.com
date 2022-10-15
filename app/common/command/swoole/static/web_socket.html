@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>web_socket</title>
+</head>
+
+<body>
+    <div id="akali"></div>
+    <div>
+        <input type="text" id="input" />
+        <input type="button" onclick="send()" value="发送" />
+    </div>
+    <div id="message"></div>
+    <script src="jquery.min.js"></script>
+    <script>
+        // 普通http
+        // var wsServer = 'ws://127.0.0.1:9502';
+        // ssl
+        var wsServer = 'wss://124.71.218.160:9502';
+        var websocket = new WebSocket(wsServer);
+
+        // 连接
+        websocket.onopen = function (res) {
+            console.log("Connected to WebSocket server.");
+            $('#akali').append(
+                '<h1>连接成功！牡蛎摸牡蛎~</h1>'
+            );
+        };
+
+        // 关闭连接
+        websocket.onclose = function (res) {
+            console.log("Disconnected");
+            $('#message').append(
+                '<h3>连接关闭</h3>'
+            );
+        };
+
+        // 服务器返回的数据
+        websocket.onmessage = function (res) {
+            console.log('Retrieved data from server: ' + res.data);
+            $('#message').append(
+                '<h3>' + res.data + '</h3>'
+            );
+        };
+
+        // 内容抛出的错误，可以写入日志，用户那边则显示404错误
+        websocket.onerror = function (res, e) {
+            console.log('Error occured: ' + res.data);
+            $('#message').append(
+                '<h3>错误信息：' + res.data + '</h3>'
+            );
+        };
+
+        // 发送消息
+        function send() {
+            var message = $('#input').val();
+            websocket.send(message);
+        }
+
+    </script>
+</body>
+
+</html>

@@ -9,7 +9,7 @@ return [
     // php think simple_work --option msg=akali
     // 未定义的话则是 php think common/command/simple_work --option msg=akali
     'commands' => [
-        
+
         /***************** rabbitmq *****************/
 
         // 普通
@@ -54,15 +54,13 @@ return [
 
         'tcp'               => 'app\common\command\swoole\TCP',
         'tcp_client'        => 'app\common\command\swoole\TCPClient',
-        
+
         'udp'               => 'app\common\command\swoole\UDP',
         'udp_client'        => 'app\common\command\swoole\UDPClient',
 
-        'http'               => 'app\common\command\swoole\HTTP',
-        'http_client'        => 'app\common\command\swoole\HTTPClient',
+        'http'              => 'app\common\command\swoole\HTTP',
 
-        'web_socket'               => 'app\common\command\swoole\WebSocket',
-        'web_socket_client'        => 'app\common\command\swoole\WebSocketClient',
+        'web_socket'        => 'app\common\command\swoole\WebSocket',
 
     ],
 ];
