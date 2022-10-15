@@ -203,3 +203,11 @@ Route::group('elastic_search_test', function () {
     Route::post('bulk_delete', 'ElasticSearchTest/bulk_delete');
     Route::post('search', 'ElasticSearchTest/search');
 });
+
+/**
+ * swoole_test
+ */
+Route::group('swoole_test', function () {
+    // 索引
+    Route::get('index', 'SwooleTest/index');
+});

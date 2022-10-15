@@ -9,12 +9,6 @@ return [
     // php think simple_work --option msg=akali
     // 未定义的话则是 php think common/command/simple_work --option msg=akali
     'commands' => [
-
-        /***************** swoole *****************/
-
-        'tcp'               => 'app\common\command\swoole\TCP',
-        'tcp_client'        => 'app\common\command\swoole\TCPClient',
-
         
         /***************** rabbitmq *****************/
 
@@ -55,5 +49,20 @@ return [
         'federation'        => 'app\common\command\rabbitmq\Federation',
         // 测试shovel
         'shovel'            => 'app\common\command\rabbitmq\Shovel',
+
+        /***************** swoole *****************/
+
+        'tcp'               => 'app\common\command\swoole\TCP',
+        'tcp_client'        => 'app\common\command\swoole\TCPClient',
+        
+        'udp'               => 'app\common\command\swoole\UDP',
+        'udp_client'        => 'app\common\command\swoole\UDPClient',
+
+        'http'               => 'app\common\command\swoole\HTTP',
+        'http_client'        => 'app\common\command\swoole\HTTPClient',
+
+        'web_socket'               => 'app\common\command\swoole\WebSocket',
+        'web_socket_client'        => 'app\common\command\swoole\WebSocketClient',
+
     ],
 ];

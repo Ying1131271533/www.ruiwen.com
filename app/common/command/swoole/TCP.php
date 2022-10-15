@@ -1,6 +1,6 @@
 <?php
 
-// TCP
+// TCP服务端
 namespace app\common\command\swoole;
 
 use think\console\Command;
@@ -19,7 +19,7 @@ class TCP extends Command
     protected function execute(Input $input, Output $output)
     {
         // 创建Server对象，监听 127.0.0.1:9501 端口
-        $server = new \Swoole\Server(config('app.swoole.host'), config('app.swoole.port'));
+        $server = new \Swoole\Server(config('app.swoole.host'), config('app.swoole.port_tcp'));
 
         // 用于设置运行时的各项参数
         $server->set([
