@@ -22,7 +22,7 @@ class WebSocket extends Command
         // 参数3：多进程模式
         // 参数4：WebSocket是基于tcp做成的协议，打开ssl
         $ws = new \Swoole\WebSocket\Server('0.0.0.0', 9502, SWOOLE_PROCESS, SWOOLE_SOCK_TCP | SWOOLE_SSL);
-        // 暂时不用ssl
+        // 不使用ssl
         // $ws = new \Swoole\WebSocket\Server('0.0.0.0', 9502);
 
         // 用于设置运行时的各项参数
@@ -34,7 +34,7 @@ class WebSocket extends Command
             'document_root' => '/var/www/www.ruiwen.com/app/common/command/swoole/static',
             // ssl证书文件的位置
             'ssl_cert_file' => '/etc/nginx/ssl/nginx.crt',
-             // key的位置
+            // key的位置
             'ssl_key_file'  => '/etc/nginx/ssl/nginx.key',
         ]);
 

@@ -61,8 +61,7 @@ return [
         'http'              => 'app\common\command\swoole\HTTP',
 
         'web_socket'        => 'app\common\command\swoole\WebSocket',
-
-        'task'        => 'app\common\command\swoole\Task',
+        'web_socket_task'   => 'app\common\command\swoole\WebSocketTask',
 
     ],
 ];

@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>web_socket</title>
+    <title>web_socket_task</title>
 </head>
 
 <body>
@@ -15,11 +15,11 @@
     <div id="message"></div>
     <script src="jquery.min.js"></script>
     <script>
-        // 访问：https://124.71.218.160:9502/web_socket.html
-        // 普通http
-        // var wsServer = 'ws://127.0.0.1:9502';
+        // 访问：https://124.71.218.160:9502/web_socket_task.html
+        // 不使用ssl
+        var wsServer = 'ws://0.0.0.0:9502';
         // ssl
-        var wsServer = 'wss://124.71.218.160:9502';
+        // var wsServer = 'wss://124.71.218.160:9502';
         var websocket = new WebSocket(wsServer);
 
         // 连接
