@@ -63,6 +63,7 @@ class WebSocket extends Command
     // 参数2：正在发送消息的用户的连接数据
     public function onMessage($ws, $frame)
     {
+        dump($frame->fd);
         echo "消息: {$frame->data}\n";
         // WebSocket会存储所有用户连接进来的fd
         foreach ($ws->connections as $fd) {

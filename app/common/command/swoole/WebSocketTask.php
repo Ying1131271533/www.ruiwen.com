@@ -26,11 +26,11 @@ class WebSocketTask extends Command
 
         // 用于设置运行时的各项参数
         $ws->set([
-            'task_worker_num' => 4, // 设置异步任务的工作进程数量
+            'task_worker_num'       => 4, // 设置异步任务的工作进程数量
             // 静态文件
-            'enable_static_handler'  => true,
+            'enable_static_handler' => true,
             // 根目录，放置html等其它的静态文件，直接访问
-            'document_root' => '/var/www/www.ruiwen.com/app/common/command/swoole/static',
+            'document_root'         => '/var/www/www.ruiwen.com/app/common/command/swoole/static',
         ]);
 
         // 监听连接打开事件
@@ -70,21 +70,27 @@ class WebSocketTask extends Command
     // 监听WebSocket连接打开事件
     // 参数1：所有连接数据
     // 参数2：正在发送消息的用户的连接数据
+    // ！！！我在这里测试的时候出现了一个问题，连接fd有1、2、4
+    // 一共产生了fd为1、2、3、4、5的连接，观察命令行发现3和5关闭了连接，但是2还保持着连接
+    // 然后$ws里面的连接fd没有2，导致$ws-push发送不了
     public function onMessage($ws, $frame)
     {
+        dump($frame->fd);
         echo "消息: {$frame->data}\n";
         // WebSocket会存储所有用户连接进来的fd
         foreach ($ws->connections as $fd) {
+            dump($fd);
             // 场景设定为1:1聊天
             // 和正在连接的fd进行对比，例如我fd-01和对方fd-02正在聊天
             // 判断是我，还是对方发送的消息
             if ($fd == $frame->fd) {
                 // 投递一个异步任务到 task_worker 池中。此函数是非阻塞的，执行完毕会立即返回。
                 // Worker 进程可以继续处理新的请求。
-                // 使用 Task 功能，必须先设置 task_worker_num，并且必须设置 Server 的 onTask 和 onFinish 事件回调函数。
+                // 使用 Task 功能，必须先设置 task_worker_num ，并且必须设置 Server 的 onTask 和 onFinish 事件回调函数。
+                echo '阿卡丽';
                 $ws->task([
-                    'fd' => $fd,
-                    'messags' => "我发送的消息: {$frame->data}"
+                    'fd'      => $fd,
+                    'messags' => "我发送的消息: {$frame->data}",
                 ]);
                 // 服务端用fd来向客户端用户：我，发送消息，返回消息是告知是我发送的消息
                 $ws->push($fd, "我发送的消息: {$frame->data}");
@@ -112,7 +118,7 @@ class WebSocketTask extends Command
     // 处理异步任务的结果(此回调函数在worker进程中执行)
     public function onFinish($ws, $task_id, $data)
     {
-        var_dump('task_id：'.$task_id);
+        var_dump('task_id：' . $task_id);
         var_dump($data);
         // echo "AsyncTask[{$task_id}] Finish: {$data}" . PHP_EOL;
     }
