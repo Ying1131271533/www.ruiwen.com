@@ -67,16 +67,24 @@ class WebSocket extends Command
         echo "消息: {$frame->data}\n";
         // WebSocket会存储所有用户连接进来的fd
         foreach ($ws->connections as $fd) {
-            // 场景设定为1:1聊天
-            // 和正在连接的fd进行对比，例如我fd-01和对方fd-02正在聊天
-            // 判断是我，还是对方发送的消息
-            if ($fd == $frame->fd) {
-                // 服务端用fd来向客户端用户：我，发送消息，返回消息是告知是我发送的消息
-                $ws->push($fd, "我发送的消息: {$frame->data}");
-            } else {
-                // 服务端用fd来向客户端用户：对方，发送消息，返回消息是告知是对方发送的消息
-                $ws->push($fd, "对方发送的消息: {$frame->data}");
-            }
+            // 需要先判断是否是正确的websocket连接，否则有可能会push失败
+            if ($ws->isEstablished($fd)) {
+                // 场景设定为1:1聊天
+                // 和正在连接的fd进行对比，例如我fd-01和对方fd-02正在聊天
+                // 判断是我，还是对方发送的消息
+                if ($fd == $frame->fd) {
+                    // 服务端用fd来向客户端用户：我，发送消息，返回消息是告知是我发送的消息
+                    $ws->push($fd, "我发送的消息: {$frame->data}");
+                } else {
+                    // 服务端用fd来向客户端用户：对方，发送消息，返回消息是告知是对方发送的消息
+                    $ws->push($fd, "对方发送的消息: {$frame->data}");
+                    /* try {
+                        $ws->push($fd, "对方发送的消息: {$frame->data}");
+                    } catch (\Throwable $th) {
+                        echo '无效的连接，fd：' . $fd;
+                    } */
+                }
+            };
         }
     }
 

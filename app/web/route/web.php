@@ -208,6 +208,6 @@ Route::group('elastic_search_test', function () {
  * swoole_test
  */
 Route::group('swoole_test', function () {
-    // 索引
+    // index
     Route::get('index', 'SwooleTest/index');
 });

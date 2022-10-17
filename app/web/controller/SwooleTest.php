@@ -3,7 +3,9 @@
 namespace app\web\controller;
 
 use function \Swoole\Coroutine\run;
+use \Swoole\Coroutine;
 use \Swoole\Coroutine\Client;
+use \Swoole\Runtime;
 
 class SwooleTest
 {
