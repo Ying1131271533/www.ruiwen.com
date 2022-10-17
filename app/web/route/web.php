@@ -205,9 +205,9 @@ Route::group('elastic_search_test', function () {
 });
 
 /**
- * swoole_test
+ * swoole
  */
-Route::group('swoole_test', function () {
+Route::group('swoole', function () {
     // index
-    Route::get('index', 'SwooleTest/index');
+    Route::get('index', 'Swoole/index');
 });
