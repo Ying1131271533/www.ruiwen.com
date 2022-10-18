@@ -1,8 +1,7 @@
 <?php
-namespace lib;
+namespace app\common\lib\classes\redis;
 
 // use think\cache\driver\Redis;
-use lib\RedisPool;
 
 class RedisLock
 {

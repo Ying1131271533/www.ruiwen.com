@@ -6,13 +6,13 @@ use think\cache\driver\Memcache;
 /**
  * 返回api接口数据
  *
- * @param  string    $smg       描述信息
- * @param  int       $code      http状态码
- * @param  int       $status    程序状态码
- * @param  notype    $data      返回的数据
- * @return json                 api返回的json数据
+ * @param  string    $smg           描述信息
+ * @param  int       $HttpStatus    http状态码
+ * @param  int       $status        程序状态码
+ * @param  notype    $data          返回的数据
+ * @return json                     api返回的json数据
  */
-function show(string $msg, int $code = 200, int $status = 20000, $data = [])
+function show(string $msg, int $HttpStatus = 200, int $status = 20000, $data = [])
 {
     // 组装数据
     $resultData = [
@@ -21,19 +21,19 @@ function show(string $msg, int $code = 200, int $status = 20000, $data = [])
         'data'   => $data,
     ];
     // 返回数据
-    return json($resultData, $code);
+    return json($resultData, $HttpStatus);
 }
 
 /**
  * 返回成功的api接口数据
  *
- * @param  array|string     $data       返回的数据
- * @param  string           $smg        描述信息
- * @param  int              $status     程序状态码
- * @param  int              $code       http状态码
- * @return json                         api返回的json数据
+ * @param  array|string     $data           返回的数据
+ * @param  string           $smg            描述信息
+ * @param  int              $status         程序状态码
+ * @param  int              $HttpStatus     http状态码
+ * @return json                             api返回的json数据
  */
-function success($data = [], int $status = 20000, int $code = 200, string $msg = '成功')
+function success($data = [], int $status = 20000, int $HttpStatus = 200, string $msg = '成功')
 {
     // 组装数据
     if (is_string($data) && (int) ($data) == 0) {
@@ -50,20 +50,20 @@ function success($data = [], int $status = 20000, int $code = 200, string $msg =
         ];
     }
     // 返回数据
-    // echo json($resultData, $code);exit;
-    return json($resultData, $code);
+    // echo json($resultData, $HttpStatus);exit;
+    return json($resultData, $HttpStatus);
 }
 
 /**
  * 返回资源创建成功的api接口数据
  *
- * @param  array|string     $data       返回的数据
- * @param  string           $smg        描述信息
- * @param  int              $status     程序状态码
- * @param  int              $code       http状态码
- * @return json                         api返回的json数据
+ * @param  array|string     $data           返回的数据
+ * @param  string           $smg            描述信息
+ * @param  int              $status         程序状态码
+ * @param  int              $HttpStatus     http状态码
+ * @return json                             api返回的json数据
  */
-function create($data = [], int $status = 20001, int $code = 201, string $msg = '成功')
+function create($data = [], int $status = 20001, int $HttpStatus = 201, string $msg = '成功')
 {
     // 组装数据
     $resultData = [
@@ -72,18 +72,18 @@ function create($data = [], int $status = 20001, int $code = 201, string $msg = 
         'data'   => $data,
     ];
     // 返回数据
-    return json($resultData, $code);
+    return json($resultData, $HttpStatus);
 }
 
 /**
  * 返回失败的api接口数据
  *
- * @param  string    $smg       描述信息
- * @param  int       $status    程序状态码
- * @param  int       $code      http状态码
- * @return json                 api返回的json数据
+ * @param  string    $smg           描述信息
+ * @param  int       $status        程序状态码
+ * @param  int       $HttpStatus    http状态码
+ * @return json                     api返回的json数据
  */
-function fail(string $msg = '失败', int $status = 40000, int $code = 400)
+function fail(string $msg = '失败', int $status = 40000, int $HttpStatus = 400)
 {
     // 组装数据
     $resultData = [
@@ -91,8 +91,8 @@ function fail(string $msg = '失败', int $status = 40000, int $code = 400)
         'msg'    => $msg,
     ];
     // 返回数据
-    // echo json_encode($resultData, $code);exit;
-    return json($resultData, $code);
+    // echo json_encode($resultData, $HttpStatus);exit;
+    return json($resultData, $HttpStatus);
 }
 
 /**
@@ -521,15 +521,16 @@ function cache_time(string $type = 'dawn_rand_time')
 function dawn_time($id)
 {
     $number = substr(crc32($id), 6);
-    $time = 86400 - (strtotime(date('Y-m-d H:i:30')) + 8 * 3600) % 86400 + 3600 * 3 + (int)$number;
+    $time   = 86400 - (strtotime(date('Y-m-d H:i:30')) + 8 * 3600) % 86400 + 3600 * 3 + (int) $number;
     return $time;
 }
 
 // 返回当前的毫秒时间戳
-function msectime() {
+function msectime()
+{
     list($t1, $t2) = explode(' ', microtime());
-    $msectime =  (float)sprintf('%.0f',(floatval($t1)+floatval($t2))*1000);
-    $msectime2 = (string)sprintf('%.0f',(floatval($t1)+floatval($t2))*1000);
+    $msectime      = (float) sprintf('%.0f', (floatval($t1) + floatval($t2)) * 1000);
+    $msectime2     = (string) sprintf('%.0f', (floatval($t1) + floatval($t2)) * 1000);
     // var_dump("float类型:".$msectime);  // string(29) "float类型:1.60981667462E+12"
     // var_dump("string类型:".$msectime2); // string(26) "string类型:1609816674622"
     return $msectime;

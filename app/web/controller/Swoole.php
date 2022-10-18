@@ -6,7 +6,7 @@ class Swoole
 {
     public function index()
     {
-        // return view();
+        
         return success('阿卡丽');
     }
 }

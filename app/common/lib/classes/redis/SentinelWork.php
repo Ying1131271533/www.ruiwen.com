@@ -4,8 +4,9 @@
  * @author: Shane
  * @time: 2020/4/19 19:04
  *
+ * 哨兵切换端口
  */
-namespace app\common\lib\classes;
+namespace app\common\lib\classes\redis;
 
 use think\cache\driver\Redis;
 use think\facade\Cache;

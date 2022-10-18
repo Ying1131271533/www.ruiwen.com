@@ -7,3 +7,5 @@ class Akali extends BaseException
     public $code   = 200;
     public $status = 20000;
 }
+;
+}

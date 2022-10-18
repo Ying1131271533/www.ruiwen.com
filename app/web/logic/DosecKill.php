@@ -1,11 +1,10 @@
 <?php
 namespace app\web\logic;
 
-use app\common\lib\classes\rabbitmq\RabbitMqConnection;
+use app\common\lib\classes\redis\RedisLock;
+use app\common\lib\classes\redis\RedisPool;
 use app\common\lib\exception\Fail;
 use app\common\lib\exception\Miss;
-use lib\RedisLock;
-use lib\RedisPool;
 
 class DosecKill
 {
