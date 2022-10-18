@@ -35,6 +35,9 @@ return [
     // jwt密钥
     'token_key'        => 'U2OpdWDyzQ4iSUWaCAaXaGg3qEzR00Qv3fwMkkWKQ5CXjIWLJTmg8g==',
 
+    // 一把盐 其实是在amdin里面的config.app
+    'token_salt'       => 'AIGDKNGP8fga8f4IGHIBdaurcn123545fgpgsg',
+
     // 页码
     'page'             => 1,
     // 条数

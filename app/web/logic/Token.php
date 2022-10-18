@@ -3,6 +3,7 @@ namespace app\web\logic;
 
 use app\common\lib\exception\Error;
 use app\common\lib\exception\Token as ExceptionToken;
+use app\common\logic\lib\Str;
 use think\facade\Cache;
 
 class Token
@@ -15,13 +16,14 @@ class Token
     }
 
     /**
-     * 生产token随机数
+     * 生成token随机数
      */
     private static function generateToken()
     {
         $randChar  = get_rand_char(32);
         $timestamp = $_SERVER['REQUEST_TIME_FLOAT'];
         $tokenSalt = config('app.token_salt');
+        // $tokenSalt = (new Str())->salt(40);
         $token     = md5($randChar . $timestamp . $tokenSalt);
         // 查找缓存中是否有同名的token，如果存在，则重新生成新的token名称
         $cache = Cache::store('redis')->get($token);
@@ -31,6 +33,7 @@ class Token
         return $token;
     }
 
+    // 保存token
     public static function saveToCache($token, $data, $expire = 0)
     {
         if (!$expire) {
@@ -56,6 +59,7 @@ class Token
         return self::getTokenVar('openid');
     }
 
+    // 后去token
     public static function getTokenVar(string $key)
     {
         $vars = Cache::store('redis')->get(self::$token);
