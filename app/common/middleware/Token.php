@@ -16,7 +16,7 @@ class Token
     {
         // 表单令牌验证
         $check = $request->checkToken('__token__');
-        if(false === $check) {
+        if($check === false) {
             throw new Fail(['msg' => '不能重复提交表单', 401, 10031]);
         }
         return $next($request);

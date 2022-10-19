@@ -57,8 +57,8 @@ class ExceptionHandle extends Handle
         }
         if ($e instanceof \Exception) {
             if (env('APP_DEBUG')) {
-                // 这里打开后就只能在接口显示错误
-                // return show($e->getMessage(), $e->getCode());
+                // 这里打开后，就只显示错误信息，而没有详细的页面错误提示了
+                return show($e->getMessage(), $e->getCode());
             } else {
                 return show('系统内部错误', $e->getCode());
             }

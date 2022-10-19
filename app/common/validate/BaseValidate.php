@@ -61,7 +61,7 @@ class BaseValidate extends Validate
     }
 
     // 该id是否存在于数据库
-    protected function exist($value, $rule = '', $data = '', $field = '')
+    protected function idIsExist($value, $rule = '', $data = '', $field = '')
     {
         $data = Db::table($rule)->find($value);
         if (!$data) {

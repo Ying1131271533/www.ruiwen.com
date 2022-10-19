@@ -16,7 +16,8 @@ class Login
     public function handle($request, \Closure $next)
     {
         $params = $request->params;
-        $admin   = Admin::findUser($params['username'], $params['password']);
+        $password = md5(config('app.token_salt').$params['password']);
+        $admin   = Admin::findUser($params['username'], $password);
         if (empty($admin)) {
             throw new Miss('账号或者密码错误');
         }

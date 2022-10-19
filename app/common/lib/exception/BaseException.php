@@ -5,7 +5,7 @@ use think\Exception;
 
 abstract class BaseException extends Exception
 {
-    public $msg    = '成功';
+    public $msg    = '';
     public $code   = 200;
     public $status = 20000;
     public $data   = [];

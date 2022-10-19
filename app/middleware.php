@@ -9,4 +9,7 @@ return [
     // \think\middleware\LoadLangPack::class,
     // Session初始化
     // \think\middleware\SessionInit::class,
+
+    // 检查参数 - 在这里打开的话，会获取不到控制器controller名称
+    // app\common\middleware\CheckParams::class,
 ];

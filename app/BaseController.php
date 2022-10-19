@@ -48,7 +48,7 @@ abstract class BaseController
     {
         $this->app     = $app;
         $this->request = $this->app->request;
-        $this->redis = new Redis();
+        $this->redis   = new Redis();
 
         // 控制器初始化
         $this->initialize();
@@ -95,6 +95,11 @@ abstract class BaseController
         return $v->failException(true)->check($data);
     }
 
+    public function __call($name, $arguments)
+    {
+        return $this->fali("找不到{$name}方法");
+    }
+
     public function show($status, $message, $data)
     {
         return show_res($status, $message, $data);
@@ -126,11 +131,11 @@ abstract class BaseController
 
     public function getUser()
     {
-        
+        return $this->redis->get(config('redis.token_pre') . $this->getToken());
     }
 
     public function getUid()
     {
-        
+        return $this->getUser()['id'];
     }
 }
