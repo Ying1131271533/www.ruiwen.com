@@ -30,7 +30,6 @@ class User extends BaseController
     // 登录
     public function login()
     {
-        halt(md5('AIGDKNGP8fga8f4IGHIBdaurcn123545fgpgsg123456'));
         // 接收参数
         $params = $this->request->params;
         $token = $this->logic->login($params);

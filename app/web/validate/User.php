@@ -23,13 +23,14 @@ class User extends BaseValidate
     protected $scene = [
         'saveInfo' => ['nickName', 'gender', 'avatarUrl'],
         'register' => ['username', 'password', 'phone'],
+        // 虽然Login从User分开了.....
         'login'    => ['username', 'password'],
     ];
 
     // edit 验证场景定义
     public function sceneLogin()
     {
-        // 登录时移除user表的唯一性
+        // 登录时移除user表的username唯一性
         return $this->only(['username', 'password', 'phone'])->remove('username', 'unique');
     }
 }

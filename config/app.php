@@ -50,8 +50,8 @@ return [
 
     // redis连接配置
     'redis'            => [
-        'host'     => '127.0.0.1',
-        // 'host' => 'redis',
+        // 'host'     => '127.0.0.1',
+        'host' => 'redis',
         'password' => 'Ym-12]i4!gDal^Jc/3@n.c^Mh',
         'port'     => 6379,
         'select'     => 0,
@@ -67,14 +67,14 @@ return [
     // rabbitmq连接配置
     'rabbitmq'         => [
         // 'host'     => '124.71.218.160',
-        'host'     => '127.0.0.1',
+        // 'host'     => '127.0.0.1',
         // 'host'     => '192.168.0.184',
-        // 'host'     => 'rabbitmq',
+        'host'     => 'rabbitmq',
         'port'     => 5672,
         // 'port'     => 5673,
         // 'port'     => 5674,
-        'login'    => 'akali',
-        'password' => '123456',
+        'login'    => 'admin',
+        'password' => 'Pt-89]j9+qLai^Rc/3@n|c^Um',
         'vhost'    => '/',
         // 'vhost'    => '/akali',
     ],
@@ -82,6 +82,11 @@ return [
     // elasticsearch连接配置
     'elasticsearch'    => [
 
+        // 华为
+        'http' => ['http://elasticsearch:9200'],
+        'https' => ['https://elasticsearch:9200'],
+        'username' => 'elastic',
+        'password' => 'kMy6-Tai8pMnoCEYvcoR',
 
         // 神织知更
         // 'http' => ['http://127.0.0.1:9200'],
@@ -113,11 +118,11 @@ return [
         // 'http_ca' => 'D:/Web/www.ruiwen.com/config/cents/es-api-ca-wse.crt',
 
         // docker
-        'http' => ['http://192.168.159.128:9210'],
-        'https' => ['https://192.168.159.128:9210'],
-        'username' => 'elastic',
-        'password' => 'UzgSm1kavMdTGQdIkX5h',
-        'http_ca' => 'D:/Web/www.ruiwen.com/config/cents/es-api-ca-wse-docker.crt',
+        // 'http' => ['http://192.168.159.128:9210'],
+        // 'https' => ['https://192.168.159.128:9210'],
+        // 'username' => 'elastic',
+        // 'password' => 'UzgSm1kavMdTGQdIkX5h',
+        // 'http_ca' => 'D:/Web/www.ruiwen.com/config/cents/es-api-ca-wse-docker.crt',
     ],
 
     // swoole连接配置

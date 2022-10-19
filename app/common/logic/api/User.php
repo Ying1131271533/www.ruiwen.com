@@ -42,15 +42,14 @@ class User
     {
         // 找到用户
         $user = $this->userModel->findByUserNameWithStatus($data['username']);
-        if (!empty($user)) {
+        if (empty($user)) {
             throw new Exception('用户名不存在！');
         }
-
+        
         // 验证密码
-        $salt          = $user['passrowd_salt'];
-        $password      = md5($salt . $user['password'] . $salt);
-        $user_password = md5($salt . $data['salt'] . $salt);
-        if ($password != $user_password) {
+        $salt          = $user['password_salt'];
+        $password = md5($salt . $data['password'] . $salt);
+        if ($password != $user['password']) {
             throw new Exception('密码错误');
         }
 

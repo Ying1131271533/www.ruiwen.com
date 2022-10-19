@@ -31,6 +31,6 @@ class User extends BaseValidate
     public function sceneLogin()
     {
         // 登录时移除username的唯一性
-    	return $this->remove('username', 'unique');
+    	return $this->only(['username', 'password'])->remove('username', 'unique');
     }
 }
