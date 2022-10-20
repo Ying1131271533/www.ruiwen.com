@@ -40,6 +40,10 @@ class ComposerStaticInita6a660313dd2bf6efafe8ed857a8b5a8
         array (
             'ZipStream\\' => 10,
         ),
+        'W' => 
+        array (
+            'WebSocket\\' => 10,
+        ),
         'S' => 
         array (
             'Symfony\\Polyfill\\Php80\\' => 23,
@@ -123,6 +127,10 @@ class ComposerStaticInita6a660313dd2bf6efafe8ed857a8b5a8
         'ZipStream\\' => 
         array (
             0 => __DIR__ . '/..' . '/maennchen/zipstream-php/src',
+        ),
+        'WebSocket\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/textalk/websocket/lib',
         ),
         'Symfony\\Polyfill\\Php80\\' => 
         array (

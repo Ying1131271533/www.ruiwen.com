@@ -10,6 +10,8 @@
 return [
     // 全局路由中间件
     'middleware' => [
+        // token验证
+        // app\api\middleware\IsLogin::class,
         // 参数验证
         app\common\middleware\CheckParams::class,
     ],

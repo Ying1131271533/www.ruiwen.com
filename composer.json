@@ -29,7 +29,8 @@
         "phpoffice/phpspreadsheet": "^1.22",
         "php-amqplib/php-amqplib": "3.1.2",
         "php-http/guzzle7-adapter": "^1.0",
-        "elasticsearch/elasticsearch": "8.4.1"
+        "elasticsearch/elasticsearch": "8.4.1",
+        "textalk/websocket": "^1.5"
     },
     "require-dev": {
         "symfony/var-dumper": "^4.2",

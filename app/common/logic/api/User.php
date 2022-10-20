@@ -43,15 +43,18 @@ class User
         // 找到用户
         $user = $this->userModel->findByUserNameWithStatus($data['username']);
         if (empty($user)) {
-            throw new Exception('用户名不存在！');
+            throw new Exception('用户不存在！');
         }
-        
+
         // 验证密码
-        $salt          = $user['password_salt'];
+        $salt     = $user['password_salt'];
         $password = md5($salt . $data['password'] . $salt);
         if ($password != $user['password']) {
             throw new Exception('密码错误');
         }
+
+        // 删除上一次登录的token
+        $this->redis->delete(config('redis.token_pre') . $user['last_login_token']);
 
         // 生成token
         $token = $this->str->createToken($user['username']);
@@ -60,13 +63,20 @@ class User
             'username'         => $user['username'],
             'last_login_token' => $token,
         ]);
-        // 保存token
+
+        // 保存token，不设置过期时间
         $this->redis->set(config('redis.token_pre') . $token, [
             'id'       => $user['id'],
-            'username' => $user['username']
+            'username' => $user['username'],
         ]);
 
         // 返回token
         return $token;
+    }
+
+    public function logout($token)
+    {
+        // 删除token
+        $this->redis->delete($token);
     }
 }

@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'aba1b0cd8fa0989465a74add8ae52ea02a347015',
+        'reference' => 'f2f2e7cb8c806c1ef21dbf3da252d39542458ad6',
         'name' => 'topthink/think',
         'dev' => true,
     ),
@@ -346,6 +346,15 @@
             'reference' => '2d0c056b2faaa3d785bdbd5adecc593a5be9c16e',
             'dev_requirement' => true,
         ),
+        'textalk/websocket' => array(
+            'pretty_version' => '1.5.8',
+            'version' => '1.5.8.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../textalk/websocket',
+            'aliases' => array(),
+            'reference' => 'd05dbaa97500176447ffb1f1800573f23085ab13',
+            'dev_requirement' => false,
+        ),
         'topthink/framework' => array(
             'pretty_version' => 'v6.0.12',
             'version' => '6.0.12.0',
@@ -361,7 +370,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'aba1b0cd8fa0989465a74add8ae52ea02a347015',
+            'reference' => 'f2f2e7cb8c806c1ef21dbf3da252d39542458ad6',
             'dev_requirement' => false,
         ),
         'topthink/think-helper' => array(

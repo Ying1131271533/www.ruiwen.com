@@ -32,8 +32,25 @@ class User extends BaseController
     {
         // 接收参数
         $params = $this->request->params;
-        $token = $this->logic->login($params);
+        $token  = $this->logic->login($params);
         // 返回结果
         return $this->success($token);
+    }
+
+    // 退出登录
+    public function logout()
+    {
+        // 获取token
+        $token = $this->getToken();
+        // 删除token
+        $this->logic->logout(config('redis.token_pre') . $token);
+        // 返回结果
+        return $this->success('退出登录成功！');
+    }
+
+    // 是否已登录，验证token
+    public function isLogin()
+    {
+        return $this->success('token验证成功！');
     }
 }
