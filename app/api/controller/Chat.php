@@ -20,7 +20,8 @@ class Chat extends BaseController
     {
         $client = new Client('ws://124.71.218.160:9502?token=' . $this->getToken());
         // $client = new Client('wss://124.71.218.160:9502?token=' . $this->getToken());
-        $client->send('是的');
+        $client->send('哎嘿');
+        // 接收服务端返回的信息
         dump($client->receive());
         $client->close();
     }

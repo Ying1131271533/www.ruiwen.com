@@ -63,6 +63,7 @@ class Room extends Command
         // 获取token
         $token = $request->get['token'];
         echo $token.PHP_EOL;
+        // 给客户端发送消息
         $ws->push($request->fd, "客户端：{$request->fd}，打开连接，进入聊天室\n");
     }
 
