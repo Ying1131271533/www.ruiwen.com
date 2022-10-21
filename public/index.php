@@ -16,9 +16,8 @@ namespace think;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-/* 自定义常量 */
-// 黎明3点 + 随机秒数
-define('DAWN_TIME', 86400 - (time() + 8 * 3600) % 86400 + 3600 * 3 + rand(1, 3600));
+// 加载自定义常量
+require 'define.php';
 
 // 执行HTTP应用并响应
 $http = (new App())->http;

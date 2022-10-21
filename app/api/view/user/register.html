@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>注册</title>
     {include file="public/_meta" /}
 </head>
+
 <body class="layui-card">
     <div style="text-align:center">
         <form class="layui-form layui-card-body">
@@ -22,7 +24,7 @@
     <script>
         layui.use('form', function () {
             var form = layui.form;
-            form.on('submit(commit)', function(data){
+            form.on('submit(commit)', function (data) {
                 $.ajax({
                     type: "POST",
                     contentType: "application/x-www-form-urlencoded",
@@ -31,20 +33,21 @@
                         username: data.field.username,
                         password: data.field.password
                     },
-                    success: function(res){
-                        if(res.status === config('failed')){
+                    success: function (res) {
+                        if (res.status === config('failed')) {
                             layer.msg(res.message);
-                        }else if (res.status === config('success')) {
-                            layer.msg(res.result, function () {
+                        } else if (res.status === config('success')) {
+                            layer.msg(res.result, { icon: 1 }, function () {
                                 $(window).attr('location', '/api/View/user/login');
                             });
                         }
                     }
                 });
-                
+
                 return false;
             });
         });
     </script>
 </body>
+
 </html>

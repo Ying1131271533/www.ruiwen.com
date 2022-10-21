@@ -12,6 +12,7 @@ Route::group('user', function () {
     // 登录
     Route::rule('login', 'user/login', 'POST');
 });
+
 // 视图
 Route::group('View/user', function () {
     // 注册
@@ -20,6 +21,7 @@ Route::group('View/user', function () {
     Route::rule('login', '/api/View/login', 'GET');
     Route::rule('index', '/api/View/index', 'GET');
 });
+
 // 需要已登录的操作
 Route::group('user', function () {
     // 退出登录

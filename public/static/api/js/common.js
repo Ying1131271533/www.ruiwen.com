@@ -105,17 +105,38 @@ function isLogin(secret) {
         type: "POST",
         contentType: "application/x-www-form-urlencoded",
         url: '/' +secret+'/Admin/isLogin',
-        data: "data",
         beforeSend: function (request) {
             request.setRequestHeader("access-token", getToken());
         },
         success: function (res) {
             if (res.status === config('goto')) {
-                layer.msg('登录失败！', function () {
-                    $.remvoeCookie('admin_login_tokne', {path: '/'});
+                layer.msg('登录凭证失效！', {}, function () {
+                    $.remvoeCookie('admin_login_token', {path: '/'});
                     $(window).attr('location', '/'+secret+'loginView');
                 });
             }
         }
     });
 }
+
+// 用户是否已登录
+function isApiLogin() {
+    $.ajax({
+        type: "POST",
+        contentType: "application/x-www-form-urlencoded",
+        url: '/api/User/isLogin',
+        beforeSend: function (request) {
+            request.setRequestHeader("access-token", getApiToken());
+        },
+        success: function (res) {
+            if (res.status === config('goto')) {
+                layer.msg('登录凭证失效！', {}, function () {
+                    $.removeCookie('api_login_token', {path: '/'});
+                    // $.removeCookie('api_login_token', {domain: document.domain, path: '/'});
+                    $(window).attr('location', '/api/View/user/login');
+                });
+            }
+        }
+    });
+}
+

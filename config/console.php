@@ -64,5 +64,10 @@ return [
         'web_socket_task'   => 'app\common\command\swoole\WebSocketTask',
 
         'mysql'             => 'app\common\command\swoole\MySQL',
+
+        /***************** chat *****************/
+
+        // 聊天室
+        'room'              => 'app\common\command\chat\Room',
     ],
 ];
