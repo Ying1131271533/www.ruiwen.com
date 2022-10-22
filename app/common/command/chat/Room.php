@@ -97,6 +97,7 @@ class Room extends Command
     }
 
     // 监听WebSocket连接关闭事件
+    // 只要关闭了连接，就一定会触发这里的onClose()
     public function onClose($ws, $fd)
     {
         echo "客户端-{$fd}：关闭连接\n";

@@ -28,6 +28,6 @@ class Chat extends BaseController
 
     public function room()
     {
-
+        
     }
 }

@@ -18,7 +18,12 @@ return [
     // 应用映射（自动多应用模式有效）
     'app_map'          => [],
     // 域名绑定（自动多应用模式有效）
-    'domain_bind'      => [],
+    'domain_bind'      => [
+        'www'   => 'web',
+        'admin' => 'admin',
+        'm'     => 'mobile',
+        'api'   => 'api',
+    ],
     // 禁止URL访问的应用列表（自动多应用模式有效）
     'deny_app_list'    => [],
 
@@ -51,10 +56,10 @@ return [
     // redis连接配置
     'redis'            => [
         // 'host'     => '127.0.0.1',
-        'host' => 'redis',
+        'host'     => 'redis',
         'password' => 'Ym-12]i4!gDal^Jc/3@n.c^Mh',
         'port'     => 6379,
-        'select'     => 0,
+        'select'   => 0,
     ],
 
     // memcache连接配置
@@ -83,8 +88,8 @@ return [
     'elasticsearch'    => [
 
         // 华为
-        'http' => ['http://elasticsearch:9200'],
-        'https' => ['https://elasticsearch:9200'],
+        'http'     => ['http://elasticsearch:9200'],
+        'https'    => ['https://elasticsearch:9200'],
         'username' => 'elastic',
         'password' => 'kMy6-Tai8pMnoCEYvcoR',
 
@@ -101,7 +106,6 @@ return [
         // 'username' => 'elastic',
         // 'password' => 'XyX=ION5joUhx6IpFmBc',
         // 'http_ca' => 'D:/Web/www.ruiwen.com/config/cents/es-api-ca-akali.crt',
-
 
         // 威速易
         // 'http' => ['http://127.0.0.1:9200'],
@@ -126,9 +130,9 @@ return [
     ],
 
     // swoole连接配置
-    'swoole'    => [
+    'swoole'           => [
         'host'     => '127.0.0.1',
-        'port_tcp'     => 9501,
-        'port_udp'     => 9502,
+        'port_tcp' => 9501,
+        'port_udp' => 9502,
     ],
 ];
