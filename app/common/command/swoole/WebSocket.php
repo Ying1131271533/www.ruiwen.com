@@ -58,7 +58,7 @@ class WebSocket extends Command
         $ws->push($request->fd, "客户端：{$request->fd}，打开连接，进入聊天室\n");
     }
 
-    // 监听WebSocket连接打开事件
+    // 监听WebSocket消息事件
     // 参数1：所有连接数据
     // 参数2：正在发送消息的用户的连接数据
     public function onMessage($ws, $frame)

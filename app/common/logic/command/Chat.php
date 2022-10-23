@@ -8,7 +8,7 @@ class Chat
     {
         // WebSocket会存储所有用户连接进来的fd
         foreach ($ws->connections as $fd) {
-            dump($fd);
+            // dump($fd);
             // 需要先判断是否是正确的websocket连接，否则有可能会push失败
             if ($ws->isEstablished($fd)) {
                 // 场景设定为1:1聊天

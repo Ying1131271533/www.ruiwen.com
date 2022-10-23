@@ -67,7 +67,7 @@ class WebSocketTask extends Command
         echo "Dispatch AsyncTask: id={$task_id}\n";
     }
 
-    // 监听WebSocket连接打开事件
+    // 监听消息事件
     // 参数1：所有连接数据
     // 参数2：正在发送消息的用户的连接数据
     // ！！！我在这里测试的时候出现了一个问题，连接fd有1、2、4
