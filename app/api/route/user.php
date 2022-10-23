@@ -24,6 +24,10 @@ Route::group('View/user', function () {
 
 // 需要已登录的操作
 Route::group('user', function () {
+    // 处理加好友请求
+    Route::rule('handleFriend', 'user/handleFriend', 'POST');
+    // 加好友
+    Route::rule('addFriend', 'user/addFriend', 'POST');
     // 退出登录
     Route::rule('logout', 'user/logout', 'POST');
     // 是否已登录，验证token

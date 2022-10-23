@@ -53,4 +53,20 @@ class User extends BaseController
     {
         return $this->success('token验证成功！');
     }
+
+    // 加好友请求
+    public function addFriend()
+    {
+        $data = $this->request->params;
+        $data['user'] = $this->getUser();
+        $data['token'] = $this->getToken();
+        $this->logic->addFriend($data);
+        return $this->success('好友申请已经发送！');
+    }
+
+    // 处理加好友请求
+    public function handleFriend()
+    {
+        
+    }
 }

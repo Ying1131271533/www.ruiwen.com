@@ -9,11 +9,13 @@ class User extends BaseValidate
     // 验证规则
     protected $rule = [
         'id|用户id'                    => 'require|number|gt:0',
-        'username|用户名'               => 'require|unique:api_user|max:20|min:2',
+        'username|用户名'               => 'require|max:20|min:2',
         'password|密码'                => 'require|max:50|min:6',
         'password_salt|密码盐'          => 'require',
         'last_login_token|上次登录Token' => 'require',
         'status|状态'                  => 'number',
+
+        'message|加好友留言'              => 'max:20',
     ];
 
     // 验证消息
@@ -23,14 +25,15 @@ class User extends BaseValidate
 
     // 验证场景
     protected $scene = [
-        'register' => ['username', 'password'],
-        'login' => ['username', 'password'],
+        'register'  => ['username', 'password'],
+        'login'     => ['username', 'password'],
+        'addFriend' => ['username', 'message'],
     ];
 
     // edit 验证场景定义
-    public function sceneLogin()
+    public function sceneRegister()
     {
-        // 登录时移除username的唯一性
-    	return $this->only(['username', 'password'])->remove('username', 'unique');
+        // 注册时添加username的唯一性
+        return $this->only(['username', 'password'])->append('username', 'unique:api_user');
     }
 }

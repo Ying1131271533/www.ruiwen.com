@@ -9,7 +9,7 @@ class User extends BaseValidate
     // 验证规则
     protected $rule = [
         'id|用户id'      => 'require',
-        'username|用户名' => 'require|unique:user|max:20|min:2',
+        'username|用户名' => 'require|max:20|min:2',
         'password|密码'  => 'require|max:50|min:6',
         'phone|手机'     => 'require|mobile',
     ];
@@ -28,9 +28,9 @@ class User extends BaseValidate
     ];
 
     // edit 验证场景定义
-    public function sceneLogin()
+    public function sceneRegister()
     {
-        // 登录时移除user表的username唯一性
-        return $this->only(['username', 'password', 'phone'])->remove('username', 'unique');
+        // 注册时添加username的唯一性
+    	return $this->only(['username', 'password', 'phone'])->append('username', 'unique:user');
     }
 }

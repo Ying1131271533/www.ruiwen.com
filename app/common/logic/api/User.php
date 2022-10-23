@@ -4,19 +4,23 @@ namespace app\common\logic\api;
 
 use app\common\logic\lib\Redis;
 use app\common\logic\lib\Str;
+use app\common\model\api\Friend as FriendModel;
 use app\common\model\api\User as UserModel;
 use Exception;
+use WebSocket\Client;
 
 class User
 {
-    private $userModel = null;
-    private $str       = null;
+    private $userModel   = null;
+    private $friendModel = null;
+    private $str         = null;
 
     public function __construct()
     {
-        $this->userModel = new UserModel();
-        $this->str       = new Str();
-        $this->redis     = new Redis();
+        $this->userModel   = new UserModel();
+        $this->friendModel = new FriendModel();
+        $this->str         = new Str();
+        $this->redis       = new Redis();
     }
 
     public function register($data)
@@ -78,5 +82,45 @@ class User
     {
         // 删除token
         $this->redis->delete($token);
+    }
+
+    public function addFriend($data)
+    {
+        // 找到用户
+        $friend = $this->userModel->findByUserNameWithStatus($data['username']);
+        if (empty($user)) {
+            throw new Exception('用户不存在！');
+        }
+        // 是否有重复申请
+        $socket = $this->redis->get(config('redis.socket_pre') . $friend['id']);
+        if (!empty($socket['apply_list'])) {
+            foreach ($socket['apply_list'] as $key => $value) {
+                if ($data['user']['id'] == $key) {
+                    throw new Exception('请勿重复申请');
+                }
+            }
+        }
+        // 是否已经是好友
+        if ($this->friendModel->isFriend($data['user']['id'], $friend['id'])) {{
+            throw new Exception('已成为好友！');
+        }}
+        // 不能加自己为好友
+        if ($data['user']['id'] == $friend['id']) {
+            throw new Exception('不能加自己为好友！');
+        }
+        // 加好友数据
+        $send = [
+            'type' => 'addFriend',
+            'uid'  => $data['user']['id'],
+            'username'  => $data['user']['username'],
+            'target'  => $friend['id'],
+            'message'  => $data['message'],
+        ];
+        $client = new Client('ws://124.71.218.160:9502?type=public&token='.$data['token']);
+        // $client = new Client('wss://124.71.218.160:9502?token=' . $this->getToken());
+        $client->send(json_encode($send));
+        // 接收服务端返回的信息
+        dump($client->receive());
+        $client->close();
     }
 }

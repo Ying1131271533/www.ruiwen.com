@@ -29,4 +29,11 @@ class admin extends BaseValidate
     {
         return $this->only(['id', 'code', 'email'])->append('email', 'unique:user');
     }
+
+    // edit 验证场景定义
+    public function sceneRegister()
+    {
+        // 注册时添加username的唯一性
+    	return $this->only(['username', 'password', 'code'])->append('username', 'unique:user');
+    }
 }
