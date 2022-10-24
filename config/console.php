@@ -68,6 +68,7 @@ return [
         /***************** chat *****************/
 
         // 聊天室
+        'test'              => 'app\common\command\chat\Test',
         'room'              => 'app\common\command\chat\Room',
     ],
 ];

@@ -88,7 +88,7 @@ class User
     {
         // 找到用户
         $friend = $this->userModel->findByUserNameWithStatus($data['username']);
-        if (empty($user)) {
+        if (empty($friend)) {
             throw new Exception('用户不存在！');
         }
         // 是否有重复申请
@@ -110,17 +110,19 @@ class User
         }
         // 加好友数据
         $send = [
-            'type' => 'addFriend',
-            'uid'  => $data['user']['id'],
-            'username'  => $data['user']['username'],
-            'target'  => $friend['id'],
+            'type'     => 'addFriend',
+            'uid'      => $data['user']['id'],
+            'username' => $data['user']['username'],
+            'target'   => $friend['id'],
             'message'  => $data['message'],
         ];
-        $client = new Client('ws://124.71.218.160:9502?type=public&token='.$data['token']);
-        // $client = new Client('wss://124.71.218.160:9502?token=' . $this->getToken());
+        $client = new Client('ws://124.71.218.160:9502?type=public&token=' . $data['token']);
+        // $client = new Client('wss://124.71.218.160:9502?type=public&token=' . $data['token']);
         $client->send(json_encode($send));
         // 接收服务端返回的信息
-        dump($client->receive());
-        $client->close();
+        $receive = json_decode($client->receive(), true);
+        if ($receive['status'] == config('statu.success')) {
+            $client->close();
+        }
     }
 }

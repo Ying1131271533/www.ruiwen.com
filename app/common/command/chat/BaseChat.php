@@ -4,15 +4,13 @@
 namespace app\common\command\chat;
 
 use app\common\logic\lib\Redis;
-use think\console\Command;
 
-class Base extends Command
+class BaseChat
 {
     protected $redis = null;
 
     public function __construct()
     {
-        parent::__construct();
         $this->redis = new Redis();
     }
 

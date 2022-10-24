@@ -3,21 +3,22 @@
 // 聊天室
 namespace app\common\command\chat;
 
-use app\common\logic\command\Chat as ChatLogic;
+use app\common\logic\command\Test as TestLogic;
 use Swoole\WebSocket\Server;
 use think\console\Input;
 use think\console\Output;
 
-class Room extends Base
+class Test extends Base
 {
-    protected $chatLogic = null;
+    protected $testLogic = null;
     protected $ws        = null;
     public function __construct()
     {
         parent::__construct();
-        $this->chatLogic = new ChatLogic();
+        $this->testLogic = new TestLogic();
         $this->ws        = new Server('0.0.0.0', 9502);
         // $this->ws = new Server('0.0.0.0', 9502, SWOOLE_PROCESS, SWOOLE_SOCK_TCP | SWOOLE_SSL);
+
         // 用于设置运行时的各项参数
         $this->ws->set([
             // 设置异步任务的工作进程数量
@@ -59,7 +60,9 @@ class Room extends Base
     // 监听WebSocket连接打开事件
     public function onOpen($ws, $request)
     {
-        $this->handle($request->get['token'], $request->get['type'], $ws, $request->fd);
+        // 这里需要用postman
+        // dump($request->get);
+        // $this->handle($request->get['token'], 'chat_uid_2', $ws, $request->fd);
         $ws->push($request->fd, "客户端：{$request->fd}，打开连接，进入聊天室\n");
     }
 
@@ -72,7 +75,7 @@ class Room extends Base
     // 解决方法：使用$ws->isEstablished($fd)判断是否为有效连接，或者使用try
     public function onMessage($ws, $frame)
     {
-        $this->chatLogic->switchboard($ws, $frame);
+        $this->testLogic->handle($ws, $frame);
     }
 
     // 处理异步任务(此回调函数在task进程中执行)

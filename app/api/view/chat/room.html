@@ -21,9 +21,9 @@
         isApiLogin();
 
         // 不使用ssl
-        // let wsServer = 'ws://124.71.218.160:9502',
+        let wsServer = 'ws://124.71.218.160:9502?token=' + getApiToken(),
         // 使用ssl
-        let wsServer = 'wss://124.71.218.160:9502?token=' + getApiToken(),
+        // let wsServer = 'wss://124.71.218.160:9502?token=' + getApiToken(),
             websocket = null,
             lock = false; // 锁，用于断线重连
 

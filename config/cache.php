@@ -6,7 +6,9 @@
 
 return [
     // 默认缓存驱动
-    'default' => env('cache.driver', 'file'),
+
+    // 命令行运行的程序 默认使用这里的配置？
+    'default' => env('cache.driver', 'redis'),
 
     // 缓存连接方式配置
     'stores'  => [
