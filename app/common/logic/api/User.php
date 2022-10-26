@@ -91,6 +91,7 @@ class User
         if (empty($friend)) {
             throw new Exception('用户不存在！');
         }
+
         // 是否有重复申请
         $socket = $this->redis->get(config('redis.socket_pre') . $friend['id']);
         if (!empty($socket['apply_list'])) {
@@ -100,14 +101,20 @@ class User
                 }
             }
         }
+
         // 是否已经是好友
-        if ($this->friendModel->isFriend($data['user']['id'], $friend['id'])) {{
+        if ($this->friendModel->isFriend($data['user']['id'], $friend['id'])) {
             throw new Exception('已成为好友！');
-        }}
+        }
+
+        // 是否为黑名单
+        $this->friendModel->isBlack($data['user']['id'], $friend['id']);
+
         // 不能加自己为好友
         if ($data['user']['id'] == $friend['id']) {
             throw new Exception('不能加自己为好友！');
         }
+        
         // 加好友数据
         $send = [
             'type'     => 'addFriend',
@@ -137,8 +144,12 @@ class User
         }
 
         // 用户是否也向对方发出了好友申请
-        $user = $this->friendModel->where('uid', $data['uid'])->where('fid', $data['fid'])->find();
-        $friend = $this->friendModel->where('uid', $data['fid'])->where('fid', $data['uid'])->find();
+        if ($this->friendModel->isFriend($data['user']['id'], $data['target'])) {
+            // 删除缓存，我的好友申请
+            unset($socket['apply_list'][$data['target']]);
+            $this->redis->set(config('redis.socket_pre') . $data['uid'], $socket);
+            throw new Exception('对方已经是你的好友了！');
+        }
 
         // 添加好友数据
         // 开启事务
