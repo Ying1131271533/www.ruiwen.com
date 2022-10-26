@@ -27,7 +27,8 @@ class BaseValidate extends Validate
         $rules    = $scene[$currentScene];
         $newArray = [];
         foreach ($rules as $value) {
-            $newArray[$value] = $params[$value];
+            // $newArray[$value] = $params[$value];
+            $newArray[$value] = isset($params[$value]) ? $params[$value] : '';
         }
         return $newArray;
     }

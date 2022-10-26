@@ -16,6 +16,9 @@ class User extends BaseValidate
         'status|状态'                  => 'number',
 
         'message|加好友留言'              => 'max:20',
+
+        'decision|接受状态'            => 'require|between:0,1',
+        'target|对方id'                => 'require|number|gt:0',
     ];
 
     // 验证消息
@@ -28,6 +31,7 @@ class User extends BaseValidate
         'register'  => ['username', 'password'],
         'login'     => ['username', 'password'],
         'addFriend' => ['username', 'message'],
+        'handleFriend' => ['decision', 'target'],
     ];
 
     // edit 验证场景定义

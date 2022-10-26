@@ -86,7 +86,7 @@ class User
 
     public function addFriend($data)
     {
-        // 找到用户
+        // 找到要加为好友的用户
         $friend = $this->userModel->findByUserNameWithStatus($data['username']);
         if (empty($friend)) {
             throw new Exception('用户不存在！');
@@ -123,6 +123,54 @@ class User
         $receive = json_decode($client->receive(), true);
         if ($receive['status'] == config('statu.success')) {
             $client->close();
+        }
+    }
+
+    // 处理加好友请求
+    public function handleFriend($data)
+    {
+        // 查出自己的socket，里面的好友申请列表
+        $socket = $this->redis->get(config('redis.socket_pre') . $data['uid']);
+        // 对方的申请，在列表中是否有数据
+        if (empty($socket['apply_list']) || !array_key_exists($data['target'], $socket['apply_list'])) {
+            throw new Exception('该好友申请不存在！');
+        }
+
+        // 用户是否也向对方发出了好友申请
+        $user = $this->friendModel->where('uid', $data['uid'])->where('fid', $data['fid'])->find();
+        $friend = $this->friendModel->where('uid', $data['fid'])->where('fid', $data['uid'])->find();
+
+        // 添加好友数据
+        // 开启事务
+        $this->friendModel->startTrans();
+        try {
+            // redis开启事务
+            $this->redis->multi();
+            if ((boolean) $data['decision']) {
+                $lists = [
+                    [
+                        'uid' => $data['target'],
+                        'fid' => $data['uid'],
+                    ],
+                    [
+                        'uid' => $data['uid'],
+                        'fid' => $data['target'],
+                    ],
+                ];
+                $this->friendModel->saveAll($lists);
+            }
+            // 删除缓存的好友申请
+            unset($socket['apply_list'][$data['target']]);
+            $this->redis->drset(config('redis.socket_pre') . $data['uid'], $socket);
+
+            // 提交事务
+            $this->redis->exec();
+            $this->friendModel->commit();
+        } catch (Exception $e) {
+            // 回滚事务
+            $this->redis->discard();
+            $this->friendModel->rollback();
+            throw new Exception($e->getMessage());
         }
     }
 }

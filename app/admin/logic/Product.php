@@ -4,6 +4,7 @@ namespace app\admin\logic;
 use app\common\model\Product as ProductModel;
 use app\common\lib\exception\Fail;
 use app\common\lib\exception\Miss;
+use Exception;
 
 class Product
 {
@@ -36,9 +37,9 @@ class Product
             // 删除原来的规格、图册
             if ($id) {
                 $productSpecsDel = $product->specs->delete();
-                if (!$productSpecsDel) throw new \Exception('原来的商品规格删除失败');
+                if (!$productSpecsDel) throw new Exception('原来的商品规格删除失败');
                 $productImgsDel = $product->imgs->delete();
-                if (!$productImgsDel) throw new \Exception('原来的商品图册删除失败');
+                if (!$productImgsDel) throw new Exception('原来的商品图册删除失败');
             }
 
             // 保存新的商品规格
@@ -47,24 +48,24 @@ class Product
             foreach ($specs_arr as &$specs) {
                 $stock += $specs['stock'];
                 $productSpecsResult = $product->specs()->save($specs);
-                if (!$productSpecsResult) throw new \Exception('商品规格保存失败');
+                if (!$productSpecsResult) throw new Exception('商品规格保存失败');
             }
 
             // 保存商品图片
             $imgs = $params['imgs'];
             foreach ($imgs as $value) {
                 $productImgsResult = $product->imgs()->save(['path' => $value]);
-                if (!$productImgsResult) throw new \Exception('商品图册保存失败');
+                if (!$productImgsResult) throw new Exception('商品图册保存失败');
             }
 
             // 保存商品信息，这里不能在删除关联数据上面，不然delete()不能使用
             $productResult = $product->save($params);
-            if (!$productResult) throw new \Exception('商品保存失败');
+            if (!$productResult) throw new Exception('商品保存失败');
 
             // 赋值商品总库存
             $product->stock = $stock;
             $stockSave      = $product->save();
-            if (!$stockSave) throw new \Exception('商品总库存保存失败');
+            if (!$stockSave) throw new Exception('商品总库存保存失败');
 
             // 提交事务
             $product->commit();
@@ -78,7 +79,7 @@ class Product
             $product->specs;
             $product->imgs;
             return $product;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $product->rollback();
             throw new Fail($e->getMessage());
         }
@@ -96,12 +97,12 @@ class Product
             $result = $product->together(['specs', 'imgs'])->delete();
             if(!$result){
                 $product->rollback();
-                throw new \Exception('商品删除失败');
+                throw new Exception('商品删除失败');
             }
             
             $product->commit();
             return $result;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $product->rollback();
             throw new Fail($e->getMessage());
         }

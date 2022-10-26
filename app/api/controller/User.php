@@ -67,6 +67,9 @@ class User extends BaseController
     // 处理加好友请求
     public function handleFriend()
     {
-        
+        $data = $this->request->params;
+        $data['uid'] = $this->getUid();
+        $this->logic->handleFriend($data);
+        return $this->success('好友申请处理完成！');
     }
 }

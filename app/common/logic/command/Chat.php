@@ -34,13 +34,14 @@ class Chat extends Base
 
     private function addFriend($ws, $fd, $data)
     {
+        // 获取对方的id
         $socket = $this->getSocket($data['target']);
-        // $socket = $this->getSocket($data['target']);
         $socket['apply_list'][$data['uid']] = $data['message'];
         // 对方是否在线，主面板fd
         if (!empty($socket['fd']['index'])) {
             // 如果在线，则直接推送消息
             $this->success($ws, $socket['fd']['index'], [
+                'type'     => 'addFriend',
                 'from'     => $data['uid'],
                 'username' => $data['username'],
                 'message'  => $data['message'],

@@ -29,5 +29,6 @@ return [
         '__ADMIN__'  => '/static/admin',
         '__FRONT__'  => '/static/front',
         '__API__'    => '/static/api',
+        '__XADMIN__' => '/static/api/lib/xadmin',
     ],
 ];

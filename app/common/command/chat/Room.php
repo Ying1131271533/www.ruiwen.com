@@ -60,10 +60,10 @@ class Room extends Base
     public function onOpen($ws, $request)
     {
         $this->handle($request->get['token'], $request->get['type'], $ws, $request->fd);
-        $ws->push($request->fd, "客户端：{$request->fd}，打开连接，进入聊天室\n");
+        // $ws->push($request->fd, "客户端：{$request->fd}，打开连接，进入聊天室\n");
     }
 
-    // 监听WebSocket发送信息
+    // 监听WebSocket发送信息，监听用户向服务器发送的消息
     // 参数1：所有连接数据
     // 参数2：正在发送消息的用户的连接数据
     // ！！！我在这里测试的时候出现了一个问题，连接fd有1、2、4
@@ -95,6 +95,7 @@ class Room extends Base
     // 只要关闭了连接，就一定会触发这里的onClose()
     public function onClose($ws, $fd)
     {
+        // 这里应该要把socket的fd那个index给删除掉，就等于不在线了
         echo "客户端-{$fd}：关闭连接\n";
     }
 }
