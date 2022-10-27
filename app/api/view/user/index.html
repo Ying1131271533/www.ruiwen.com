@@ -19,20 +19,30 @@
         </ul>
     </div>
     <div class="layui-fluid">
-        <div class="layui-row layui-col-space15">
+        <div class="layui-row layui-col-space15" id="list">
             <div class="layui-col-md12">
                 <div class="layui-card">
                     <div class="layui-card-body ">
                         <form class="layui-form">
-                            <div class="layui-from-item">
+                            <div class="layui-form-item">
                                 <label for="username" class="layui-form-label">添加好友：</label>
-                                <div class="layui-input-inline layui-show-xs-block">
+                                <div class="layui-input-inline">
                                     <input class="layui-input" type="text" id="username" name="username" required="" lay-verify="required" autocomplete="off">
                                 </div>
-                                <div class="layui-input-inline layui-word-aux">
-                                    <span class="x-red">*</span>输入对方的用户名
+                                <div class="layui-form-mid layui-word-aux">
+                                    <span class="x-red">*</span> 输入对方的用户名
                                 </div>
                             </div>
+                            <div class="layui-form-item">
+                                <label for="message" class="layui-form-label">附加消息：</label>
+                                <div class="layui-input-inline">
+                                    <input class="layui-input" type="text" id="message" name="message" required="" lay-verify="required" autocomplete="off">
+                                </div>
+                                <div class="layui-form-mid layui-word-aux">
+                                    输入消息
+                                </div>
+                            </div>
+                            
                             <div class="layui-form-item">
                                 <label class="layui-form-label"></label>
                                 <button class="layui-btn" lay-filter="add" lay-submit="">添加</button>
@@ -51,62 +61,7 @@
                     </div>
                 </div>
             </div>
-            <div class="layui-col-sm6 layui-col-md3">
-                <div class="layui-card">
-                    <div class="layui-card-header">下载
-                        <span class="layui-badge layui-bg-cyan layuiadmin-badge">月</span>
-                    </div>
-                    <div class="layui-card-body  ">
-                        <p class="layuiadmin-big-font">33,555</p>
-                        <p>新下载
-                            <span class="layuiadmin-span-color">10%
-                                <i class="layui-inline layui-icon layui-icon-face-smile-b"></i></span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="layui-col-sm6 layui-col-md3">
-                <div class="layui-card">
-                    <div class="layui-card-header">下载
-                        <span class="layui-badge layui-bg-cyan layuiadmin-badge">月</span>
-                    </div>
-                    <div class="layui-card-body ">
-                        <p class="layuiadmin-big-font">33,555</p>
-                        <p>新下载
-                            <span class="layuiadmin-span-color">10%
-                                <i class="layui-inline layui-icon layui-icon-face-smile-b"></i></span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="layui-col-sm6 layui-col-md3">
-                <div class="layui-card">
-                    <div class="layui-card-header">下载
-                        <span class="layui-badge layui-bg-cyan layuiadmin-badge">月</span>
-                    </div>
-                    <div class="layui-card-body ">
-                        <p class="layuiadmin-big-font">33,555</p>
-                        <p>新下载
-                            <span class="layuiadmin-span-color">10%
-                                <i class="layui-inline layui-icon layui-icon-face-smile-b"></i></span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="layui-col-sm6 layui-col-md3">
-                <div class="layui-card">
-                    <div class="layui-card-header">下载
-                        <span class="layui-badge layui-bg-cyan layuiadmin-badge">月</span>
-                    </div>
-                    <div class="layui-card-body ">
-                        <p class="layuiadmin-big-font">33,555</p>
-                        <p>新下载
-                            <span class="layuiadmin-span-color">10%
-                                <i class="layui-inline layui-icon layui-icon-face-smile-b"></i></span>
-                        </p>
-                    </div>
-                </div>
-            </div>
+            
         </div>
     </div>
     
@@ -121,7 +76,50 @@
             lock = false; // 锁，用于断线重连
 
         $(document).ready(function () {
+            $.ajax({
+                type: "POST",
+                contentType: "application/x-www-form-urlencoded",
+                url: '/api/User/friendList',
+                beforeSend: function (request) {
+                    request.setRequestHeader("access-token", getApiToken());
+                },
+                success: function (res) {
+                    if (res.status === config('failed')) {
+                        // console.log(res);
+                        layer.msg(res.message);
+                        return false;
+                    }
+                    // 渲染好友列表
+                    renderFriendList(res.result);
+                }
+            });
+
+            // 连接
             link();
+            
+            // 退出登录
+            $('#quit').click(function () {
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/x-www-form-urlencoded",
+                    url: '/api/User/logout',
+                    data: {
+                        username: data.field.username
+                    },
+                    success: function (res) {
+                        if (res.status === config('failed')) {
+                            layer.msg(res.message);
+                            return false;
+                        }
+                        if (res.status === config('success')) {
+                            layer.msg(res.result, {}, function () {
+                                $.removeCookie('api_login_token', { path: '/' });
+                                $(window).attr('location', '/api/View/User/login');
+                            });
+                        }
+                    }
+                });
+            });
         });
 
         // layui
@@ -135,7 +133,8 @@
                     contentType: "application/x-www-form-urlencoded",
                     url: '/api/User/addFriend',
                     data: {
-                        username: data.field.username
+                        username: data.field.username,
+                        message: data.field.message
                     },
                     success: function (res) {
                         if (res.status === config('failed')) {
@@ -151,7 +150,7 @@
             });
         });
 
-        // 渲染好友列表
+        // 渲染好友申请列表
         function renderApplyList(data) {
             console.log(data);
             let message = data['message'];
@@ -160,7 +159,7 @@
             }
             $('#friend_list').append(
                 '<li class="layui-col-md2 layui-col-xs6">'+
-                    '<a onclick="handleFriend(this, ' + data['from'] + ')" href="javascript:;" class="x-admin-backlog-body">'+
+                    '<a onclick="handleFriend(this, ' + data['form'] + ')" href="javascript:;" class="x-admin-backlog-body">'+
                         '<h3>来自<span class="layui-badge layui-bg-green layuiadmin-badge">' + data['username'] + '</span>的申请</h3>'+
                         '<p>'+
                             '<cite>留言：' + message + '</cite>'+
@@ -168,6 +167,39 @@
                     '</a>'+
                 '</li>'
             );
+        }
+        
+        // 渲染好友列表
+        function renderFriendList(data) {
+            for(let key of data){
+                title = '与'+key['username']+'的聊天窗口';
+                $('#list').append(
+                    '<div onclick="openChat('+ key['fid']+', \''+ title +'\')" class="layui-col-sm6 layui-col-md3" style="cursor:pointer;">'+
+                        '<div class="layui-card">'+
+                            '<div class="layui-card-header">'+
+                                '<span class="layui-badge layui-bg-cyan layuiadmin-badge">'+ key['username'] +'</span> 点击聊天'+
+                            '</div>'+
+                            '<div class="layui-card-body">'+
+                                '<p class="layuiadmin-big-font" id="uid_'+ key['fid'] +'"></p>'+
+                            '</div>'+
+                        '</div>'+
+                    '</div>'
+                );
+            }
+        }
+
+        // 打开聊天窗口
+        function openChat(fid, username) {
+            // window.open('/api/View/chat/room?fid=' + fid);
+            layer.open({
+                title: username,
+                type: 2,
+                closeBtn: false, // 不显示关闭按钮
+                shift: 2,
+                shadeClose: true, // 开启遮罩关闭
+                area: ['40%', '60%'],
+                content: '/api/View/chat/room?fid=' + fid
+            });
         }
 
         // 处理好友申请
@@ -239,12 +271,12 @@
             websocket.onerror = function (res, e) {
                 console.log('Error occured: ' + res.data);
                 websocket.close();
-                // 关闭连接时，重连
+                // 服务器断开连接时，尝试重连
                 relink();
             };
         }
 
-        // 重连聊天室
+        // 服务器断开连接时，尝试重连
         function relink() {
             if (lock) {
                 return false;

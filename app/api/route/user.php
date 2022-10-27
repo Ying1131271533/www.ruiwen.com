@@ -24,6 +24,8 @@ Route::group('View/user', function () {
 
 // 需要已登录的操作
 Route::group('user', function () {
+    // 好友列表
+    Route::rule('friendList', 'user/friendList', 'POST');
     // 处理加好友请求
     Route::rule('handleFriend', 'user/handleFriend', 'POST');
     // 加好友

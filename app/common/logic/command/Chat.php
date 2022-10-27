@@ -4,6 +4,7 @@ namespace app\common\logic\command;
 
 use app\common\command\chat\Base;
 use app\common\logic\lib\Redis;
+use app\common\model\api\Chat as ChatModel;
 
 class Chat extends Base
 {
@@ -25,13 +26,22 @@ class Chat extends Base
             case 'addFriend':
                 $this->addFriend($ws, $frame->fd, $data);
                 break;
-
+            case 'chat':
+                $this->chat($ws, $frame->fd, $data);
+                break;
             default:
                 # code...
                 break;
         }
     }
 
+    // 聊天
+    private function chat($ws, $fd, $data)
+    {
+        
+    }
+
+    // 添加好友
     private function addFriend($ws, $fd, $data)
     {
         // 获取对方的id

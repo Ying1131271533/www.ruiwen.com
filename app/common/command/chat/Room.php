@@ -95,7 +95,17 @@ class Room extends Base
     // 只要关闭了连接，就一定会触发这里的onClose()
     public function onClose($ws, $fd)
     {
-        // 这里应该要把socket的fd那个index给删除掉，就等于不在线了
+        // 把redis缓存的fd那个chat_uid_给删除掉，就等于不在聊天窗口了
         echo "客户端-{$fd}：关闭连接\n";
+        $uid = $this->getBindUid($ws, $fd);
+        if (!empty($uid)) {
+            $data = $this->getSocket($uid);
+            foreach ($data['fd'] as $key => $value) {
+                if ($fd == $value) {
+                    unset($data['fd'][$key]);
+                }
+            }
+            $this->redis->set(config('redis.socket_pre') . $uid, $data);
+        }
     }
 }

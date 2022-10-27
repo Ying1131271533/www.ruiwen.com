@@ -143,8 +143,8 @@ class User
             throw new Exception('该好友申请不存在！');
         }
 
-        // 用户是否也向对方发出了好友申请
-        if ($this->friendModel->isFriend($data['user']['id'], $data['target'])) {
+        // 是否已经是好友，而已用户是否也向对方发出了好友申请
+        if ($this->friendModel->isFriend($data['uid'], $data['target'])) {
             // 删除缓存，我的好友申请
             unset($socket['apply_list'][$data['target']]);
             $this->redis->set(config('redis.socket_pre') . $data['uid'], $socket);
@@ -183,5 +183,11 @@ class User
             $this->friendModel->rollback();
             throw new Exception($e->getMessage());
         }
+    }
+
+    // 获取好友列表
+    public function friendList($uid)
+    {
+        return $this->friendModel->friendList($uid);
     }
 }

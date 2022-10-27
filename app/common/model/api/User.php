@@ -10,6 +10,12 @@ class User extends Model
     protected $table = 'api_user';
     // 设置当前模型的数据库连接
     protected $connection = 'mysql';
+    
+    // 好友列表
+    public function friends()
+    {
+        return $this->hasMany(Friend::class, 'uid');
+    }
 
     // 查询用户，使用名称
     public function findByUserName($username)

@@ -72,4 +72,11 @@ class User extends BaseController
         $this->logic->handleFriend($data);
         return $this->success('好友申请处理完成！');
     }
+
+    // 好友列表
+    public function friendList()
+    {
+        $list = $this->logic->friendList($this->getUid());
+        return $this->success($list);
+    }
 }

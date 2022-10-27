@@ -72,6 +72,7 @@ class Base extends Command
         $this->redis->set(config('redis.socket_pre') . $uid, $data);
     }
 
+    // 缓存fd
     public function setFd($ws, $uid, $fd, $type)
     {
         $data = $this->getSocket($uid);
@@ -85,10 +86,10 @@ class Base extends Command
             // dump($value);
             // 如果重连了，那么这里获取到fd:1的信息就没有绑定uid了，因为swoole重新分配fd了
             // 清除断开连接无效的fd
-            $info = $ws->getClientInfo($value);
+            $bindUid = $this->getBindUid($ws, $value);
             // dump($uid);
             // dump($info);
-            if (empty($info['uid']) || $info['uid'] != $uid) {
+            if (empty($bindUid) || $bindUid != $uid) {
                 unset($data['fd'][$key]);
             }
             // dump('结束');
@@ -97,6 +98,14 @@ class Base extends Command
         $this->redis->set(config('redis.socket_pre') . $uid, $data);
     }
 
+    // 获取正在连接的socket绑定的uid
+    public function getBindUid($ws, $fd)
+    {
+        $info = $ws->getClientInfo($fd);
+        return empty($info['uid']) ? null : $info['uid'];
+    }
+
+    // 获取缓存中的socket数据
     public function getSocket($uid)
     {
         return $this->redis->get(config('redis.socket_pre') . $uid);
