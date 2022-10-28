@@ -66,10 +66,6 @@ class Room extends Base
     // 监听WebSocket发送信息，监听用户向服务器发送的消息
     // 参数1：所有连接数据
     // 参数2：正在发送消息的用户的连接数据
-    // ！！！我在这里测试的时候出现了一个问题，连接fd有1、2、4
-    // 一共产生了fd为1、2、3、4、5的连接，观察命令行发现3和5关闭了连接，但是2还保持着连接
-    // 然后$ws里面的连接fd没有2，导致$ws-push发送不了
-    // 解决方法：使用$ws->isEstablished($fd)判断是否为有效连接，或者使用try
     public function onMessage($ws, $frame)
     {
         $this->chatLogic->switchboard($ws, $frame);
@@ -107,5 +103,6 @@ class Room extends Base
             }
             $this->redis->set(config('redis.socket_pre') . $uid, $data);
         }
+        // 这里应该还要做一个删除fd那个index主面板的缓存
     }
 }

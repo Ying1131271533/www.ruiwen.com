@@ -22,7 +22,7 @@ class View extends BaseController
         return FacadeView::fetch('user/login');
     }
     
-    // 聊天室测试
+    // 聊天测试
     public function chat_test()
     {
         return FacadeView::fetch('chat/test');

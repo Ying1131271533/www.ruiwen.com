@@ -5,6 +5,7 @@ namespace app\api\controller;
 use app\BaseController;
 use think\App;
 use WebSocket\Client;
+use app\common\logic\api\Chat as ChatLogic;
 
 class Chat extends BaseController
 {
@@ -14,6 +15,7 @@ class Chat extends BaseController
     {
         // 控制器初始化
         parent::__construct($app);
+        $this->logic = new ChatLogic();
     }
 
     public function test()
@@ -26,8 +28,14 @@ class Chat extends BaseController
         $client->close();
     }
 
-    public function room()
+    // 聊天记录
+    public function record()
     {
-        
+        // 接收参数
+        $params = $this->request->params;
+        $params['uid'] = $this->getUid();
+        $record  = $this->logic->record($params);
+        // 返回结果
+        return $this->success($record);
     }
 }

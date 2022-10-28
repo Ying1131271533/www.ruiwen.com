@@ -56,7 +56,7 @@ class Friend extends Model
             ->where('status', 1)
             ->field(['fid'])
             ->select();
-            // 红叶说这里应该做成分页
+            // 红叶说这里应该做成分页，但是要传分页参数过来
             // ->paginate($size, false, ['page' => $page]);
     }
 }

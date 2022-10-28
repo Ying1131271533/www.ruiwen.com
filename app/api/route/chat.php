@@ -11,6 +11,8 @@ Route::group('chat', function () {
     Route::rule('test', 'Chat/test', 'POST');
     // 聊天室
     Route::rule('room', 'Chat/room', 'POST');
+    // 聊天记录
+    Route::rule('record', 'Chat/record', 'POST');
 })->middleware(app\api\middleware\IsLogin::class);
 
 // 视图

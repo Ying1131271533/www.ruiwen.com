@@ -261,9 +261,18 @@
 
             // 服务器返回的数据
             websocket.onmessage = function (res) {
+
+                // 接受服务器的数据
                 let data = JSON.parse(res.data)['result'];
+
+                // 处理好友申请列表数据
                 if (data['type'] === 'addFriend') {
                     renderApplyList(data);
+                }
+                
+                // 处理好友聊天消息数据
+                if (data['type'] === 'chat') {
+                    renderChatList(data);
                 }
             };
 

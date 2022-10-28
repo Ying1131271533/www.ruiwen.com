@@ -23,6 +23,7 @@ class Base extends Command
     public function handle($token, $type, $ws, $fd)
     {
         $user = $this->getUser($token);
+        // dump($type);
         // dump($user);
         if (empty($user)) {
             $ws->close($fd);
@@ -50,8 +51,8 @@ class Base extends Command
     {
         // 获取socket
         $data = $this->getSocket($uid);
-        
-        // 申请好友的延时消息
+
+        // 好友申请列表的延时数据
         if (!empty($data['apply_list'])) {
             foreach ($data['apply_list'] as $key => $value) {
                 $user = $this->userModel->findByIdWithStatus($key);
@@ -62,11 +63,25 @@ class Base extends Command
                 }
                 $this->success($ws, $fd, [
                     'type'     => 'addFriend',
-                    'from'     => $key, // 来自那个对方的id
+                    'from'     => $key, // 来自对方的id
                     'username' => $user['username'],
                     'message'  => $value,
                 ]);
             }
+        }
+
+        // 好友消息的延时数据
+        if (!empty($data['delay_list'])) {
+            foreach ($data['delay_list'] as $key => $value) {
+                $this->success($ws, $fd, [
+                    'type'    => 'chat',
+                    'uid'     => $key, // 对方的id
+                    'count'   => $value['count'],
+                    'message' => $value['message'],
+                ]);
+            }
+            // 发送过去后，就删除缓存
+            unset($data['delay_list'][$key]);
         }
         // 缓存socket
         $this->redis->set(config('redis.socket_pre') . $uid, $data);
