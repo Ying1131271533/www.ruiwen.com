@@ -13,6 +13,7 @@
             <a href="/api/View/user/index">IMChat</a>
         </div>
         <ul class="layui-nav right">
+            <li class="layui-nav-item to-index" id="username"></li>
             <li class="layui-nav-item to-index">
                 <a id="quit">退出</a>
             </li>
@@ -73,6 +74,7 @@
             // 使用ssl
             // let wsServer = 'wss://124.71.218.160:9502?token=' + getApiToken(),
             websocket = null,
+            user = null,
             lock = false; // 锁，用于断线重连
 
         $(document).ready(function () {
@@ -97,6 +99,10 @@
             // 连接
             link();
             
+            // 显示用户名
+            user = getUser();
+            $('#username').text(user['username']);
+
             // 退出登录
             $('#quit').click(function () {
                 $.ajax({

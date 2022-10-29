@@ -34,15 +34,15 @@
         // 连接聊天室
         function link() {
             // 创建WebSocket Server对象，监听124.71.218.160:9502端口
-            websocket = new WebSocket(wsServer),
+            websocket = new WebSocket(wsServer);
 
-                // 连接
-                websocket.onopen = function (res) {
-                    console.log("Connected to WebSocket server.");
-                    $('#akali').append(
-                        '<h1>连接成功！牡蛎摸牡蛎~</h1>'
-                    );
-                };
+            // 连接
+            websocket.onopen = function (res) {
+                console.log("Connected to WebSocket server.");
+                $('#akali').append(
+                    '<h1>连接成功！牡蛎摸牡蛎~</h1>'
+                );
+            };
 
             // 关闭连接
             websocket.onclose = function (res) {

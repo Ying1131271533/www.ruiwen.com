@@ -52,9 +52,11 @@ class Chat extends Base
         $socket = $this->getSocket($data['fid']);
         // 对方打开了聊天窗口
         if (isset($socket['fd']['chat_uid_' . $uid])) {
+            
             $this->success($ws, $socket['fd']['chat_uid_' . $uid], [
                 'message' => $data['message'],
             ]);
+
         } else {
 
             // 对方打开了主面板或者是离线状态

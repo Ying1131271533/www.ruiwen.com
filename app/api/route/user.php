@@ -26,6 +26,8 @@ Route::group('View/user', function () {
 // 需要已登录的操作
 Route::group('user', function () {
     // 获取用户
+    Route::rule('getUserByToken', 'user/getUserByToken', 'POST');
+    // 获取用户
     Route::rule('getUserById', 'user/getUserById', 'POST');
     // 好友列表
     Route::rule('friendList', 'user/friendList', 'POST');

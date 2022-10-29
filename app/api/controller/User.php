@@ -87,4 +87,11 @@ class User extends BaseController
         $user = $this->logic->getUserById($uid);
         return $this->success($user);
     }
+
+    // 获取用户
+    public function getUserByToken()
+    {
+        $user = $this->getUser();
+        return $this->success($user);
+    }
 }

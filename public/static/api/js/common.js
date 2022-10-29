@@ -142,6 +142,7 @@ function isApiLogin() {
 
 // 获取用户
 function getUserById(uid) {
+    let user = null;
     $.ajax({
         type: "POST",
         contentType: "application/x-www-form-urlencoded",
@@ -163,8 +164,56 @@ function getUserById(uid) {
                 return false;
             }
             // console.log(res.result);
-            return res.result;
+            user = res.result;
         }
     });
+    // 返回用户信息，必须要在ajax外面返回值
+    return user;
 }
 
+// 获取用户
+function getUser() {
+    let user = null;
+    $.ajax({
+        type: "POST",
+        contentType: "application/x-www-form-urlencoded",
+        url: '/api/User/getUserByToken',
+        beforeSend: function (request) {
+            request.setRequestHeader("access-token", getApiToken());
+        },
+        success: function (res) {
+            if (res.status === config('goto')) {
+                layer.msg('登录凭证失效！', {}, function () {
+                    $.removeCookie('api_login_token', {path: '/'});
+                    $(window).attr('location', '/api/View/user/login');
+                });
+            }
+
+            if (res.status === config('failed')) {
+                layer.msg(res.result);
+                return false;
+            }
+            // console.log(res.result);
+            user = res.result;
+        }
+    });
+    // 返回用户信息，必须要在ajax外面返回值
+    return user;
+}
+
+// 滚动到指定位置 上、中、下
+function scrollToEnd(val){
+    var h = null;
+    switch (val) {
+        case 1:
+            h = 0;
+            break;
+        case 2:
+            h = $(document).height()-$(window).height() / 2;
+            break;
+        case 3:
+            h = $(document).height()-$(window).height();
+            break;
+    }
+    $(document).scrollTop(h);
+}
