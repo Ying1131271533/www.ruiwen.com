@@ -140,3 +140,31 @@ function isApiLogin() {
     });
 }
 
+// 获取用户
+function getUserById(uid) {
+    $.ajax({
+        type: "POST",
+        contentType: "application/x-www-form-urlencoded",
+        url: '/api/User/getUserById',
+        data: { id: uid},
+        beforeSend: function (request) {
+            request.setRequestHeader("access-token", getApiToken());
+        },
+        success: function (res) {
+            if (res.status === config('goto')) {
+                layer.msg('登录凭证失效！', {}, function () {
+                    $.removeCookie('api_login_token', {path: '/'});
+                    $(window).attr('location', '/api/View/user/login');
+                });
+            }
+
+            if (res.status === config('failed')) {
+                layer.msg(res.result);
+                return false;
+            }
+            // console.log(res.result);
+            return res.result;
+        }
+    });
+}
+

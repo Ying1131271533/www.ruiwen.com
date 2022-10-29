@@ -19,11 +19,14 @@ Route::group('View/user', function () {
     Route::rule('register', '/api/View/register', 'GET');
     // 登录
     Route::rule('login', '/api/View/login', 'GET');
+    // 首页
     Route::rule('index', '/api/View/index', 'GET');
 });
 
 // 需要已登录的操作
 Route::group('user', function () {
+    // 获取用户
+    Route::rule('getUserById', 'user/getUserById', 'POST');
     // 好友列表
     Route::rule('friendList', 'user/friendList', 'POST');
     // 处理加好友请求

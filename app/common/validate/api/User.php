@@ -32,6 +32,7 @@ class User extends BaseValidate
         'login'     => ['username', 'password'],
         'addFriend' => ['username', 'message'],
         'handleFriend' => ['decision', 'target'],
+        'getUserById' => ['id'],
     ];
 
     // edit 验证场景定义

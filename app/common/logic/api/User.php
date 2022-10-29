@@ -190,4 +190,11 @@ class User
     {
         return $this->friendModel->friendList($uid);
     }
+
+    // 获取用户
+    public function getUserById($uid)
+    {
+        $user = $this->userModel->findById($uid);
+        return ['id' => $user['id'], 'username' => $user['username']];
+    }
 }

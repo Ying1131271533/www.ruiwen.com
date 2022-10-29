@@ -23,13 +23,19 @@ class User extends Model
         return $this->where('username', $username)->find();
     }
 
-    // 查询用户，使用id，根据状态1
+    // 使用id查询用户
+    public function findById($id)
+    {
+        return $this->where('id', $id)->find();
+    }
+    
+    // 使用id查询用户，根据状态1
     public function findByIdWithStatus($id)
     {
         return $this->where('id', $id)->where('status', 1)->find();
     }
 
-    // 查询用户名，根据状态1
+    // 使用用户名查询用户，根据状态1
     public function findByUserNameWithStatus($username)
     {
         return $this->where('username', $username)->where('status', 1)->find();

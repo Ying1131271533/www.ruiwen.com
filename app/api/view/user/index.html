@@ -103,9 +103,6 @@
                     type: "POST",
                     contentType: "application/x-www-form-urlencoded",
                     url: '/api/User/logout',
-                    data: {
-                        username: data.field.username
-                    },
                     success: function (res) {
                         if (res.status === config('failed')) {
                             layer.msg(res.message);
@@ -150,6 +147,15 @@
             });
         });
 
+        // 未读取消息，显示好友发来的最后一条消息，和消息条数
+        function renderDelay(data) {
+            let str = '<span class="layui-badge layui-bg-red layuiadmin-badge">'+ data['message'] +'</span>';
+            if(!empty(data['count'])){
+                str += '<span class="layui-badge layui-bg-green layuiadmin-badge">'+ data['count'] +'</span>';
+            }
+            $('#uid_'+data['fid']).html(str);
+        }
+
         // 渲染好友申请列表
         function renderApplyList(data) {
             console.log(data);
@@ -159,7 +165,7 @@
             }
             $('#friend_list').append(
                 '<li class="layui-col-md2 layui-col-xs6">'+
-                    '<a onclick="handleFriend(this, ' + data['form'] + ')" href="javascript:;" class="x-admin-backlog-body">'+
+                    '<a onclick="handleFriend(this, ' + data['from'] + ')" href="javascript:;" class="x-admin-backlog-body">'+
                         '<h3>来自<span class="layui-badge layui-bg-green layuiadmin-badge">' + data['username'] + '</span>的申请</h3>'+
                         '<p>'+
                             '<cite>留言：' + message + '</cite>'+
@@ -189,10 +195,10 @@
         }
 
         // 打开聊天窗口
-        function openChat(fid, username) {
+        function openChat(fid, title) {
             // window.open('/api/View/chat/room?fid=' + fid);
             layer.open({
-                title: username,
+                title: title,
                 type: 2,
                 closeBtn: false, // 不显示关闭按钮
                 shift: 2,
@@ -200,6 +206,8 @@
                 area: ['40%', '60%'],
                 content: '/api/View/chat/room?fid=' + fid
             });
+            // 清空消息显示
+            $('#uid_'+fid).empty();
         }
 
         // 处理好友申请
@@ -220,7 +228,7 @@
                 layer.close(index);
             });
         }
-
+        
         function sendHandleFriend(obj, decision, id) {
             $(obj).parents('li').remove();
             $.ajax({
@@ -270,9 +278,9 @@
                     renderApplyList(data);
                 }
                 
-                // 处理好友聊天消息数据
+                // 未读取消息，显示好友发来的最后一条消息，和消息条数
                 if (data['type'] === 'chat') {
-                    renderChatList(data);
+                    renderDelay(data);
                 }
             };
 

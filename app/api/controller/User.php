@@ -79,4 +79,12 @@ class User extends BaseController
         $list = $this->logic->friendList($this->getUid());
         return $this->success($list);
     }
+
+    // 获取用户
+    public function getUserById()
+    {
+        $uid = $this->request->params['id'];
+        $user = $this->logic->getUserById($uid);
+        return $this->success($user);
+    }
 }

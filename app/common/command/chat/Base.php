@@ -75,13 +75,14 @@ class Base extends Command
             foreach ($data['delay_list'] as $key => $value) {
                 $this->success($ws, $fd, [
                     'type'    => 'chat',
-                    'uid'     => $key, // 对方的id
+                    'fid'     => $key, // 对方的id
                     'count'   => $value['count'],
                     'message' => $value['message'],
                 ]);
             }
             // 发送过去后，就删除缓存
-            unset($data['delay_list'][$key]);
+            // 不过我觉得应该是对方打开了聊天窗口再删除缓存
+            // unset($data['delay_list'][$key]);
         }
         // 缓存socket
         $this->redis->set(config('redis.socket_pre') . $uid, $data);
