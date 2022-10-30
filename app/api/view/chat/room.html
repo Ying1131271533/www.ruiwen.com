@@ -157,6 +157,7 @@
 
             // 服务器返回的数据
             websocket.onmessage = function (res) {
+                console.log(res['data']); // data是我在服务端程序里面返回的success数据
                 renderRecord({
                     'icon': '&#xe612;',
                     'sender': friend['username'],
