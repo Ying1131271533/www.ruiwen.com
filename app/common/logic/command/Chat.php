@@ -50,6 +50,7 @@ class Chat extends Base
 
         // 获取对方的socket
         $socket = $this->getSocket($data['fid']);
+
         // 对方打开了聊天窗口
         if (isset($socket['fd']['chat_uid_' . $uid])) {
             
@@ -71,6 +72,9 @@ class Chat extends Base
                     'message' => $data['message']
                 ];
             }
+            
+            // 保存
+            $this->redis->set(config('redis.socket_pre') . $data['fid'], $socket);
 
             // 如果对方有打开主面板，则发送消息
             if (isset($socket['fd']['index'])) {
@@ -81,9 +85,6 @@ class Chat extends Base
                     'message' => $data['message']
                 ]);
             }
-            
-            // 保存
-            $this->redis->set(config('redis.socket_pre') . $data['fid'], $socket);
         }
     }
 

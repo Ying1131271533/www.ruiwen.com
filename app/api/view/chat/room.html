@@ -98,7 +98,15 @@
                 }
             });
 
+            // 连接
             link();
+
+            // 回车触发发送
+            $(document).keyup(function(event) {
+                if (event.keyCode == 13) {
+                    send();
+                }
+            });
         });
         
         // 处理聊天记录显示方式
@@ -176,6 +184,12 @@
 
         // 发送消息
         function send() {
+            
+            if(empty($('#input').val())){
+                layer.msg('发送的消息不能为空');
+                return false;
+            }
+
             let data = {
                 'type': 'chat',
                 'message': $('#input').val(),
