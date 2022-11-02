@@ -27,10 +27,10 @@ function show(string $msg, int $code = 200, int $status = 20000, $data = [])
 /**
  * 返回api接口数据
  *
- * @param  string    $smg           描述信息
- * @param  int       $HttpStatus    http状态码
  * @param  int       $status        程序状态码
+ * @param  string    $message       描述信息
  * @param  notype    $data          返回的数据
+ * @param  int       $HttpStatus    http状态码
  * @return json                     api返回的json数据
  */
 function show_res($status, $message, $data, $HttpStatus = 200)
