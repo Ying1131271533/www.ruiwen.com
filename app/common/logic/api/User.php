@@ -14,6 +14,7 @@ class User
     private $userModel   = null;
     private $friendModel = null;
     private $str         = null;
+    private $redis       = null;
 
     public function __construct()
     {
@@ -114,7 +115,7 @@ class User
         if ($data['user']['id'] == $friend['id']) {
             throw new Exception('不能加自己为好友！');
         }
-        
+
         // 加好友数据
         $send = [
             'type'     => 'addFriend',
