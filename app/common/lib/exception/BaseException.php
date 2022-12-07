@@ -6,9 +6,9 @@ use think\Exception;
 abstract class BaseException extends Exception
 {
     public $msg    = '';
-    public $code   = 200;
-    public $status = 20000;
-    public $data   = [];
+    public $errorCode   = 200;
+    public $httpStatus = 200;
+    public $data   = null;
 
     public function __construct($params = [])
     {

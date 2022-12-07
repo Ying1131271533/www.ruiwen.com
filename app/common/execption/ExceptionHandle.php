@@ -1,5 +1,5 @@
 <?php
-namespace app\admin;
+namespace app\common\execption;
 
 use app\common\lib\exception\BaseException;
 use think\db\exception\DataNotFoundException;
@@ -53,7 +53,7 @@ class ExceptionHandle extends Handle
     {
         // 添加自定义异常处理机制
         if ($e instanceof BaseException) {
-            return show($e->msg, $e->code, $e->status, $e->data);
+            return show($e->msg, $e->errorCode, $e->httpStatus);
         }
 
         $message = $e->getMessage();

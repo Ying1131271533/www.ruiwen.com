@@ -19,9 +19,6 @@ class CheckParams
         // $this->check_time($params['time']);
         // 验证参数，参数过滤
 
-        // 页码，条数赋值
-        $request->page = $request->param('?page') ? $request->param('page') : config('app.page');
-        $request->size = $request->param('?size') ? $request->param('size') : config('app.size');
         // if ($request->action() == 'index') { }
 
         $this->check_param($request);
@@ -48,6 +45,8 @@ class CheckParams
         // $validateClassName = 'app' . $root . '\validate\\' . $controller;
         // 红叶的命名方式就用下面这个
         $validateClassName = 'app\common\validate' . $root . '\\' . $controller;
+        // 公共的
+        // $validateClassName = 'app\\common\\validate\\' . $controller;
 
         // 判断当前验证类是否存在
         if (class_exists($validateClassName)) {
@@ -73,6 +72,9 @@ class CheckParams
                 } else {
                     $resultParams    = $validate->getDateByRule($params);
                     $request->params = $resultParams;
+                    // 页码，条数赋值
+                    $request->page = $request->param('?page') ? $request->param('page') : config('app.page');
+                    $request->size = $request->param('?limit') ? $request->param('limit') : config('app.limit');
                 }
             }
         } /* else{

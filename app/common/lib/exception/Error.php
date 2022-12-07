@@ -5,6 +5,6 @@ namespace app\common\lib\exception;
 class Error extends BaseException
 {
     public $msg    = '服务发生错误';
-    public $code   = 500;
-    public $status = 50000;
+    public $errorCode   = 500;
+    public $httpStatus = 500;
 }
