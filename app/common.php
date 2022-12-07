@@ -50,24 +50,18 @@ function show_res($status, $message, $data, $HttpStatus = 200)
  * @param  string           $msg            描述信息
  * @return json                             api返回的json数据
  */
-function success($data = [], int $code = 200, int $HttpStatus = 200, string $msg = '成功')
+function success($data = null, int $code = 200, int $HttpStatus = 200, string $msg = '成功')
 {
     // 组装数据
-    if (is_string($data) && (int) ($data) == 0) {
-        $resultData = [
-            'code' => $code,
-            'msg'  => $data,
-            // 'data'   => [],
-        ];
-    } else {
-        $resultData = [
-            'code' => $code,
-            'msg'  => $msg,
-        ];
-        if (isset($data['current_page'])) {
-            $resultData['total'] = $data['total'];
-            $resultData['code']  = 0;
-        }
+    $resultData = [
+        'code' => $code,
+        'msg'  => $msg,
+        'data' => $data,
+    ];
+    // 有分页
+    if (isset($data['current_page'])) {
+        $resultData['code']  = 0;
+        $resultData['total'] = $data['total'];
         $resultData['data'] = $data['data'];
     }
     // 返回数据
