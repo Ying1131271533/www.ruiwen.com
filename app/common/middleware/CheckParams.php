@@ -42,12 +42,12 @@ class CheckParams
         // halt($params);
 
         // 拼接验证类名，注意路径不要出错
-        // $validateClassName = 'app' . $root . '\validate\\' . $controller;
+        $validateClassName = 'app' . $root . '\validate\\' . $controller;
         // 红叶的命名方式就用下面这个
-        $validateClassName = 'app\common\validate' . $root . '\\' . $controller;
+        // $validateClassName = 'app\common\validate' . $root . '\\' . $controller;
         // 公共的
         // $validateClassName = 'app\\common\\validate\\' . $controller;
-
+        
         // 判断当前验证类是否存在
         if (class_exists($validateClassName)) {
             $validate = new $validateClassName;

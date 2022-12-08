@@ -5,14 +5,14 @@ use think\Exception;
 
 abstract class BaseException extends Exception
 {
-    public $msg    = '';
-    public $errorCode   = 200;
+    public $msg        = '';
+    public $errorCode  = 200;
     public $httpStatus = 200;
-    public $data   = null;
+    public $data       = null;
 
     public function __construct($params = [])
     {
-        if(is_string($params) && (int)($params) == 0){
+        if (is_string($params) && (int) ($params) == 0) {
             $this->msg = $params;
             return;
         }

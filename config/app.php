@@ -19,10 +19,10 @@ return [
     'app_map'          => [],
     // 域名绑定（自动多应用模式有效）
     'domain_bind'      => [
-        'www'   => 'web',
-        'admin' => 'admin',
-        'm'     => 'mobile',
-        'api'   => 'api',
+        // 'www'   => 'web',
+        // 'admin' => 'admin',
+        // 'm'     => 'mobile',
+        // 'api'   => 'api',
     ],
     // 禁止URL访问的应用列表（自动多应用模式有效）
     'deny_app_list'    => [],
@@ -55,8 +55,8 @@ return [
 
     // redis连接配置
     'redis'            => [
-        // 'host'     => '127.0.0.1',
-        'host'     => 'redis',
+        'host'     => '127.0.0.1',
+        // 'host'     => 'redis',
         'password' => 'Ym-12]i4!gDal^Jc/3@n.c^Mh',
         'port'     => 6379,
         'select'   => 0,

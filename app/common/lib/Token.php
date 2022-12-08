@@ -16,7 +16,7 @@ class Token
         return (new Redis)->get(config('redis.token_pre') . self::getToken());
     }
 
-    public static function getUserId()
+    public static function getUid()
     {
         return self::getUser()['id'];
     }
