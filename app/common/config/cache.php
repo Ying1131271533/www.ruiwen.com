@@ -17,8 +17,6 @@ return [
             'type'     => 'redis',
             // 服务器地址
             'host'     => config('app.redis.host'),
-            // 'host'     => '127.0.0.1',
-            // 'host'     => 'redis',
             // 密码.
             'password' => config('app.redis.password'),
             // 端口

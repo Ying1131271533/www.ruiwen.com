@@ -33,7 +33,7 @@ return [
     // 错误显示信息,非调试模式有效
     'error_message'    => '页面错误！请稍后再试～',
     // 显示错误信息
-    'show_error_msg'   => false,
+    'show_error_msg'   => true,
 
     // 签名，签名由参数变成字符串组合起来的，可以参照微信的接口
     'sign'             => 'Akali',
