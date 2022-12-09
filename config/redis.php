@@ -8,17 +8,17 @@
 
 return [
     // 前缀 激活Token
-    'avtive_pre'   => 'avtive_account_pre_',
+    'avtive_pre'   => 'avtive_account_pre:',
     // 前缀 登录Token
-    'token_pre'    => 'access_token_pre_',
+    'token_pre'    => 'access_token_pre:',
     // 登录Token持续时间(一天)
     'token_expire' => 24 * 3600,
     // 前缀 登录验证码
-    'code_pre'     => 'login_pre_',
+    'code_pre'     => 'login_pre:',
     // 登录验证码过期时间
     'code_expire'  => 120,
     // 文件数据过期时间 15min
     'code_expire'  => 3600 / 4,
     // websocket
-    'socket_pre' => 'socket_uid_'
+    'socket_pre' => 'socket_uid:'
 ];

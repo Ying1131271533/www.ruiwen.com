@@ -66,9 +66,9 @@ class CheckParams
                 $validate->scene($action);
                 // 校验不通过则直接返回错误信息
                 if (!$validate->check($params)) {
-                    // throw new Params(['msg' => $validate->getError()]);
+                    throw new Params($validate->getError());
                     // 红叶的命名方式就用下面这个
-                    throw new \Exception($validate->getError(), 300);
+                    // throw new \Exception($validate->getError(), config('status.failed'));
                 } else {
                     $resultParams    = $validate->getDateByRule($params);
                     $request->params = $resultParams;

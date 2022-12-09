@@ -53,12 +53,16 @@ class ExceptionHandle extends Handle
     {
         // 添加自定义异常处理机制
         if ($e instanceof BaseException) {
-            return show($e->msg, $e->code, $e->status, $e->data);
+            return show($e->msg, $e->errorCode, $e->httpStatus);
         }
+
+        $message = $e->getMessage();
+        // $message = mb_convert_encoding($message, 'UTF-8', 'UTF-8,GBK,GB2312,BIG5');
+
         if ($e instanceof \Exception) {
             if (env('APP_DEBUG')) {
                 // 这里打开后，就只显示错误信息，而没有详细的页面错误提示了
-                return show($e->getMessage(), $e->getCode());
+                return show($message, $e->getCode());
             } else {
                 return show('系统内部错误', $e->getCode());
             }
