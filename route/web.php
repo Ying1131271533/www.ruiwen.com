@@ -16,3 +16,4 @@ Route::get('think', function () {
 
 
 // Route::get('', 'web/home/index');
+// Route::get('login', 'web/user/login');
