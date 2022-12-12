@@ -27,7 +27,7 @@ Route::group('login', function () {
  */
 Route::group('admin', function () {
      // 获取管理员信息
-    Route::post('info', 'admin/info')->middleware(app\admin\middleware\Auth::class)->allowCrossDomain();
+    Route::post('info', 'admin/info')->middleware(app\admin\middleware\Auth::class)->allowCrossDomain(); // 跨域请求支持
 });
 
 
