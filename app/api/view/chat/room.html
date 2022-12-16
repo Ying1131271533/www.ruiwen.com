@@ -111,21 +111,21 @@
         
         // 处理聊天记录显示方式
         function renderRecordList(data) {
-            for(let key of data) {
+            for(let value of data) {
                 // 判断是哪方发的消息
-                if(Number(key['uid']) === Number(fid)) {
+                if(Number(value['uid']) === Number(fid)) {
                     // 对方发的消息
                     renderRecord({
                         'icon': '&#xe612;',
                         'sender': friend['username'],
-                        'message': key['message']
+                        'message': value['message']
                     });
                 }else{
                     // 我发的消息
                     renderRecord({
                         'icon': '&#xe63f;',
                         'sender': user['username'],
-                        'message': key['message']
+                        'message': value['message']
                     });
                 }
             }
