@@ -67,7 +67,7 @@ class ExceptionHandle extends Handle
                 return show('系统内部错误', $e->getCode());
             }
         }
-
+        
         // 其他错误交给系统处理
         return parent::render($request, $e);
     }
