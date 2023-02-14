@@ -1,17 +1,17 @@
 /*
  Navicat MySQL Data Transfer
 
- Source Server         : 华为
+ Source Server         : 威速易 - 本地
  Source Server Type    : MySQL
- Source Server Version : 50738
- Source Host           : 124.71.218.160:3306
+ Source Server Version : 50736
+ Source Host           : localhost:3306
  Source Schema         : www_ruiwen_com
 
  Target Server Type    : MySQL
- Target Server Version : 50738
+ Target Server Version : 50736
  File Encoding         : 65001
 
- Date: 29/11/2022 10:50:23
+ Date: 07/02/2023 09:24:47
 */
 
 SET NAMES utf8mb4;
