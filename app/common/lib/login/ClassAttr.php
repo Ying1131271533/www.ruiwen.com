@@ -5,11 +5,12 @@ namespace app\common\lib\login;
 // 登录工厂
 class ClassAttr
 {
+    private $classStats;
     public function __construct()
     {
         $this->classStats = [
             // 帐号登录 这个UP没做
-            'login' => 'app\common\lib\login\loginAccount',
+            'login' => 'app\common\lib\login\LoginAccount',
             // 微信
             'wx' => 'app\common\lib\login\WechatApplet',
         ];

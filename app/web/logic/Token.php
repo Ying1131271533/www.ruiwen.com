@@ -59,7 +59,7 @@ class Token
         return self::getTokenVar('openid');
     }
 
-    // 后去token
+    // 获取token
     public static function getTokenVar(string $key)
     {
         $vars = Cache::store('redis')->get(self::$token);
@@ -72,7 +72,7 @@ class Token
             if (array_key_exists($key, $vars)) {
                 return $vars[$key];
             } else {
-                throw new ExceptionToken(['msg' => '权限查询失败']);
+                throw new ExceptionToken(['msg' => 'token查询失败']);
             }
         }
     }
