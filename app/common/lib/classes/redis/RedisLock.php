@@ -50,6 +50,7 @@ class RedisLock
         return false;
     }
 
+    // 上锁
     public function lockByLua($key = 'lock', $expire = 5)
     {
         // ttl - 过期时间
@@ -72,6 +73,7 @@ EOF;
         return $this->_eval($script, [$key, $this->_lockFlag, $expire]);
     }
 
+    // 解锁
     public function unlock($key)
     {
         $script = <<<EOF
