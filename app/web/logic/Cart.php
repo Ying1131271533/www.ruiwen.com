@@ -46,6 +46,7 @@ class Cart
             $product_spec = ProductSpecs::field('specs_value_id, product_id')->find($spec_id);
             $prodcut = Product::field('name, image')->find($product_spec['prodcut_id']);
             $data = [
+                'spec_id' => $spec_id, // 自己加的，应该有一个商品规格的id
                 'name' => $prodcut['name'],
                 'image' => $prodcut['image'],
                 'specs' => '',
