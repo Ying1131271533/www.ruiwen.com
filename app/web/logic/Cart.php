@@ -45,11 +45,11 @@ class Cart
         }else{
             $product_spec = ProductSpecs::field('specs_value_id, product_id')->find($spec_id);
             $prodcut = Product::field('name, image')->find($product_spec['prodcut_id']);
+            $specs = 
             $data = [
-                'spec_id' => $spec_id, // 自己加的，应该有一个商品规格的id
                 'name' => $prodcut['name'],
                 'image' => $prodcut['image'],
-                'specs' => '',
+                'specs' => '', // 这里应该是商品规格和属性的数组
                 'number' => $number,
                 'create_time' => time(),
             ];
