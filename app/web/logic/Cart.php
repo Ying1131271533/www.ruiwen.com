@@ -49,7 +49,7 @@ class Cart
             $data = [
                 'name' => $prodcut['name'],
                 'image' => $prodcut['image'],
-                'specs' => '', // 这里应该是商品规格和属性的数组
+                'specs' => '', // 这里应该还有个记录商品规格名称的数组，参考淘宝
                 'number' => $number,
                 'create_time' => time(),
             ];
