@@ -77,7 +77,7 @@ class DosecKill
         
         // 实例化redisLock
         $redisLock = new RedisLock();
-        $key       = 'lock_akali';
+        $key       = 'lock_goods_' . $product_id;
         if ($redisLock->lockByLua($key)) {
             // to do...业务代码
 

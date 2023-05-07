@@ -45,10 +45,15 @@ class Cart
         }else{
             $product_spec = ProductSpecs::field('specs_value_id, product_id')->find($spec_id);
             $prodcut = Product::field('name, image')->find($product_spec['prodcut_id']);
+            $specs = 
             $data = [
                 'name' => $prodcut['name'],
                 'image' => $prodcut['image'],
-                'specs' => '',
+                
+                // 这里应该还有个商品规格id
+                // 'spec_id' => $spec_id,
+                // 这里应该还有个记录商品规格名称的数组，参考淘宝
+                // 'specs' => [ '布料：黄色', '尺寸：L' ],
                 'number' => $number,
                 'create_time' => time(),
             ];
