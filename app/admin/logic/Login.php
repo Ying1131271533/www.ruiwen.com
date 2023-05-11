@@ -2,7 +2,7 @@
 namespace app\admin\logic;
 
 use app\common\lib\exception\Error;
-use app\common\model\User;
+use app\common\model\Admin;
 use think\facade\Cache;
 
 class Login
@@ -21,7 +21,7 @@ class Login
             'last_ip'   => get_client_ip(),
             'last_time' => time(),
         ];
-        User::update($updateData);
+        Admin::update($updateData);
         return $token;
     }
 
