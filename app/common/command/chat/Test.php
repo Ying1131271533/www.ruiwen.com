@@ -24,9 +24,9 @@ class Test extends Base
             // 设置异步任务的工作进程数量
             'task_worker_num' => 4,
             // ssl证书文件的位置
-            // 'ssl_cert_file'   => '/etc/nginx/ssl/nginx.crt',
+            // 'ssl_cert_file'   => '/etc/nginx/cert/nginx.crt',
             // key的位置
-            // 'ssl_key_file'    => '/etc/nginx/ssl/nginx.key',
+            // 'ssl_key_file'    => '/etc/nginx/cert/nginx.key',
         ]);
     }
 
