@@ -498,13 +498,11 @@ function cache_time(string $type = 'dawn_rand_time')
 /**
  * 返回黎明三点的随机时间
  *
- * @param  integer|string   $id     一般使用数据的id
- * @return integer                  返回距离黎明三点的剩余时间戳
+ * @return integer 返回距离黎明三点的剩余时间戳
  */
-function dawn_time($id)
+function dawn_time()
 {
-    $number = substr(crc32($id), 6);
-    $time   = 86400 - (strtotime(date('Y-m-d H:i:30')) + 8 * 3600) % 86400 + 3600 * 3 + (int) $number;
+    $time = 86400 - (time() + 8 * 3600) % 86400 + 3600 * 3 + rand(1, 3600);
     return $time;
 }
 
