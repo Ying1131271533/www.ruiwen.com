@@ -204,7 +204,7 @@ class ElasticSearch
         $data = [
             'index' => 'user',
             'id'    => $params['id'], // 唯一性标识，如果不填就会自动生成
-            'body'  => $params,
+            'body' => $params,
         ];
 
         // 保存
@@ -399,35 +399,35 @@ class ElasticSearch
         ]; */
 
         // 并且 数组形式
-        /* $params = [
-        'index' => 'user',
-        'body'  => [
-        'query' => [
-        'bool' => [
-        'must' => [
-        [
-        'match' => [
-        'age' => 26
-        ]
-        ],
-        // 等于下面的must_ont
-        // [
-        //     'match' => [
-        //         'sex' => "男"
-        //     ]
-        // ],
-        ],
-        'must_not' => [
-        [
-        'match' => [
-        'sex' => '女'
-        ]
-        ]
-        ]
-        ],
-        ],
-        ],
-        ]; */
+        $params = [
+            'index' => 'user',
+            'body'  => [
+                'query' => [
+                    'bool' => [
+                        'must'     => [
+                            [
+                                'match' => [
+                                    'age' => 26,
+                                ],
+                            ],
+                            // 等于下面的must_ont
+                            // [
+                            //     'match' => [
+                            //         'sex' => "男"
+                            //     ]
+                            // ],
+                        ],
+                        'must_not' => [
+                            [
+                                'match' => [
+                                    'sex' => '女',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ];
 
         // 并且 json形式
         /* $params = [
@@ -471,7 +471,7 @@ class ElasticSearch
         ],
         ]; */
 
-        // 权重 权重默认系数为2.2
+        // 权重 权重默认系数为2.2， 数字越大，权重越大
         /* $params = [
         'index' => 'user',
         'body'  => [
@@ -712,14 +712,14 @@ class ElasticSearch
         $data = [
             'index' => 'user',
             'id'    => $params['id'], // 唯一性标识，如果不填就会自动生成
-            'body'  => $params,
+            'body' => $params,
         ];
-        
+
         // 异步客户端，在需要用到的方法里面启用(需要安装php-http/guzzle7-adapter)
         $this->client->setAsync(true);
         // 禁用
         // $this->client->setAsync(false);
-        
+
         // 保存
         $response = $this->client->index($data);
         $response->then(
@@ -727,7 +727,7 @@ class ElasticSearch
             function (ResponseInterface $response) {
                 // $response is Elastic\Elasticsearch\Response\Elasticsearch
                 // return success($response->asArray());
-                dump('创建数据线程：'.$response->asArray());
+                dump('创建数据线程：' . $response->asArray());
             },
             // The failure callback
             function (\Exception $exception) {
